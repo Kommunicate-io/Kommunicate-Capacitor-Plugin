@@ -1,0 +1,1 @@
+# Kommunicate-Capacitor-Plugin
