@@ -1,0 +1,39 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Kommunicate Sample App
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="vertical-align-content">
+  <ion-grid>
+    <ion-row>
+      <button class="ion-activatable ripple-parent" (click) ="launchConversation()">
+        Launch Support chat
+        <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+      </button>
+    </ion-row>
+
+    <ion-row>
+      <button class="ion-activatable ripple-parent" (click) ="updateChatContext()">
+        Update chat context
+        <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+      </button>
+    </ion-row>
+
+    <ion-row>
+      <button class="ion-activatable ripple-parent" (click) ="updateUserDetails()">
+        Update user details
+        <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+      </button>
+    </ion-row>
+
+    <ion-row>
+      <button class="ion-activatable ripple-parent" (click) ="logout()">
+        Logout
+        <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+      </button>
+    </ion-row>
+  </ion-grid>
+</ion-content>

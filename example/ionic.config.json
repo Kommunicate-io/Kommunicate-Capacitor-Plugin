@@ -1,0 +1,7 @@
+{
+  "name": "KmSample",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
