@@ -9,7 +9,8 @@ import Applozic
  */
 @objc(KommunicateCapacitorPlugin)
 public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerDelegate {
-    var appId : String? = nil;
+    
+    var appId: String?
     var agentIds: [String]? = [];
     var botIds: [String]? = [];
     var createOnly: Bool = false
@@ -30,46 +31,31 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
         var withPrechat : Bool = false
         var kmUser : KMUser? = nil
         
-        if call.hasOption("appId") {
-            appId = call.getString("appId")
+        guard let appId = call.options["appId"] as? String else {
+            call.error("appId is required, cannot be left blank or nil")
+            return
         }
+        self.appId = appId
         
         if call.hasOption("withPreChat") {
             withPrechat = call.getBool("withPreChat") ?? false
         }
         
-        if call.hasOption("isSingleConversation") {
-            self.isSingleConversation = call.getBool("isSingleConversation") ?? true
-        }
+        self.isSingleConversation = call.options["isSingleConversation"] as? Bool ?? true
+        self.createOnly = call.options["createOnly"] as? Bool ?? false
+        self.conversationAssignee = call.options["conversationAssignee"] as? String
+        self.clientConversationId = call.options["clientConversationId"] as? String
+        self.agentIds = call.options["agentIds"] as? [String]
+        self.botIds = call.options["botIds"] as? [String]
         
-        if call.hasOption("createOnly") {
-            self.createOnly = call.getBool("createOnly") ?? false
-        }
-        
-        if(call.hasOption("conversationAssignee")) {
-            self.conversationAssignee = call.getString("conversationAssignee")
-        }
-        
-        if(call.hasOption("clientConversationId")) {
-            self.clientConversationId = call.getString("clientConversationId")
-        }
-        
-        let agentIds = jsonObj["agentIds"] as? [String]
-        let botIds = jsonObj["botIds"] as? [String]
-        
-        self.agentIds = agentIds
-        self.botIds = botIds
-        
-        if Kommunicate.isLoggedIn{
+        if Kommunicate.isLoggedIn {
             self.handleCreateConversation()
-        }else{
-            if jsonObj["appId"] != nil {
-                Kommunicate.setup(applicationId: jsonObj["appId"] as! String)
-            }
+        } else {
+            Kommunicate.setup(applicationId: appId)
             
             if !withPrechat {
-                if jsonObj["kmUser"] != nil {
-                    var jsonSt = jsonObj["kmUser"] as! String
+                if call.hasOption("kmUser") {
+                    var jsonSt = call.getString("kmUser")!
                     jsonSt = jsonSt.replacingOccurrences(of: "\\\"", with: "\"")
                     jsonSt = "\(jsonSt)"
                     kmUser = KMUser(jsonString: jsonSt)
@@ -100,7 +86,7 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
     }
     
     @objc func updateChatContext(_ call: CAPPluginCall) {
-        guard let chatContext = call.arguments as? Dictionary<String, Any> else {
+        guard let chatContext = call.options as? Dictionary<String, Any> else {
             return
         }
         do {
@@ -119,12 +105,13 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
     }
     
     @objc func updateUserDetails(_ call: CAPPluginCall) {
-        guard let kmUser = call.arguments as? Dictionary<String, Any> else {
-            call.error("Invalid kmUser object")
-            return
-        }
         if(Kommunicate.isLoggedIn) {
-            self.updateUser(displayName: kmUser["displayName"] as? String, imageLink: kmUser["imageLink"] as? String, status: kmUser["status"] as? String, metadata: kmUser["metadata"] as? NSMutableDictionary, phoneNumber: kmUser["contactNumber"] as? String, email: kmUser["email"] as? String, result: call)
+            self.updateUser(displayName: call.options["displayName"] as? String,
+                            imageLink: call.options["imageLink"] as? String,
+                            status: call.options["status"] as? String,
+                            metadata: call.options as? NSMutableDictionary,
+                            phoneNumber: call.options["contactNumber"] as? String,
+                            email: call.options["email"] as? String, call: call)
         } else {
             call.error("User not authorised. This usually happens when calling the function before conversationBuilder or loginUser. Make sure you call either of the two functions before updating the user details")
         }
