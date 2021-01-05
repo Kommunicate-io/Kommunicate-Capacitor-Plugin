@@ -9,16 +9,21 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin implements Kommunic
     });
   }
   buildConversation(options: any): Promise<void> {
-    throw new Error('Method not implemented.');
+    console.log('Call received for buildConversation in plugin, but method not implemented will it work?');
+    return options
   }
   updateChatContext(options: any): Promise<void> {
-    throw new Error('Method not implemented.');
+    console.log('Call received for updateChatContext in plugin, but method not implemented');
+    return options
   }
   updateUserDetails(options: any): Promise<void> {
-    throw new Error('Method not implemented.');
+    console.log('Call received for updateUserDetails in plugin, but method not implemented');
+    return options
   }
   logout(): Promise<void> {
-    throw new Error('Method not implemented.');
+    console.log('Call received for logout in plugin, but method not implemented');
+    let options:any = "success"
+    return options;
   }
 
   async echo(options: { value: string }): Promise<{ value: string }> {
@@ -27,9 +32,9 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin implements Kommunic
   }
 }
 
-const KommunicateCapacitorPlugin = new KommunicateCapacitorPluginWeb();
+const Kommunicate = new KommunicateCapacitorPluginWeb();
 
-export { KommunicateCapacitorPlugin };
+export { Kommunicate };
 
 import { registerWebPlugin } from '@capacitor/core';
-registerWebPlugin(KommunicateCapacitorPlugin);
+registerWebPlugin(Kommunicate);
