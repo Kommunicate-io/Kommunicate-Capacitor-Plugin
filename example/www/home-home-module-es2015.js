@@ -117,8 +117,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HomePage", function() { return HomePage; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
-/* harmony import */ var capacitor_plugin_kommunicate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! capacitor-plugin-kommunicate */ "../Plugin/Kommunicate-Capacitor-Plugin/dist/esm/index.js");
-/* harmony import */ var _capacitor_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @capacitor/core */ "../Plugin/Kommunicate-Capacitor-Plugin/node_modules/@capacitor/core/dist/esm/index.js");
+/* harmony import */ var capacitor_plugin_kommunicate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! capacitor-plugin-kommunicate */ "../dist/esm/index.js");
+/* harmony import */ var _capacitor_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @capacitor/core */ "../node_modules/@capacitor/core/dist/esm/index.js");
 
 
 

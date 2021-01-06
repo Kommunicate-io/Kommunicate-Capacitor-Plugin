@@ -6145,8 +6145,8 @@ window.__Zone_disable_customElements = true;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/reytum/Documents/Projects/Ionic/Kommunicate/Capacitor/KmSample/src/polyfills.ts */"./src/polyfills.ts");
-module.exports = __webpack_require__(/*! /Users/reytum/Documents/Projects/Ionic/Kommunicate/Capacitor/KmSample/node_modules/@angular-devkit/build-angular/src/angular-cli-files/models/jit-polyfills.js */"./node_modules/@angular-devkit/build-angular/src/angular-cli-files/models/jit-polyfills.js");
+__webpack_require__(/*! /home/reytum/Documents/Projects/Capacitor/Kommunicate-Capacitor-Plugin/example/src/polyfills.ts */"./src/polyfills.ts");
+module.exports = __webpack_require__(/*! /home/reytum/Documents/Projects/Capacitor/Kommunicate-Capacitor-Plugin/example/node_modules/@angular-devkit/build-angular/src/angular-cli-files/models/jit-polyfills.js */"./node_modules/@angular-devkit/build-angular/src/angular-cli-files/models/jit-polyfills.js");
 
 
 /***/ })

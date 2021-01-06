@@ -21,35 +21,61 @@
 
   (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["main"], {
     /***/
-    "../Plugin/Kommunicate-Capacitor-Plugin/dist/esm/index.js":
-    /*!****************************************************************!*\
-      !*** ../Plugin/Kommunicate-Capacitor-Plugin/dist/esm/index.js ***!
-      \****************************************************************/
+    "../dist/esm/definitions.js":
+    /*!**********************************!*\
+      !*** ../dist/esm/definitions.js ***!
+      \**********************************/
+
+    /*! no exports provided */
+
+    /***/
+    function distEsmDefinitionsJs(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__); //# sourceMappingURL=definitions.js.map
+
+      /***/
+
+    },
+
+    /***/
+    "../dist/esm/index.js":
+    /*!****************************!*\
+      !*** ../dist/esm/index.js ***!
+      \****************************/
 
     /*! exports provided: KommunicateCapacitorPluginWeb, Kommunicate */
 
     /***/
-    function PluginKommunicateCapacitorPluginDistEsmIndexJs(module, __webpack_exports__, __webpack_require__) {
+    function distEsmIndexJs(module, __webpack_exports__, __webpack_require__) {
       "use strict";
 
       __webpack_require__.r(__webpack_exports__);
       /* harmony import */
 
 
-      var _web__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      var _definitions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! ./definitions */
+      "../dist/esm/definitions.js");
+      /* empty/unused harmony star reexport */
+
+      /* harmony import */
+
+
+      var _web__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
       /*! ./web */
-      "../Plugin/Kommunicate-Capacitor-Plugin/dist/esm/web.js");
+      "../dist/esm/web.js");
       /* harmony reexport (safe) */
 
 
       __webpack_require__.d(__webpack_exports__, "KommunicateCapacitorPluginWeb", function () {
-        return _web__WEBPACK_IMPORTED_MODULE_0__["KommunicateCapacitorPluginWeb"];
+        return _web__WEBPACK_IMPORTED_MODULE_1__["KommunicateCapacitorPluginWeb"];
       });
       /* harmony reexport (safe) */
 
 
       __webpack_require__.d(__webpack_exports__, "Kommunicate", function () {
-        return _web__WEBPACK_IMPORTED_MODULE_0__["Kommunicate"];
+        return _web__WEBPACK_IMPORTED_MODULE_1__["Kommunicate"];
       }); //# sourceMappingURL=index.js.map
 
       /***/
@@ -57,15 +83,15 @@
     },
 
     /***/
-    "../Plugin/Kommunicate-Capacitor-Plugin/dist/esm/web.js":
-    /*!**************************************************************!*\
-      !*** ../Plugin/Kommunicate-Capacitor-Plugin/dist/esm/web.js ***!
-      \**************************************************************/
+    "../dist/esm/web.js":
+    /*!**************************!*\
+      !*** ../dist/esm/web.js ***!
+      \**************************/
 
     /*! exports provided: KommunicateCapacitorPluginWeb, Kommunicate */
 
     /***/
-    function PluginKommunicateCapacitorPluginDistEsmWebJs(module, __webpack_exports__, __webpack_require__) {
+    function distEsmWebJs(module, __webpack_exports__, __webpack_require__) {
       "use strict";
 
       __webpack_require__.r(__webpack_exports__);
@@ -86,7 +112,7 @@
 
       var _capacitor_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
       /*! @capacitor/core */
-      "../Plugin/Kommunicate-Capacitor-Plugin/node_modules/@capacitor/core/dist/esm/index.js");
+      "../node_modules/@capacitor/core/dist/esm/index.js");
 
       var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
         function adopt(value) {
@@ -137,8 +163,14 @@
         _createClass(KommunicateCapacitorPluginWeb, [{
           key: "buildConversation",
           value: function buildConversation(options) {
-            console.log('Call received for buildConversation in plugin, but method not implemented');
-            return options;
+            console.log('Call received for buildConversation in plugin, but method not implemented will it work?');
+            return new Promise(function (resolve, reject) {
+              if (options.hasKey('sdrf')) {
+                reject("error");
+              }
+
+              resolve(options);
+            });
           }
         }, {
           key: "updateChatContext",
@@ -462,13 +494,13 @@
 
       var capacitor_plugin_kommunicate__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! capacitor-plugin-kommunicate */
-      "../Plugin/Kommunicate-Capacitor-Plugin/dist/esm/index.js");
+      "../dist/esm/index.js");
       /* harmony import */
 
 
       var _capacitor_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
       /*! @capacitor/core */
-      "../Plugin/Kommunicate-Capacitor-Plugin/node_modules/@capacitor/core/dist/esm/index.js");
+      "../node_modules/@capacitor/core/dist/esm/index.js");
 
       var KommunicateWebPlugin = _capacitor_core__WEBPACK_IMPORTED_MODULE_6__["Plugins"];
 
@@ -600,7 +632,7 @@
 
       var capacitor_plugin_kommunicate__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
       /*! capacitor-plugin-kommunicate */
-      "../Plugin/Kommunicate-Capacitor-Plugin/dist/esm/index.js");
+      "../dist/esm/index.js");
 
       var AppModule = function AppModule() {
         _classCallCheck(this, AppModule);
@@ -716,7 +748,7 @@
     /***/
     function _(module, exports, __webpack_require__) {
       module.exports = __webpack_require__(
-      /*! /Users/reytum/Documents/Projects/Ionic/Kommunicate/Capacitor/KmSample/src/main.ts */
+      /*! /home/reytum/Documents/Projects/Capacitor/Kommunicate-Capacitor-Plugin/example/src/main.ts */
       "./src/main.ts");
       /***/
     }

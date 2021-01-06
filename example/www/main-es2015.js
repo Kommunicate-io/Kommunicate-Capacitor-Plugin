@@ -1,28 +1,44 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["main"],{
 
-/***/ "../Plugin/Kommunicate-Capacitor-Plugin/dist/esm/index.js":
-/*!****************************************************************!*\
-  !*** ../Plugin/Kommunicate-Capacitor-Plugin/dist/esm/index.js ***!
-  \****************************************************************/
+/***/ "../dist/esm/definitions.js":
+/*!**********************************!*\
+  !*** ../dist/esm/definitions.js ***!
+  \**********************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+//# sourceMappingURL=definitions.js.map
+
+/***/ }),
+
+/***/ "../dist/esm/index.js":
+/*!****************************!*\
+  !*** ../dist/esm/index.js ***!
+  \****************************/
 /*! exports provided: KommunicateCapacitorPluginWeb, Kommunicate */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _web__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./web */ "../Plugin/Kommunicate-Capacitor-Plugin/dist/esm/web.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "KommunicateCapacitorPluginWeb", function() { return _web__WEBPACK_IMPORTED_MODULE_0__["KommunicateCapacitorPluginWeb"]; });
+/* harmony import */ var _definitions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./definitions */ "../dist/esm/definitions.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _web__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./web */ "../dist/esm/web.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "KommunicateCapacitorPluginWeb", function() { return _web__WEBPACK_IMPORTED_MODULE_1__["KommunicateCapacitorPluginWeb"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Kommunicate", function() { return _web__WEBPACK_IMPORTED_MODULE_0__["Kommunicate"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Kommunicate", function() { return _web__WEBPACK_IMPORTED_MODULE_1__["Kommunicate"]; });
+
 
 
 //# sourceMappingURL=index.js.map
 
 /***/ }),
 
-/***/ "../Plugin/Kommunicate-Capacitor-Plugin/dist/esm/web.js":
-/*!**************************************************************!*\
-  !*** ../Plugin/Kommunicate-Capacitor-Plugin/dist/esm/web.js ***!
-  \**************************************************************/
+/***/ "../dist/esm/web.js":
+/*!**************************!*\
+  !*** ../dist/esm/web.js ***!
+  \**************************/
 /*! exports provided: KommunicateCapacitorPluginWeb, Kommunicate */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -30,7 +46,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "KommunicateCapacitorPluginWeb", function() { return KommunicateCapacitorPluginWeb; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Kommunicate", function() { return Kommunicate; });
-/* harmony import */ var _capacitor_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @capacitor/core */ "../Plugin/Kommunicate-Capacitor-Plugin/node_modules/@capacitor/core/dist/esm/index.js");
+/* harmony import */ var _capacitor_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @capacitor/core */ "../node_modules/@capacitor/core/dist/esm/index.js");
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -49,8 +65,13 @@ class KommunicateCapacitorPluginWeb extends _capacitor_core__WEBPACK_IMPORTED_MO
         });
     }
     buildConversation(options) {
-        console.log('Call received for buildConversation in plugin, but method not implemented');
-        return options;
+        console.log('Call received for buildConversation in plugin, but method not implemented will it work?');
+        return new Promise((resolve, reject) => {
+            if (options.hasKey('sdrf')) {
+                reject("error");
+            }
+            resolve(options);
+        });
     }
     updateChatContext(options) {
         console.log('Call received for updateChatContext in plugin, but method not implemented');
@@ -424,8 +445,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/__ivy_ngcc__/fesm2015/ionic-angular.js");
 /* harmony import */ var _ionic_native_splash_screen_ngx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic-native/splash-screen/ngx */ "./node_modules/@ionic-native/splash-screen/__ivy_ngcc__/ngx/index.js");
 /* harmony import */ var _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic-native/status-bar/ngx */ "./node_modules/@ionic-native/status-bar/__ivy_ngcc__/ngx/index.js");
-/* harmony import */ var capacitor_plugin_kommunicate__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! capacitor-plugin-kommunicate */ "../Plugin/Kommunicate-Capacitor-Plugin/dist/esm/index.js");
-/* harmony import */ var _capacitor_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @capacitor/core */ "../Plugin/Kommunicate-Capacitor-Plugin/node_modules/@capacitor/core/dist/esm/index.js");
+/* harmony import */ var capacitor_plugin_kommunicate__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! capacitor-plugin-kommunicate */ "../dist/esm/index.js");
+/* harmony import */ var _capacitor_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @capacitor/core */ "../node_modules/@capacitor/core/dist/esm/index.js");
 
 
 
@@ -485,7 +506,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic-native/status-bar/ngx */ "./node_modules/@ionic-native/status-bar/__ivy_ngcc__/ngx/index.js");
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
 /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
-/* harmony import */ var capacitor_plugin_kommunicate__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! capacitor-plugin-kommunicate */ "../Plugin/Kommunicate-Capacitor-Plugin/dist/esm/index.js");
+/* harmony import */ var capacitor_plugin_kommunicate__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! capacitor-plugin-kommunicate */ "../dist/esm/index.js");
 
 
 
@@ -577,7 +598,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/reytum/Documents/Projects/Ionic/Kommunicate/Capacitor/KmSample/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /home/reytum/Documents/Projects/Capacitor/Kommunicate-Capacitor-Plugin/example/src/main.ts */"./src/main.ts");
 
 
 /***/ })

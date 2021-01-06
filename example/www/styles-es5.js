@@ -526,11 +526,11 @@
     /***/
     function _(module, exports, __webpack_require__) {
       __webpack_require__(
-      /*! /Users/reytum/Documents/Projects/Ionic/Kommunicate/Capacitor/KmSample/src/theme/variables.scss */
+      /*! /home/reytum/Documents/Projects/Capacitor/Kommunicate-Capacitor-Plugin/example/src/theme/variables.scss */
       "./src/theme/variables.scss");
 
       module.exports = __webpack_require__(
-      /*! /Users/reytum/Documents/Projects/Ionic/Kommunicate/Capacitor/KmSample/src/global.scss */
+      /*! /home/reytum/Documents/Projects/Capacitor/Kommunicate-Capacitor-Plugin/example/src/global.scss */
       "./src/global.scss");
       /***/
     }

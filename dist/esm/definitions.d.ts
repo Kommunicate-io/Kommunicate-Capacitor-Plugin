@@ -1,6 +1,6 @@
 declare module '@capacitor/core' {
     interface PluginRegistry {
-        Kommunicate: KommunicateCapacitorPlugin;
+        KommunicatePlugin: KommunicateCapacitorPlugin;
     }
 }
 export interface KommunicateCapacitorPlugin {

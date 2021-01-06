@@ -215,13 +215,13 @@
 
       var capacitor_plugin_kommunicate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
       /*! capacitor-plugin-kommunicate */
-      "../Plugin/Kommunicate-Capacitor-Plugin/dist/esm/index.js");
+      "../dist/esm/index.js");
       /* harmony import */
 
 
       var _capacitor_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! @capacitor/core */
-      "../Plugin/Kommunicate-Capacitor-Plugin/node_modules/@capacitor/core/dist/esm/index.js");
+      "../node_modules/@capacitor/core/dist/esm/index.js");
 
       var KommunicateCapacitorPlugin = _capacitor_core__WEBPACK_IMPORTED_MODULE_3__["Plugins"].KommunicateCapacitorPlugin;
 
