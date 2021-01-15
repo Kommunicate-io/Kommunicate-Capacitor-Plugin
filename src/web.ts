@@ -12,7 +12,7 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin implements Kommunic
   buildConversation(options: any): Promise<void> {
     return new Promise((resolve, reject) => {
 
-    var kmUser: any;
+    let kmUser: any;
 
 		if (this.isUserLoggedIn()) {
 			this.init((response: any) => {
@@ -48,7 +48,9 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin implements Kommunic
 
   updateChatContext(options: any): Promise<void> {
     return new Promise((resolve: any, reject: any) => {
-      if(this.isUserLoggedIn()) {
+      if(!this.isUserLoggedIn()) {
+        reject("User not logged in. Call buildConversation function once before updating the chat context")
+      }
         this.init((response: any) => {
           console.log(response);
           (window as any).Kommunicate.updateChatContext(options);
@@ -57,15 +59,14 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin implements Kommunic
           console.log(error);
           reject(error)
         });
-      } else {
-        reject("User not logged in. Call buildConversation function once before updating the chat context")
-      }
    })
   }
 
   updateUserDetails(options: any): Promise<void> {
     return new Promise((resolve: any, reject: any) => {
-       if(this.isUserLoggedIn()) {
+      if(!this.isUserLoggedIn()) {
+        reject("User not logged in. Call buildConversation function once before updating the details")
+      }
         this.init((response: any) => {
           console.log(response);
           var userDetails: any = {};
@@ -90,9 +91,6 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin implements Kommunic
           console.log(error);
           reject(error)
         });
-       } else {
-         reject("User not logged in. Call buildConversation function once before updating the details")
-       }
     })
   }
 
@@ -121,14 +119,14 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin implements Kommunic
   }
   
   init(successCallback: any, errorCallback: any): void {
-    if (this.isUserLoggedIn()) {
-      if (typeof (window as any).Kommunicate != 'undefined' && (window as any).Kommunicate) {
+    if (!this.isUserLoggedIn()) {
+      errorCallback("User not logged in, call login first")
+      return;
+    }
+    if (typeof (window as any).Kommunicate != 'undefined' && (window as any).Kommunicate) {
         successCallback("success")
       } else {  
         this.initPlugin(null, successCallback, errorCallback)
-      }
-    } else {
-      errorCallback("User not logged in, call login first")
     }
   }
 
