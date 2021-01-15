@@ -16,27 +16,110 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin {
         });
     }
     buildConversation(options) {
-        console.log('Call received for buildConversation in plugin, but method not implemented will it work?');
         return new Promise((resolve, reject) => {
-            this.init(resolve, reject);
-            if (options.hasOwnProperty('sdrf')) {
-                reject("error");
+            var kmUser;
+            if (this.isUserLoggedIn()) {
+                this.init((response) => {
+                    console.log(response);
+                    this.createConversation(options, JSON.parse(localStorage.KM_PLUGIN_USER_DETAILS).userId, resolve, reject);
+                }, (error) => {
+                    reject(error);
+                });
             }
-            resolve(options);
+            else {
+                if (options.kmUser) {
+                    kmUser = JSON.parse(options.kmUser);
+                    kmUser.applicationId = options.appId;
+                }
+                else if (options.withPreChat && options.withPreChat == true) {
+                    kmUser.withPreChat = true;
+                    kmUser.applicationId = options.appId;
+                }
+                else {
+                    kmUser = {
+                        'userId': this.getRandomId(),
+                        'applicationId': options.appId
+                    };
+                }
+                this.initPlugin(kmUser, (response) => {
+                    console.log(response);
+                    if (!(kmUser.withPreChat && kmUser.withPreChat == true)) {
+                        this.createConversation(options, kmUser.userId, resolve, reject);
+                    }
+                }, (error) => {
+                    reject(error);
+                });
+            }
         });
     }
     updateChatContext(options) {
-        console.log('Call received for updateChatContext in plugin, but method not implemented');
-        return options;
+        return new Promise((resolve, reject) => {
+            if (this.isUserLoggedIn()) {
+                this.init((response) => {
+                    console.log(response);
+                    window.Kommunicate.updateChatContext(options);
+                    resolve("Chat context updated");
+                }, (error) => {
+                    console.log(error);
+                    reject(error);
+                });
+            }
+            else {
+                reject("User not logged in. Call buildConversation function once before updating the chat context");
+            }
+        });
     }
     updateUserDetails(options) {
-        console.log('Call received for updateUserDetails in plugin, but method not implemented');
-        return options;
+        return new Promise((resolve, reject) => {
+            if (this.isUserLoggedIn()) {
+                this.init((response) => {
+                    console.log(response);
+                    var userDetails = {};
+                    if (options.email) {
+                        userDetails.email = options.email;
+                    }
+                    if (options.displayName) {
+                        userDetails.displayName = options.displayName;
+                    }
+                    if (options.imageLink) {
+                        userDetails.imageLink = options.imageLink;
+                    }
+                    if (options.contactNumber) {
+                        userDetails.contactNumber = options.contactNumber;
+                    }
+                    if (options.metadata) {
+                        userDetails.metadata = options.metadata;
+                    }
+                    window.Kommunicate.updateUser(userDetails);
+                    resolve("user details updated");
+                }, (error) => {
+                    console.log(error);
+                    reject(error);
+                });
+            }
+            else {
+                reject("User not logged in. Call buildConversation function once before updating the details");
+            }
+        });
     }
     logout() {
-        console.log('Call received for logout in plugin, but method not implemented');
-        let options = "success";
-        return options;
+        return new Promise((resolve, reject) => {
+            if (this.isUserLoggedIn() && typeof window.Kommunicate != 'undefined' && window.Kommunicate) {
+                this.init((response) => {
+                    console.log(response);
+                    window.Kommunicate.logout();
+                    localStorage.removeItem('KM_PLUGIN_USER_DETAILS');
+                    resolve("success");
+                }, (error) => {
+                    console.log(error);
+                    reject(error);
+                });
+            }
+            else {
+                localStorage.removeItem('KM_PLUGIN_USER_DETAILS');
+                resolve("success");
+            }
+        });
     }
     echo(options) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -46,7 +129,7 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin {
     }
     init(successCallback, errorCallback) {
         if (this.isUserLoggedIn()) {
-            if (typeof Kommunicate != 'undefined' && Kommunicate) {
+            if (typeof window.Kommunicate != 'undefined' && window.Kommunicate) {
                 successCallback("success");
             }
             else {
@@ -76,12 +159,20 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin {
                 "onInit": function (response) {
                     if (response && response === "success") {
                         if (kmUser.withPreChat == true) {
-                            kmUser.userId = JSON.parse(sessionStorage.getItem("mckAppHeaders")).userId;
+                            let appHeaders = sessionStorage.getItem("mckAppHeaders");
+                            if (appHeaders != null) {
+                                kmUser.userId = JSON.parse(appHeaders).userId;
+                            }
                         }
-                        document.getElementById('km-chat-widget-close-button').addEventListener('click', function () {
-                            var testClick = parent.document.getElementById("kommunicate-widget-iframe");
-                            testClick.style.display = "none";
-                        });
+                        let chatWidgetCloseButton = document.getElementById('km-chat-widget-close-button');
+                        if (chatWidgetCloseButton != null) {
+                            chatWidgetCloseButton.addEventListener('click', function () {
+                                var testClick = parent.document.getElementById("kommunicate-widget-iframe");
+                                if (testClick != null) {
+                                    testClick.style.display = "none";
+                                }
+                            });
+                        }
                         localStorage.setItem('KM_PLUGIN_USER_DETAILS', JSON.stringify(kmUser));
                         !(kmUser.withPreChat && kmUser.withPreChat == true) && parent.document.getElementById('kommunicate-widget-iframe').setAttribute("style", "display:none");
                         successCallback(response);
@@ -132,14 +223,15 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin {
             }
         ];
     }
-    createConversation(conversationObj, userId, successCallback, errorCallback) {
+    createConversation(conversationObj, userId, success, error) {
         this.init((successCallback, errorCallback) => {
-            if (!conversationObj.agentIds) {
-                conversationObj.agentIds = [JSON.parse(sessionStorage.getItem("kommunicate")).appOptions.agentId];
+            let kommunicateSession = sessionStorage.getItem("kommunicate");
+            if (!conversationObj.agentIds && kommunicateSession != null) {
+                conversationObj.agentIds = [JSON.parse(kommunicateSession).appOptions.agentId];
             }
             var clientChannelKey = conversationObj.clientConversationId ? conversationObj.clientConversationId : (conversationObj.isUnique ? this.generateClientConversationId(conversationObj, userId) : "");
             if (clientChannelKey && clientChannelKey !== "") {
-                KommunicateGlobal.Applozic.ALApiService.getGroupInfo({
+                window.KommunicateGlobal.Applozic.ALApiService.getGroupInfo({
                     data: {
                         clientGroupId: clientChannelKey
                     },
@@ -150,6 +242,7 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin {
                                     this.startConversation(conversationObj, clientChannelKey, successCallback, errorCallback);
                                 }
                                 else {
+                                    error(JSON.stringify(response));
                                     errorCallback(JSON.stringify(response));
                                 }
                             }
@@ -159,15 +252,16 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin {
                         }
                     },
                     error: (error) => {
+                        error(error);
                         errorCallback(error);
                     }
                 });
             }
             else {
-                this.startConversation(conversationObj, clientChannelKey, successCallback, errorCallback);
+                this.startConversation(conversationObj, clientChannelKey, success, error);
             }
         }, (error) => {
-            errorCallback(error);
+            error(error);
         });
     }
     processOpenConversation(conversationObj, clientChannelKey, successCallback) {
@@ -175,8 +269,8 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin {
             successCallback(clientChannelKey);
         }
         else {
-            KommunicateGlobal.document.getElementById("mck-sidebox-launcher").click();
-            KommunicateGlobal.$applozic.fn.applozic('loadGroupTabByClientGroupId', {
+            window.KommunicateGlobal.document.getElementById("mck-sidebox-launcher").click();
+            window.KommunicateGlobal.$applozic.fn.applozic('loadGroupTabByClientGroupId', {
                 "clientGroupId": clientChannelKey
             });
             parent.document.getElementById('kommunicate-widget-iframe').setAttribute("style", "display:block");
@@ -192,7 +286,7 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin {
             "groupName": conversationObj.groupName,
             'clientGroupId': clientChannelKey
         };
-        Kommunicate.startConversation(conversationDetail, (response) => {
+        window.Kommunicate.startConversation(conversationDetail, (response) => {
             parent.document.getElementById('kommunicate-widget-iframe').setAttribute("style", "display:block");
             successCallback(response);
         }, (error) => {
@@ -208,7 +302,10 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin {
             }
         }
         else {
-            clientId += JSON.parse(sessionStorage.getItem("kommunicate")).appOptions.agentId + "_";
+            let kommunicateSession = sessionStorage.getItem("kommunicate");
+            if (kommunicateSession != null) {
+                clientId += JSON.parse(kommunicateSession).appOptions.agentId + "_";
+            }
         }
         clientId += userId;
         if (conversationObj.botIds) {

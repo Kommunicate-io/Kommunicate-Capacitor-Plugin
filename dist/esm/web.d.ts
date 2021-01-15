@@ -16,7 +16,7 @@ export declare class KommunicateCapacitorPluginWeb extends WebPlugin implements 
     isUserLoggedIn(): boolean;
     getRandomId(): string;
     getPrechatLeadDetails(): any;
-    createConversation(conversationObj: any, userId: string, successCallback: any, errorCallback: any): void;
+    createConversation(conversationObj: any, userId: string, success: any, error: any): void;
     processOpenConversation(conversationObj: any, clientChannelKey: string, successCallback: any): void;
     startConversation(conversationObj: any, clientChannelKey: string, successCallback: any, errorCallback: any): void;
     generateClientConversationId(conversationObj: any, userId: string): string;
