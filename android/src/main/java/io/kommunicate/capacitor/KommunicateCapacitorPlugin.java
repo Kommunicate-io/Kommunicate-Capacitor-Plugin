@@ -1,9 +1,10 @@
 package io.kommunicate.capacitor;
 
 import android.content.Context;
-import android.os.AsyncTask;
+import android.text.TextUtils;
 
 import com.applozic.mobicomkit.api.account.user.AlUserUpdateTask;
+import com.applozic.mobicomkit.channel.service.ChannelService;
 import com.applozic.mobicomkit.feed.ChannelFeedApiResponse;
 import com.applozic.mobicomkit.listners.AlCallback;
 import com.applozic.mobicommons.commons.core.utils.Utils;
@@ -32,17 +33,15 @@ public class KommunicateCapacitorPlugin extends Plugin {
     private static final String TAG = "KommunicateCapacitorPlugin";
 
     @PluginMethod
-    public void echo(PluginCall call) {
-        String value = call.getString("value");
-        Utils.printLog(getContext(), "TestPlugin", "method echo works : " + value);
-        JSObject ret = new JSObject();
-        ret.put("value", value);
-        call.success(ret);
-    }
-
-    @PluginMethod
     public void buildConversation(final PluginCall call) {
-        Utils.printLog(getContext(), TAG, "Called method buildConversation with data : " + GsonUtils.getJsonFromObject(call.getData(), JSObject.class));
+        Utils.printLog(getContext(), TAG, "Called method buildConversation with data : " + call.getData().toString());
+
+        String kmUserString = null;
+
+        if (call.getData().has("kmUser")) {
+            kmUserString = call.getData().getString("kmUser");
+            call.getData().remove("kmUser");
+        }
 
         KmConversationBuilder conversationBuilder = (KmConversationBuilder) GsonUtils.getObjectFromJson(call.getData().toString(), KmConversationBuilder.class);
         conversationBuilder.setContext(getActivity());
@@ -54,10 +53,15 @@ public class KommunicateCapacitorPlugin extends Plugin {
             conversationBuilder.setSkipConversationList(true);
         }
 
+        if (!TextUtils.isEmpty(kmUserString)) {
+            conversationBuilder.setKmUser((KMUser) GsonUtils.getObjectFromJson(kmUserString, KMUser.class));
+        }
+
         KmCallback callback = new KmCallback() {
             @Override
             public void onSuccess(Object message) {
-                call.success(getJsObject("conversationId", message));
+                String clientConversationId = ChannelService.getInstance(getActivity()).getChannel((Integer) message).getClientGroupId();
+                call.success(getJsObject("clientConversationId", clientConversationId));
             }
 
             @Override
@@ -109,7 +113,7 @@ public class KommunicateCapacitorPlugin extends Plugin {
                     public void onError(Object error) {
                         call.error("Failed to update user details : " + error);
                     }
-                }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }).execute();
             } else {
                 call.error("User not authorised. This usually happens when calling the function before conversationBuilder or loginUser. Make sure you call either of the two functions before updating the user details");
             }
@@ -125,7 +129,6 @@ public class KommunicateCapacitorPlugin extends Plugin {
         Kommunicate.logout(getContext(), new KMLogoutHandler() {
             @Override
             public void onSuccess(Context context) {
-
                 call.success(getJsObject(SUCCESS, "Logout successful"));
             }
 

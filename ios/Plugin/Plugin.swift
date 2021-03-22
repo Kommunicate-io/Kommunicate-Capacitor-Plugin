@@ -18,13 +18,7 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
     var callback: CAPPluginCall?
     var conversationAssignee: String? = nil;
     var clientConversationId: String? = nil;
-    
-    @objc func echo(_ call: CAPPluginCall) {
-        let value = call.getString("value") ?? ""
-        call.success([
-            "value": value
-        ])
-    }
+    var teamId: String? = nil;
     
     @objc func buildConversation(_ call: CAPPluginCall) {
         self.callback = call
@@ -43,10 +37,11 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
         
         self.isSingleConversation = call.options["isSingleConversation"] as? Bool ?? true
         self.createOnly = call.options["createOnly"] as? Bool ?? false
-        self.conversationAssignee = call.options["conversationAssignee"] as? String
-        self.clientConversationId = call.options["clientConversationId"] as? String
-        self.agentIds = call.options["agentIds"] as? [String]
-        self.botIds = call.options["botIds"] as? [String]
+        self.conversationAssignee = call.options["conversationAssignee"] as? String ?? nil
+        self.clientConversationId = call.options["clientConversationId"] as? String ?? nil
+        self.agentIds = call.options["agentIds"] as? [String] ?? []
+        self.botIds = call.options["botIds"] as? [String] ?? []
+        self.teamId = call.options["teamId"] as? String ?? nil
         
         if Kommunicate.isLoggedIn {
             self.handleCreateConversation()
@@ -151,19 +146,23 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
             builder.withClientConversationId(clientConversationId)
         }
         
+        if let teamId = self.teamId {
+            builder.withTeamId(teamId)
+        }
+        
         Kommunicate.createConversation(conversation: builder.build(),
                                        completion: { response in
                                         switch response {
                                         case .success(let conversationId):
                                             if self.createOnly {
                                                 self.callback?.success([
-                                                    "conversationId": conversationId
+                                                    "clientConversationId": conversationId
                                                 ])
                                             } else {
                                                 self.openParticularConversation(conversationId, true, self.callback!)
                                             }
                                             self.callback?.success([
-                                                "conversationId": conversationId
+                                                "clientConversationId": conversationId
                                             ])
                                             
                                         case .failure(let error):
@@ -178,7 +177,7 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
                 Kommunicate.showConversationWith(groupId: conversationId, from: top, completionHandler: ({ (shown) in
                     if(shown) {
                         callback.success([
-                            "conversationId": conversationId
+                            "clientConversationId": conversationId
                         ])
                     } else {
                         callback.error("Failed to launch conversation with conversationId : " + conversationId)
