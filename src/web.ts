@@ -112,11 +112,6 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin implements Kommunic
       }
     });
   }
-
-  async echo(options: { value: string }): Promise<{ value: string }> {
-    console.log('ECHO', options);
-    return options;
-  }
   
   init(successCallback: any, errorCallback: any): void {
     if (!this.isUserLoggedIn()) {
