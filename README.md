@@ -59,12 +59,12 @@ const { KommunicateCapacitorPlugin } = Plugins;
 
 Now you can start calling the functions from `KommunicateCapacitorPlugin`.
 
->> Note: After any code changes in your project's .ts or .js files, run the below commands:
+> Note: After any code changes in your project's .ts or .js files, run the below commands:
    ```
      npm run build
      npx cap sync
    ```
->> For Android and iOS run the project fron Android Studio and Xcode respectively. For web, use the command `ionic serve`.
+> For Android and iOS run the project fron Android Studio and Xcode respectively. For web, use the command `ionic serve`.
 
 ## Launch conversation
 Kommunicate provides conversationBuilder function to create and launch conversation directly saving you the extra steps of authentication, creation, initialization and launch. You can customize the process by building the conversationObject according to your requirements.
@@ -171,7 +171,7 @@ You can update some details of the logged in user like displayName, imageUrl, me
       console.log("Update user details error : " + error)
     });
 ```
->> Note: userId is a unique identifier of a kmUser object. It cannot be updated.
+> Note: userId is a unique identifier of a kmUser object. It cannot be updated.
 
 ## Logout
 You can call the logout method to logout the user from kommunicate. Use the method as below:
