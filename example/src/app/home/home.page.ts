@@ -15,23 +15,8 @@ export class HomePage {
   }
 
   launchConversation() {
-    KommunicateCapacitorPlugin.echo({'value': "KmTest"}).then((res) => {
-      console.log("Echo success : " + JSON.stringify(res));
-    }).catch((error) => {
-      console.log("Echo error : " + error);
-    });
-
-    console.log("Click received from launch conversation again")
-
-    let kmUser = {
-      userId: "reytum",
-      password: "reytum"
-    };
-
     let conversationObject = {
-      appId: '22823b4a764f9944ad7913ddb3e43cae1',
-      isSingleConversation: true,
-      withPreChat: true
+      appId: '<Your-App-Id>'
     };
 
     KommunicateCapacitorPlugin.buildConversation(conversationObject).then((res) => {
