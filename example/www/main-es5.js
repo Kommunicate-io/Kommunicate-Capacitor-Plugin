@@ -21,30 +21,12 @@
 
   (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["main"], {
     /***/
-    "../dist/esm/definitions.js":
-    /*!**********************************!*\
-      !*** ../dist/esm/definitions.js ***!
-      \**********************************/
-
-    /*! no exports provided */
-
-    /***/
-    function distEsmDefinitionsJs(module, __webpack_exports__, __webpack_require__) {
-      "use strict";
-
-      __webpack_require__.r(__webpack_exports__); //# sourceMappingURL=definitions.js.map
-
-      /***/
-
-    },
-
-    /***/
     "../dist/esm/index.js":
     /*!****************************!*\
       !*** ../dist/esm/index.js ***!
       \****************************/
 
-    /*! exports provided: KommunicateCapacitorPluginWeb, Kommunicate */
+    /*! exports provided: KommunicateCapacitorPluginWeb, KommunicatePlugin */
 
     /***/
     function distEsmIndexJs(module, __webpack_exports__, __webpack_require__) {
@@ -54,28 +36,20 @@
       /* harmony import */
 
 
-      var _definitions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-      /*! ./definitions */
-      "../dist/esm/definitions.js");
-      /* empty/unused harmony star reexport */
-
-      /* harmony import */
-
-
-      var _web__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      var _web__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
       /*! ./web */
       "../dist/esm/web.js");
       /* harmony reexport (safe) */
 
 
       __webpack_require__.d(__webpack_exports__, "KommunicateCapacitorPluginWeb", function () {
-        return _web__WEBPACK_IMPORTED_MODULE_1__["KommunicateCapacitorPluginWeb"];
+        return _web__WEBPACK_IMPORTED_MODULE_0__["KommunicateCapacitorPluginWeb"];
       });
       /* harmony reexport (safe) */
 
 
-      __webpack_require__.d(__webpack_exports__, "Kommunicate", function () {
-        return _web__WEBPACK_IMPORTED_MODULE_1__["Kommunicate"];
+      __webpack_require__.d(__webpack_exports__, "KommunicatePlugin", function () {
+        return _web__WEBPACK_IMPORTED_MODULE_0__["KommunicatePlugin"];
       }); //# sourceMappingURL=index.js.map
 
       /***/
@@ -88,7 +62,7 @@
       !*** ../dist/esm/web.js ***!
       \**************************/
 
-    /*! exports provided: KommunicateCapacitorPluginWeb, Kommunicate */
+    /*! exports provided: KommunicateCapacitorPluginWeb, KommunicatePlugin */
 
     /***/
     function distEsmWebJs(module, __webpack_exports__, __webpack_require__) {
@@ -104,8 +78,8 @@
       /* harmony export (binding) */
 
 
-      __webpack_require__.d(__webpack_exports__, "Kommunicate", function () {
-        return Kommunicate;
+      __webpack_require__.d(__webpack_exports__, "KommunicatePlugin", function () {
+        return KommunicatePlugin;
       });
       /* harmony import */
 
@@ -113,38 +87,6 @@
       var _capacitor_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
       /*! @capacitor/core */
       "../node_modules/@capacitor/core/dist/esm/index.js");
-
-      var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
-        function adopt(value) {
-          return value instanceof P ? value : new P(function (resolve) {
-            resolve(value);
-          });
-        }
-
-        return new (P || (P = Promise))(function (resolve, reject) {
-          function fulfilled(value) {
-            try {
-              step(generator.next(value));
-            } catch (e) {
-              reject(e);
-            }
-          }
-
-          function rejected(value) {
-            try {
-              step(generator["throw"](value));
-            } catch (e) {
-              reject(e);
-            }
-          }
-
-          function step(result) {
-            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-          }
-
-          step((generator = generator.apply(thisArg, _arguments || [])).next());
-        });
-      };
 
       var KommunicateCapacitorPluginWeb = /*#__PURE__*/function (_capacitor_core__WEBP) {
         _inherits(KommunicateCapacitorPluginWeb, _capacitor_core__WEBP);
@@ -163,60 +105,359 @@
         _createClass(KommunicateCapacitorPluginWeb, [{
           key: "buildConversation",
           value: function buildConversation(options) {
-            console.log('Call received for buildConversation in plugin, but method not implemented will it work?');
-            return new Promise(function (resolve, reject) {
-              if (options.hasKey('sdrf')) {
-                reject("error");
-              }
+            var _this = this;
 
-              resolve(options);
+            return new Promise(function (resolve, reject) {
+              var kmUser;
+
+              if (_this.isUserLoggedIn()) {
+                _this.init(function (response) {
+                  console.log(response);
+
+                  _this.createConversation(options, JSON.parse(localStorage.KM_PLUGIN_USER_DETAILS).userId, resolve, reject);
+                }, function (error) {
+                  reject(error);
+                });
+              } else {
+                if (options.kmUser) {
+                  kmUser = JSON.parse(options.kmUser);
+                  kmUser.applicationId = options.appId;
+                } else if (options.withPreChat && options.withPreChat == true) {
+                  kmUser.withPreChat = true;
+                  kmUser.applicationId = options.appId;
+                } else {
+                  kmUser = {
+                    'userId': _this.getRandomId(),
+                    'applicationId': options.appId
+                  };
+                }
+
+                _this.initPlugin(kmUser, function (response) {
+                  console.log(response);
+
+                  if (!(kmUser.withPreChat && kmUser.withPreChat == true)) {
+                    _this.createConversation(options, kmUser.userId, resolve, reject);
+                  }
+                }, function (error) {
+                  reject(error);
+                });
+              }
             });
           }
         }, {
           key: "updateChatContext",
           value: function updateChatContext(options) {
-            console.log('Call received for updateChatContext in plugin, but method not implemented');
-            return options;
+            var _this2 = this;
+
+            return new Promise(function (resolve, reject) {
+              if (!_this2.isUserLoggedIn()) {
+                reject("User not logged in. Call buildConversation function once before updating the chat context");
+              }
+
+              _this2.init(function (response) {
+                console.log(response);
+                window.Kommunicate.updateChatContext(options);
+                resolve("Chat context updated");
+              }, function (error) {
+                console.log(error);
+                reject(error);
+              });
+            });
           }
         }, {
           key: "updateUserDetails",
           value: function updateUserDetails(options) {
-            console.log('Call received for updateUserDetails in plugin, but method not implemented');
-            return options;
+            var _this3 = this;
+
+            return new Promise(function (resolve, reject) {
+              if (!_this3.isUserLoggedIn()) {
+                reject("User not logged in. Call buildConversation function once before updating the details");
+              }
+
+              _this3.init(function (response) {
+                console.log(response);
+                var userDetails = {};
+
+                if (options.email) {
+                  userDetails.email = options.email;
+                }
+
+                if (options.displayName) {
+                  userDetails.displayName = options.displayName;
+                }
+
+                if (options.imageLink) {
+                  userDetails.imageLink = options.imageLink;
+                }
+
+                if (options.contactNumber) {
+                  userDetails.contactNumber = options.contactNumber;
+                }
+
+                if (options.metadata) {
+                  userDetails.metadata = options.metadata;
+                }
+
+                window.Kommunicate.updateUser(userDetails);
+                resolve("user details updated");
+              }, function (error) {
+                console.log(error);
+                reject(error);
+              });
+            });
           }
         }, {
           key: "logout",
           value: function logout() {
-            console.log('Call received for logout in plugin, but method not implemented');
-            var options = "success";
-            return options;
+            var _this4 = this;
+
+            return new Promise(function (resolve, reject) {
+              if (_this4.isUserLoggedIn() && typeof window.Kommunicate != 'undefined' && window.Kommunicate) {
+                _this4.init(function (response) {
+                  console.log(response);
+                  window.Kommunicate.logout();
+                  localStorage.removeItem('KM_PLUGIN_USER_DETAILS');
+                  resolve("success");
+                }, function (error) {
+                  console.log(error);
+                  reject(error);
+                });
+              } else {
+                localStorage.removeItem('KM_PLUGIN_USER_DETAILS');
+                resolve("success");
+              }
+            });
           }
         }, {
-          key: "echo",
-          value: function echo(options) {
-            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-              return regeneratorRuntime.wrap(function _callee$(_context) {
-                while (1) {
-                  switch (_context.prev = _context.next) {
-                    case 0:
-                      console.log('ECHO', options);
-                      return _context.abrupt("return", options);
+          key: "init",
+          value: function init(successCallback, errorCallback) {
+            if (!this.isUserLoggedIn()) {
+              errorCallback("User not logged in, call login first");
+              return;
+            }
 
-                    case 2:
-                    case "end":
-                      return _context.stop();
+            if (typeof window.Kommunicate != 'undefined' && window.Kommunicate) {
+              successCallback("success");
+            } else {
+              this.initPlugin(null, successCallback, errorCallback);
+            }
+          }
+        }, {
+          key: "initPlugin",
+          value: function initPlugin(kmUser, successCallback, errorCallback) {
+            var _this5 = this;
+
+            if (localStorage && localStorage.KM_PLUGIN_USER_DETAILS) {
+              kmUser = JSON.parse(localStorage.KM_PLUGIN_USER_DETAILS);
+            }
+
+            (function (document, m) {
+              var kommunicateSettings = {
+                "appId": kmUser.applicationId,
+                "popupWidget": false,
+                "automaticChatOpenOnNavigation": false,
+                "userId": kmUser.userId,
+                "password": kmUser.password,
+                "userName": kmUser.displayName,
+                "email": kmUser.email,
+                "imageLink": kmUser.imageLink,
+                "preLeadCollection": kmUser.withPreChat ? _this5.getPrechatLeadDetails() : [],
+                "authenticationTypeId": kmUser.authenticationTypeId,
+                "onInit": function onInit(response) {
+                  if (response && response === "success") {
+                    if (kmUser.withPreChat == true) {
+                      var appHeaders = sessionStorage.getItem("mckAppHeaders");
+
+                      if (appHeaders != null) {
+                        kmUser.userId = JSON.parse(appHeaders).userId;
+                      }
+                    }
+
+                    var chatWidgetCloseButton = document.getElementById('km-chat-widget-close-button');
+
+                    if (chatWidgetCloseButton != null) {
+                      chatWidgetCloseButton.addEventListener('click', function () {
+                        var testClick = parent.document.getElementById("kommunicate-widget-iframe");
+
+                        if (testClick != null) {
+                          testClick.style.display = "none";
+                        }
+                      });
+                    }
+
+                    localStorage.setItem('KM_PLUGIN_USER_DETAILS', JSON.stringify(kmUser));
+                    !(kmUser.withPreChat && kmUser.withPreChat == true) && parent.document.getElementById('kommunicate-widget-iframe').setAttribute("style", "display:none");
+                    successCallback(response);
+                  } else {
+                    errorCallback(response);
                   }
                 }
-              }, _callee);
-            }));
+              };
+              var s = document.createElement("script");
+              s.type = "text/javascript";
+              s.async = true;
+              s.src = "https://widget.kommunicate.io/v2/kommunicate.app";
+              var h = document.getElementsByTagName("head")[0];
+              h.appendChild(s);
+              window.kommunicate = m;
+              m._globals = kommunicateSettings;
+            })(document, window.kommunicate || {});
+          }
+        }, {
+          key: "isUserLoggedIn",
+          value: function isUserLoggedIn() {
+            return localStorage && localStorage.KM_PLUGIN_USER_DETAILS;
+          }
+        }, {
+          key: "getRandomId",
+          value: function getRandomId() {
+            var text = "";
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+            for (var i = 0; i < 32; i++) {
+              text += possible.charAt(Math.floor(Math.random() * possible.length));
+            }
+
+            return text;
+          }
+        }, {
+          key: "getPrechatLeadDetails",
+          value: function getPrechatLeadDetails() {
+            return [{
+              "field": "Name",
+              "required": false,
+              "placeholder": "enter your name" // add whatever text you want to show in the placeholder
+
+            }, {
+              "field": "Email",
+              "type": "email",
+              "required": true,
+              "placeholder": "Enter your email"
+            }, {
+              "field": "Phone",
+              "type": "number",
+              "required": true,
+              "element": "input",
+              "placeholder": "Enter your phone number"
+            }];
+          }
+        }, {
+          key: "createConversation",
+          value: function createConversation(conversationObj, userId, success, error) {
+            var _this6 = this;
+
+            this.init(function (successCallback, errorCallback) {
+              var kommunicateSession = sessionStorage.getItem("kommunicate");
+
+              if (!conversationObj.agentIds && kommunicateSession != null) {
+                conversationObj.agentIds = [JSON.parse(kommunicateSession).appOptions.agentId];
+              }
+
+              var clientChannelKey = conversationObj.clientConversationId ? conversationObj.clientConversationId : conversationObj.isUnique ? _this6.generateClientConversationId(conversationObj, userId) : "";
+
+              if (clientChannelKey && clientChannelKey !== "") {
+                window.KommunicateGlobal.Applozic.ALApiService.getGroupInfo({
+                  data: {
+                    clientGroupId: clientChannelKey
+                  },
+                  success: function success(response) {
+                    if (response) {
+                      if (response.status === "error") {
+                        if (response.errorResponse[0].errorCode === "AL-G-01") {
+                          _this6.startConversation(conversationObj, clientChannelKey, successCallback, errorCallback);
+                        } else {
+                          error(JSON.stringify(response));
+                          errorCallback(JSON.stringify(response));
+                        }
+                      } else if (response.status === "success") {
+                        _this6.processOpenConversation(conversationObj, clientChannelKey, successCallback);
+                      }
+                    }
+                  },
+                  error: function error(_error) {
+                    _error(_error);
+
+                    errorCallback(_error);
+                  }
+                });
+              } else {
+                _this6.startConversation(conversationObj, clientChannelKey, success, error);
+              }
+            }, function (error) {
+              error(error);
+            });
+          }
+        }, {
+          key: "processOpenConversation",
+          value: function processOpenConversation(conversationObj, clientChannelKey, successCallback) {
+            if (conversationObj.createOnly && conversationObj.createOnly == true) {
+              successCallback(clientChannelKey);
+            } else {
+              window.KommunicateGlobal.document.getElementById("mck-sidebox-launcher").click();
+              window.KommunicateGlobal.$applozic.fn.applozic('loadGroupTabByClientGroupId', {
+                "clientGroupId": clientChannelKey
+              });
+              parent.document.getElementById('kommunicate-widget-iframe').setAttribute("style", "display:block");
+              successCallback(clientChannelKey);
+            }
+          }
+        }, {
+          key: "startConversation",
+          value: function startConversation(conversationObj, clientChannelKey, successCallback, errorCallback) {
+            var conversationDetail = {
+              "agentIds": conversationObj.agentIds,
+              "botIds": conversationObj.botIds,
+              "skipRouting": conversationObj.skipRouting,
+              "assignee": conversationObj.conversationAssignee,
+              "groupName": conversationObj.groupName,
+              'clientGroupId': clientChannelKey
+            };
+            window.Kommunicate.startConversation(conversationDetail, function (response) {
+              parent.document.getElementById('kommunicate-widget-iframe').setAttribute("style", "display:block");
+              successCallback(response);
+            }, function (error) {
+              errorCallback(error);
+            });
+          }
+        }, {
+          key: "generateClientConversationId",
+          value: function generateClientConversationId(conversationObj, userId) {
+            var clientId = "";
+
+            if (conversationObj.agentIds) {
+              conversationObj.agentIds.sort();
+
+              for (var i = 0; i < conversationObj.agentIds.length; i++) {
+                clientId += conversationObj.agentIds[i] + "_";
+              }
+            } else {
+              var kommunicateSession = sessionStorage.getItem("kommunicate");
+
+              if (kommunicateSession != null) {
+                clientId += JSON.parse(kommunicateSession).appOptions.agentId + "_";
+              }
+            }
+
+            clientId += userId;
+
+            if (conversationObj.botIds) {
+              conversationObj.botIds.sort();
+
+              for (var _i = 0; _i < conversationObj.botIds.length; _i++) {
+                clientId += "_";
+                clientId += conversationObj.botIds[_i];
+              }
+            }
+
+            return clientId;
           }
         }]);
 
         return KommunicateCapacitorPluginWeb;
       }(_capacitor_core__WEBPACK_IMPORTED_MODULE_0__["WebPlugin"]);
 
-      var Kommunicate = new KommunicateCapacitorPluginWeb();
-      Object(_capacitor_core__WEBPACK_IMPORTED_MODULE_0__["registerWebPlugin"])(Kommunicate); //# sourceMappingURL=web.js.map
+      var KommunicatePlugin = new KommunicateCapacitorPluginWeb();
+      Object(_capacitor_core__WEBPACK_IMPORTED_MODULE_0__["registerWebPlugin"])(KommunicatePlugin); //# sourceMappingURL=web.js.map
 
       /***/
     },
@@ -517,14 +758,14 @@
         _createClass(AppComponent, [{
           key: "initializeApp",
           value: function initializeApp() {
-            var _this = this;
+            var _this7 = this;
 
             this.platform.ready().then(function () {
               console.log('Platform is ready');
 
-              _this.statusBar.styleDefault();
+              _this7.statusBar.styleDefault();
 
-              _this.splashScreen.hide();
+              _this7.splashScreen.hide();
             });
           }
         }]);
@@ -748,7 +989,7 @@
     /***/
     function _(module, exports, __webpack_require__) {
       module.exports = __webpack_require__(
-      /*! /home/reytum/Documents/Projects/Capacitor/Kommunicate-Capacitor-Plugin/example/src/main.ts */
+      /*! /Users/reytum/Documents/Projects/Ionic/Kommunicate/Capacitor/Plugin/Kommunicate-Capacitor-Plugin/example/src/main.ts */
       "./src/main.ts");
       /***/
     }

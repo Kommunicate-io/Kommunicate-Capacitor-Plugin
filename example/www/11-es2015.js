@@ -14,10 +14,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ion_picker_column", function() { return PickerColumnCmp; });
 /* harmony import */ var _index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index-e806d1f6.js */ "./node_modules/@ionic/core/dist/esm/index-e806d1f6.js");
 /* harmony import */ var _ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ionic-global-9d5c8ee3.js */ "./node_modules/@ionic/core/dist/esm/ionic-global-9d5c8ee3.js");
-/* harmony import */ var _helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers-fde0057c.js */ "./node_modules/@ionic/core/dist/esm/helpers-fde0057c.js");
-/* harmony import */ var _animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./animation-8c514e52.js */ "./node_modules/@ionic/core/dist/esm/animation-8c514e52.js");
-/* harmony import */ var _hardware_back_button_389954a0_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./hardware-back-button-389954a0.js */ "./node_modules/@ionic/core/dist/esm/hardware-back-button-389954a0.js");
-/* harmony import */ var _overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./overlays-46020acc.js */ "./node_modules/@ionic/core/dist/esm/overlays-46020acc.js");
+/* harmony import */ var _helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers-90f46169.js */ "./node_modules/@ionic/core/dist/esm/helpers-90f46169.js");
+/* harmony import */ var _animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./animation-54fe0237.js */ "./node_modules/@ionic/core/dist/esm/animation-54fe0237.js");
+/* harmony import */ var _hardware_back_button_4a6b37fb_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./hardware-back-button-4a6b37fb.js */ "./node_modules/@ionic/core/dist/esm/hardware-back-button-4a6b37fb.js");
+/* harmony import */ var _overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./overlays-12c20431.js */ "./node_modules/@ionic/core/dist/esm/overlays-12c20431.js");
 /* harmony import */ var _haptic_27b3f981_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./haptic-27b3f981.js */ "./node_modules/@ionic/core/dist/esm/haptic-27b3f981.js");
 /* harmony import */ var _theme_ff3fc52f_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./theme-ff3fc52f.js */ "./node_modules/@ionic/core/dist/esm/theme-ff3fc52f.js");
 
@@ -676,13 +676,13 @@ const Datetime = class {
       return;
     }
     const pickerOptions = this.generatePickerOptions();
-    const picker = await _overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_5__["p"].create(pickerOptions);
+    const picker = await _overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_5__["p"].create(pickerOptions);
     this.isExpanded = true;
     picker.onDidDismiss().then(() => {
       this.isExpanded = false;
       this.setFocus();
     });
-    Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["a"])(picker, 'ionPickerColChange', async (event) => {
+    Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["a"])(picker, 'ionPickerColChange', async (event) => {
       const data = event.detail;
       const colSelectedIndex = data.selectedIndex;
       const colOptions = data.options;
@@ -917,7 +917,7 @@ const Datetime = class {
         indexMax = Math.max(indexMax, i);
       }
     }
-    const selectedIndex = column.selectedIndex = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(indexMin, column.selectedIndex, indexMax);
+    const selectedIndex = column.selectedIndex = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(indexMin, column.selectedIndex, indexMax);
     const opt = column.options[selectedIndex];
     if (opt) {
       return opt.value;
@@ -946,7 +946,7 @@ const Datetime = class {
     const { inputId, text, disabled, readonly, isExpanded, el, placeholder } = this;
     const mode = Object(_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["b"])(this);
     const labelId = inputId + '-lbl';
-    const label = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["f"])(el);
+    const label = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["f"])(el);
     const addPlaceholderClass = (text === undefined && placeholder != null) ? true : false;
     // If selected text has been passed in, use that first
     // otherwise use the placeholder
@@ -959,7 +959,7 @@ const Datetime = class {
     if (label) {
       label.id = labelId;
     }
-    Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["d"])(true, el, this.name, this.value, this.disabled);
+    Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["d"])(true, el, this.name, this.value, this.disabled);
     return (Object(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["h"])(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["H"], { onClick: this.onClick, "aria-disabled": disabled ? 'true' : null, "aria-expanded": `${isExpanded}`, "aria-haspopup": "true", "aria-labelledby": labelId, class: {
         [mode]: true,
         'datetime-disabled': disabled,
@@ -1014,9 +1014,9 @@ Datetime.style = {
  * iOS Picker Enter Animation
  */
 const iosEnterAnimation = (baseEl) => {
-  const baseAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
-  const backdropAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
-  const wrapperAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
+  const baseAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
+  const backdropAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
+  const wrapperAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
   backdropAnimation
     .addElement(baseEl.querySelector('ion-backdrop'))
     .fromTo('opacity', 0.01, 'var(--backdrop-opacity)')
@@ -1038,9 +1038,9 @@ const iosEnterAnimation = (baseEl) => {
  * iOS Picker Leave Animation
  */
 const iosLeaveAnimation = (baseEl) => {
-  const baseAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
-  const backdropAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
-  const wrapperAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
+  const baseAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
+  const backdropAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
+  const wrapperAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
   backdropAnimation
     .addElement(baseEl.querySelector('ion-backdrop'))
     .fromTo('opacity', 'var(--backdrop-opacity)', 0.01);
@@ -1095,24 +1095,24 @@ const Picker = class {
      */
     this.animated = true;
     this.onBackdropTap = () => {
-      this.dismiss(undefined, _overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_5__["B"]);
+      this.dismiss(undefined, _overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_5__["B"]);
     };
     this.dispatchCancelHandler = (ev) => {
       const role = ev.detail.role;
-      if (Object(_overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_5__["i"])(role)) {
+      if (Object(_overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_5__["i"])(role)) {
         const cancelButton = this.buttons.find(b => b.role === 'cancel');
         this.callButtonHandler(cancelButton);
       }
     };
   }
   connectedCallback() {
-    Object(_overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_5__["e"])(this.el);
+    Object(_overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_5__["e"])(this.el);
   }
   /**
    * Present the picker overlay after it has been created.
    */
   async present() {
-    await Object(_overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_5__["d"])(this, 'pickerEnter', iosEnterAnimation, iosEnterAnimation, undefined);
+    await Object(_overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_5__["d"])(this, 'pickerEnter', iosEnterAnimation, iosEnterAnimation, undefined);
     if (this.duration > 0) {
       this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
     }
@@ -1130,19 +1130,19 @@ const Picker = class {
     if (this.durationTimeout) {
       clearTimeout(this.durationTimeout);
     }
-    return Object(_overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_5__["f"])(this, data, role, 'pickerLeave', iosLeaveAnimation, iosLeaveAnimation);
+    return Object(_overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_5__["f"])(this, data, role, 'pickerLeave', iosLeaveAnimation, iosLeaveAnimation);
   }
   /**
    * Returns a promise that resolves when the picker did dismiss.
    */
   onDidDismiss() {
-    return Object(_overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_5__["g"])(this.el, 'ionPickerDidDismiss');
+    return Object(_overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_5__["g"])(this.el, 'ionPickerDidDismiss');
   }
   /**
    * Returns a promise that resolves when the picker will dismiss.
    */
   onWillDismiss() {
-    return Object(_overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_5__["g"])(this.el, 'ionPickerWillDismiss');
+    return Object(_overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_5__["g"])(this.el, 'ionPickerWillDismiss');
   }
   /**
    * Get the column that matches the specified name.
@@ -1154,7 +1154,7 @@ const Picker = class {
   }
   async buttonClick(button) {
     const role = button.role;
-    if (Object(_overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_5__["i"])(role)) {
+    if (Object(_overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_5__["i"])(role)) {
       return this.dismiss(undefined, role);
     }
     const shouldDismiss = await this.callButtonHandler(button);
@@ -1167,7 +1167,7 @@ const Picker = class {
     if (button) {
       // a handler has been provided, execute it
       // pass the handler the values from the inputs
-      const rtn = await Object(_overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_5__["s"])(button.handler, this.getSelected());
+      const rtn = await Object(_overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_5__["s"])(button.handler, this.getSelected());
       if (rtn === false) {
         // if the return value of the handler is false then do not dismiss
         return false;
@@ -1460,7 +1460,7 @@ const PickerColumnCmp = class {
       this.emitColChange();
       return;
     }
-    this.velocity = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(-MAX_PICKER_SPEED, detail.velocityY * 23, MAX_PICKER_SPEED);
+    this.velocity = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(-MAX_PICKER_SPEED, detail.velocityY * 23, MAX_PICKER_SPEED);
     if (this.velocity === 0 && detail.deltaY === 0) {
       const opt = detail.event.target.closest('.picker-opt');
       if (opt && opt.hasAttribute('opt-index')) {
@@ -1502,7 +1502,7 @@ const PickerColumnCmp = class {
     if (this.velocity !== 0) {
       return;
     }
-    const selectedIndex = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(min, this.col.selectedIndex || 0, max);
+    const selectedIndex = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(min, this.col.selectedIndex || 0, max);
     if (this.col.prevSelected !== selectedIndex || forceRefresh) {
       const y = (selectedIndex * this.optHeight) * -1;
       this.velocity = 0;

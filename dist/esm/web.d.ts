@@ -6,11 +6,6 @@ export declare class KommunicateCapacitorPluginWeb extends WebPlugin implements 
     updateChatContext(options: any): Promise<void>;
     updateUserDetails(options: any): Promise<void>;
     logout(): Promise<void>;
-    echo(options: {
-        value: string;
-    }): Promise<{
-        value: string;
-    }>;
     init(successCallback: any, errorCallback: any): void;
     initPlugin(kmUser: any, successCallback: any, errorCallback: any): void;
     isUserLoggedIn(): boolean;

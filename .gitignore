@@ -83,5 +83,6 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
-node_modules
+node_modules/
 example/node_modules
+example/

@@ -14,7 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ion_item_sliding", function() { return ItemSliding; });
 /* harmony import */ var _index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index-e806d1f6.js */ "./node_modules/@ionic/core/dist/esm/index-e806d1f6.js");
 /* harmony import */ var _ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ionic-global-9d5c8ee3.js */ "./node_modules/@ionic/core/dist/esm/ionic-global-9d5c8ee3.js");
-/* harmony import */ var _helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers-fde0057c.js */ "./node_modules/@ionic/core/dist/esm/helpers-fde0057c.js");
+/* harmony import */ var _helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers-90f46169.js */ "./node_modules/@ionic/core/dist/esm/helpers-90f46169.js");
 /* harmony import */ var _theme_ff3fc52f_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./theme-ff3fc52f.js */ "./node_modules/@ionic/core/dist/esm/theme-ff3fc52f.js");
 
 
@@ -94,7 +94,7 @@ const ItemOptions = class {
   }
   render() {
     const mode = Object(_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["b"])(this);
-    const isEnd = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["l"])(this.side);
+    const isEnd = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["l"])(this.side);
     return (Object(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["h"])(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["H"], { class: {
         [mode]: true,
         // Used internally for styling
@@ -200,7 +200,7 @@ const ItemSliding = class {
       side = (optionsToOpen === this.leftOptions) ? 'start' : 'end';
     }
     // In RTL we want to switch the sides
-    side = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["l"])(side) ? 'end' : 'start';
+    side = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["l"])(side) ? 'end' : 'start';
     const isStartOpen = this.openAmount < 0;
     const isEndOpen = this.openAmount > 0;
     /**
@@ -264,7 +264,7 @@ const ItemSliding = class {
     this.leftOptions = this.rightOptions = undefined;
     for (let i = 0; i < options.length; i++) {
       const option = await options.item(i).componentOnReady();
-      const side = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["l"])(option.side) ? 'end' : 'start';
+      const side = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["l"])(option.side) ? 'end' : 'start';
       if (side === 'start') {
         this.leftOptions = option;
         sides |= 1 /* Start */;

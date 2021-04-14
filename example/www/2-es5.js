@@ -1,9 +1,9 @@
 (function () {
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
   function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
   function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -88,15 +88,15 @@
       /* harmony import */
 
 
-      var _helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-      /*! ./helpers-fde0057c.js */
-      "./node_modules/@ionic/core/dist/esm/helpers-fde0057c.js");
+      var _helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! ./helpers-90f46169.js */
+      "./node_modules/@ionic/core/dist/esm/helpers-90f46169.js");
       /* harmony import */
 
 
-      var _index_4e81e1e8_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-      /*! ./index-4e81e1e8.js */
-      "./node_modules/@ionic/core/dist/esm/index-4e81e1e8.js");
+      var _index_1eeeab2e_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! ./index-1eeeab2e.js */
+      "./node_modules/@ionic/core/dist/esm/index-1eeeab2e.js");
       /* harmony import */
 
 
@@ -129,65 +129,83 @@
           key: "componentDidLoad",
           value: function componentDidLoad() {
             {
-              rIC(function () {
-                var isHybrid = Object(_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["i"])(window, 'hybrid');
+              rIC( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+                var isHybrid, hardwareBackButtonModule;
+                return regeneratorRuntime.wrap(function _callee$(_context) {
+                  while (1) {
+                    switch (_context.prev = _context.next) {
+                      case 0:
+                        isHybrid = Object(_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["i"])(window, 'hybrid');
 
-                if (!_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["c"].getBoolean('_testing')) {
-                  __webpack_require__.e(
-                  /*! import() | tap-click-b009fc27-js */
-                  "tap-click-b009fc27-js").then(__webpack_require__.bind(null,
-                  /*! ./tap-click-b009fc27.js */
-                  "./node_modules/@ionic/core/dist/esm/tap-click-b009fc27.js")).then(function (module) {
-                    return module.startTapClick(_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["c"]);
-                  });
-                }
+                        if (!_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["c"].getBoolean('_testing')) {
+                          __webpack_require__.e(
+                          /*! import() | tap-click-71d2324a-js */
+                          "tap-click-71d2324a-js").then(__webpack_require__.bind(null,
+                          /*! ./tap-click-71d2324a.js */
+                          "./node_modules/@ionic/core/dist/esm/tap-click-71d2324a.js")).then(function (module) {
+                            return module.startTapClick(_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["c"]);
+                          });
+                        }
 
-                if (_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["c"].getBoolean('statusTap', isHybrid)) {
-                  __webpack_require__.e(
-                  /*! import() | status-tap-b46a1b02-js */
-                  "status-tap-b46a1b02-js").then(__webpack_require__.bind(null,
-                  /*! ./status-tap-b46a1b02.js */
-                  "./node_modules/@ionic/core/dist/esm/status-tap-b46a1b02.js")).then(function (module) {
-                    return module.startStatusTap();
-                  });
-                }
+                        if (_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["c"].getBoolean('statusTap', isHybrid)) {
+                          __webpack_require__.e(
+                          /*! import() | status-tap-b46a1b02-js */
+                          "status-tap-b46a1b02-js").then(__webpack_require__.bind(null,
+                          /*! ./status-tap-b46a1b02.js */
+                          "./node_modules/@ionic/core/dist/esm/status-tap-b46a1b02.js")).then(function (module) {
+                            return module.startStatusTap();
+                          });
+                        }
 
-                if (_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["c"].getBoolean('inputShims', needInputShims())) {
-                  __webpack_require__.e(
-                  /*! import() | input-shims-05babe9d-js */
-                  "input-shims-05babe9d-js").then(__webpack_require__.bind(null,
-                  /*! ./input-shims-05babe9d.js */
-                  "./node_modules/@ionic/core/dist/esm/input-shims-05babe9d.js")).then(function (module) {
-                    return module.startInputShims(_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["c"]);
-                  });
-                }
+                        if (_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["c"].getBoolean('inputShims', needInputShims())) {
+                          __webpack_require__.e(
+                          /*! import() | input-shims-bc550f99-js */
+                          "input-shims-bc550f99-js").then(__webpack_require__.bind(null,
+                          /*! ./input-shims-bc550f99.js */
+                          "./node_modules/@ionic/core/dist/esm/input-shims-bc550f99.js")).then(function (module) {
+                            return module.startInputShims(_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["c"]);
+                          });
+                        }
 
-                if (_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["c"].getBoolean('hardwareBackButton', isHybrid)) {
-                  Promise.resolve().then(__webpack_require__.bind(null,
-                  /*! ./hardware-back-button-389954a0.js */
-                  "./node_modules/@ionic/core/dist/esm/hardware-back-button-389954a0.js")).then(function (module) {
-                    return module.startHardwareBackButton();
-                  });
-                }
+                        _context.next = 6;
+                        return Promise.resolve().then(__webpack_require__.bind(null,
+                        /*! ./hardware-back-button-4a6b37fb.js */
+                        "./node_modules/@ionic/core/dist/esm/hardware-back-button-4a6b37fb.js"));
 
-                if (typeof window !== 'undefined') {
-                  __webpack_require__.e(
-                  /*! import() | keyboard-5742b5da-js */
-                  "keyboard-5742b5da-js").then(__webpack_require__.bind(null,
-                  /*! ./keyboard-5742b5da.js */
-                  "./node_modules/@ionic/core/dist/esm/keyboard-5742b5da.js")).then(function (module) {
-                    return module.startKeyboardAssist(window);
-                  });
-                }
+                      case 6:
+                        hardwareBackButtonModule = _context.sent;
 
-                __webpack_require__.e(
-                /*! import() | focus-visible-f4ad4f1a-js */
-                "focus-visible-f4ad4f1a-js").then(__webpack_require__.bind(null,
-                /*! ./focus-visible-f4ad4f1a.js */
-                "./node_modules/@ionic/core/dist/esm/focus-visible-f4ad4f1a.js")).then(function (module) {
-                  return module.startFocusVisible();
-                });
-              });
+                        if (_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["c"].getBoolean('hardwareBackButton', isHybrid)) {
+                          hardwareBackButtonModule.startHardwareBackButton();
+                        } else {
+                          hardwareBackButtonModule.blockHardwareBackButton();
+                        }
+
+                        if (typeof window !== 'undefined') {
+                          __webpack_require__.e(
+                          /*! import() | keyboard-5742b5da-js */
+                          "keyboard-5742b5da-js").then(__webpack_require__.bind(null,
+                          /*! ./keyboard-5742b5da.js */
+                          "./node_modules/@ionic/core/dist/esm/keyboard-5742b5da.js")).then(function (module) {
+                            return module.startKeyboardAssist(window);
+                          });
+                        }
+
+                        __webpack_require__.e(
+                        /*! import() | focus-visible-f4ad4f1a-js */
+                        "focus-visible-f4ad4f1a-js").then(__webpack_require__.bind(null,
+                        /*! ./focus-visible-f4ad4f1a.js */
+                        "./node_modules/@ionic/core/dist/esm/focus-visible-f4ad4f1a.js")).then(function (module) {
+                          return module.startFocusVisible();
+                        });
+
+                      case 10:
+                      case "end":
+                        return _context.stop();
+                    }
+                  }
+                }, _callee);
+              })));
             }
           }
         }, {
@@ -467,7 +485,7 @@
         }, {
           key: "scrollToPoint",
           value: function () {
-            var _scrollToPoint = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(x, y) {
+            var _scrollToPoint = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(x, y) {
               var duration,
                   el,
                   resolve,
@@ -478,16 +496,16 @@
                   deltaY,
                   deltaX,
                   step,
-                  _args = arguments;
-              return regeneratorRuntime.wrap(function _callee$(_context) {
+                  _args2 = arguments;
+              return regeneratorRuntime.wrap(function _callee2$(_context2) {
                 while (1) {
-                  switch (_context.prev = _context.next) {
+                  switch (_context2.prev = _context2.next) {
                     case 0:
-                      duration = _args.length > 2 && _args[2] !== undefined ? _args[2] : 0;
+                      duration = _args2.length > 2 && _args2[2] !== undefined ? _args2[2] : 0;
                       el = this.scrollEl;
 
                       if (!(duration < 32)) {
-                        _context.next = 6;
+                        _context2.next = 6;
                         break;
                       }
 
@@ -499,7 +517,7 @@
                         el.scrollLeft = x;
                       }
 
-                      return _context.abrupt("return");
+                      return _context2.abrupt("return");
 
                     case 6:
                       startTime = 0;
@@ -538,14 +556,14 @@
                         startTime = ts;
                         step(ts);
                       });
-                      return _context.abrupt("return", promise);
+                      return _context2.abrupt("return", promise);
 
                     case 15:
                     case "end":
-                      return _context.stop();
+                      return _context2.stop();
                   }
                 }
-              }, _callee, this);
+              }, _callee2, this);
             }));
 
             function scrollToPoint(_x, _x2) {
@@ -790,7 +808,7 @@
       var handleContentScroll = function handleContentScroll(scrollEl, scrollHeaderIndex, contentEl) {
         Object(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["f"])(function () {
           var scrollTop = scrollEl.scrollTop;
-          var scale = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(1, 1 + -scrollTop / 500, 1.1); // Native refresher should not cause titles to scale
+          var scale = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(1, 1 + -scrollTop / 500, 1.1); // Native refresher should not cause titles to scale
 
           var nativeRefresher = contentEl.querySelector('ion-refresher.refresher-native');
 
@@ -924,32 +942,7 @@
         _createClass(Header, [{
           key: "componentDidLoad",
           value: function () {
-            var _componentDidLoad = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-              return regeneratorRuntime.wrap(function _callee2$(_context2) {
-                while (1) {
-                  switch (_context2.prev = _context2.next) {
-                    case 0:
-                      _context2.next = 2;
-                      return this.checkCollapsibleHeader();
-
-                    case 2:
-                    case "end":
-                      return _context2.stop();
-                  }
-                }
-              }, _callee2, this);
-            }));
-
-            function componentDidLoad() {
-              return _componentDidLoad.apply(this, arguments);
-            }
-
-            return componentDidLoad;
-          }()
-        }, {
-          key: "componentDidUpdate",
-          value: function () {
-            var _componentDidUpdate = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+            var _componentDidLoad = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
               return regeneratorRuntime.wrap(function _callee3$(_context3) {
                 while (1) {
                   switch (_context3.prev = _context3.next) {
@@ -963,6 +956,31 @@
                   }
                 }
               }, _callee3, this);
+            }));
+
+            function componentDidLoad() {
+              return _componentDidLoad.apply(this, arguments);
+            }
+
+            return componentDidLoad;
+          }()
+        }, {
+          key: "componentDidUpdate",
+          value: function () {
+            var _componentDidUpdate = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+              return regeneratorRuntime.wrap(function _callee4$(_context4) {
+                while (1) {
+                  switch (_context4.prev = _context4.next) {
+                    case 0:
+                      _context4.next = 2;
+                      return this.checkCollapsibleHeader();
+
+                    case 2:
+                    case "end":
+                      return _context4.stop();
+                  }
+                }
+              }, _callee4, this);
             }));
 
             function componentDidUpdate() {
@@ -979,28 +997,28 @@
         }, {
           key: "checkCollapsibleHeader",
           value: function () {
-            var _checkCollapsibleHeader = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+            var _checkCollapsibleHeader = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
               var hasCollapse, canCollapse, pageEl, contentEl;
-              return regeneratorRuntime.wrap(function _callee4$(_context4) {
+              return regeneratorRuntime.wrap(function _callee5$(_context5) {
                 while (1) {
-                  switch (_context4.prev = _context4.next) {
+                  switch (_context5.prev = _context5.next) {
                     case 0:
                       // Determine if the header can collapse
                       hasCollapse = this.collapse === 'condense';
                       canCollapse = hasCollapse && Object(_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["b"])(this) === 'ios' ? hasCollapse : false;
 
                       if (!(!canCollapse && this.collapsibleHeaderInitialized)) {
-                        _context4.next = 6;
+                        _context5.next = 6;
                         break;
                       }
 
                       this.destroyCollapsibleHeader();
-                      _context4.next = 12;
+                      _context5.next = 12;
                       break;
 
                     case 6:
                       if (!(canCollapse && !this.collapsibleHeaderInitialized)) {
-                        _context4.next = 12;
+                        _context5.next = 12;
                         break;
                       }
 
@@ -1012,15 +1030,15 @@
                         title.size = 'large';
                         cloneElement('ion-back-button');
                       });
-                      _context4.next = 12;
+                      _context5.next = 12;
                       return this.setupCollapsibleHeader(contentEl, pageEl);
 
                     case 12:
                     case "end":
-                      return _context4.stop();
+                      return _context5.stop();
                   }
                 }
-              }, _callee4, this);
+              }, _callee5, this);
             }));
 
             function checkCollapsibleHeader() {
@@ -1050,58 +1068,58 @@
         }, {
           key: "setupCollapsibleHeader",
           value: function () {
-            var _setupCollapsibleHeader = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(contentEl, pageEl) {
+            var _setupCollapsibleHeader = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(contentEl, pageEl) {
               var _this5 = this;
 
               var headers, mainHeaderIndex, scrollHeaderIndex, toolbarIntersection;
-              return regeneratorRuntime.wrap(function _callee5$(_context5) {
+              return regeneratorRuntime.wrap(function _callee6$(_context6) {
                 while (1) {
-                  switch (_context5.prev = _context5.next) {
+                  switch (_context6.prev = _context6.next) {
                     case 0:
                       if (!(!contentEl || !pageEl)) {
-                        _context5.next = 3;
+                        _context6.next = 3;
                         break;
                       }
 
                       console.error('ion-header requires a content to collapse, make sure there is an ion-content.');
-                      return _context5.abrupt("return");
+                      return _context6.abrupt("return");
 
                     case 3:
                       if (!(typeof IntersectionObserver === 'undefined')) {
-                        _context5.next = 5;
+                        _context6.next = 5;
                         break;
                       }
 
-                      return _context5.abrupt("return");
+                      return _context6.abrupt("return");
 
                     case 5:
-                      _context5.next = 7;
+                      _context6.next = 7;
                       return contentEl.getScrollElement();
 
                     case 7:
-                      this.scrollEl = _context5.sent;
+                      this.scrollEl = _context6.sent;
                       headers = pageEl.querySelectorAll('ion-header');
                       this.collapsibleMainHeader = Array.from(headers).find(function (header) {
                         return header.collapse !== 'condense';
                       });
 
                       if (this.collapsibleMainHeader) {
-                        _context5.next = 12;
+                        _context6.next = 12;
                         break;
                       }
 
-                      return _context5.abrupt("return");
+                      return _context6.abrupt("return");
 
                     case 12:
                       mainHeaderIndex = createHeaderIndex(this.collapsibleMainHeader);
                       scrollHeaderIndex = createHeaderIndex(this.el);
 
                       if (!(!mainHeaderIndex || !scrollHeaderIndex)) {
-                        _context5.next = 16;
+                        _context6.next = 16;
                         break;
                       }
 
-                      return _context5.abrupt("return");
+                      return _context6.abrupt("return");
 
                     case 16:
                       setHeaderActive(mainHeaderIndex, false);
@@ -1144,10 +1162,10 @@
 
                     case 25:
                     case "end":
-                      return _context5.stop();
+                      return _context6.stop();
                   }
                 }
-              }, _callee5, this);
+              }, _callee6, this);
             }));
 
             function setupCollapsibleHeader(_x3, _x4) {
@@ -1218,22 +1236,22 @@
         }, {
           key: "connectedCallback",
           value: function () {
-            var _connectedCallback = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
+            var _connectedCallback = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7() {
               var _this6 = this;
 
-              return regeneratorRuntime.wrap(function _callee6$(_context6) {
+              return regeneratorRuntime.wrap(function _callee7$(_context7) {
                 while (1) {
-                  switch (_context6.prev = _context6.next) {
+                  switch (_context7.prev = _context7.next) {
                     case 0:
-                      _context6.next = 2;
+                      _context7.next = 2;
                       return __webpack_require__.e(
-                      /*! import() | swipe-back-271cf974-js */
-                      "swipe-back-271cf974-js").then(__webpack_require__.bind(null,
-                      /*! ./swipe-back-271cf974.js */
-                      "./node_modules/@ionic/core/dist/esm/swipe-back-271cf974.js"));
+                      /*! import() | swipe-back-2154c9a7-js */
+                      "swipe-back-2154c9a7-js").then(__webpack_require__.bind(null,
+                      /*! ./swipe-back-2154c9a7.js */
+                      "./node_modules/@ionic/core/dist/esm/swipe-back-2154c9a7.js"));
 
                     case 2:
-                      this.gesture = _context6.sent.createSwipeBackGesture(this.el, function () {
+                      this.gesture = _context7.sent.createSwipeBackGesture(this.el, function () {
                         return !!_this6.swipeHandler && _this6.swipeHandler.canStart() && _this6.animationEnabled;
                       }, function () {
                         return _this6.swipeHandler && _this6.swipeHandler.onStart();
@@ -1279,10 +1297,10 @@
 
                     case 4:
                     case "end":
-                      return _context6.stop();
+                      return _context7.stop();
                   }
                 }
-              }, _callee6, this);
+              }, _callee7, this);
             }));
 
             function connectedCallback() {
@@ -1309,42 +1327,42 @@
         }, {
           key: "commit",
           value: function () {
-            var _commit = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(enteringEl, leavingEl, opts) {
+            var _commit = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(enteringEl, leavingEl, opts) {
               var unlock, changed;
-              return regeneratorRuntime.wrap(function _callee7$(_context7) {
+              return regeneratorRuntime.wrap(function _callee8$(_context8) {
                 while (1) {
-                  switch (_context7.prev = _context7.next) {
+                  switch (_context8.prev = _context8.next) {
                     case 0:
-                      _context7.next = 2;
+                      _context8.next = 2;
                       return this.lock();
 
                     case 2:
-                      unlock = _context7.sent;
+                      unlock = _context8.sent;
                       changed = false;
-                      _context7.prev = 4;
-                      _context7.next = 7;
+                      _context8.prev = 4;
+                      _context8.next = 7;
                       return this.transition(enteringEl, leavingEl, opts);
 
                     case 7:
-                      changed = _context7.sent;
-                      _context7.next = 13;
+                      changed = _context8.sent;
+                      _context8.next = 13;
                       break;
 
                     case 10:
-                      _context7.prev = 10;
-                      _context7.t0 = _context7["catch"](4);
-                      console.error(_context7.t0);
+                      _context8.prev = 10;
+                      _context8.t0 = _context8["catch"](4);
+                      console.error(_context8.t0);
 
                     case 13:
                       unlock();
-                      return _context7.abrupt("return", changed);
+                      return _context8.abrupt("return", changed);
 
                     case 15:
                     case "end":
-                      return _context7.stop();
+                      return _context8.stop();
                   }
                 }
-              }, _callee7, this, [[4, 10]]);
+              }, _callee8, this, [[4, 10]]);
             }));
 
             function commit(_x5, _x6, _x7) {
@@ -1358,13 +1376,13 @@
         }, {
           key: "setRouteId",
           value: function () {
-            var _setRouteId = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(id, params, direction, animation) {
+            var _setRouteId = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9(id, params, direction, animation) {
               var changed;
-              return regeneratorRuntime.wrap(function _callee8$(_context8) {
+              return regeneratorRuntime.wrap(function _callee9$(_context9) {
                 while (1) {
-                  switch (_context8.prev = _context8.next) {
+                  switch (_context9.prev = _context9.next) {
                     case 0:
-                      _context8.next = 2;
+                      _context9.next = 2;
                       return this.setRoot(id, params, {
                         duration: direction === 'root' ? 0 : undefined,
                         direction: direction === 'back' ? 'back' : 'forward',
@@ -1372,18 +1390,18 @@
                       });
 
                     case 2:
-                      changed = _context8.sent;
-                      return _context8.abrupt("return", {
+                      changed = _context9.sent;
+                      return _context9.abrupt("return", {
                         changed: changed,
                         element: this.activeEl
                       });
 
                     case 4:
                     case "end":
-                      return _context8.stop();
+                      return _context9.stop();
                   }
                 }
-              }, _callee8, this);
+              }, _callee9, this);
             }));
 
             function setRouteId(_x8, _x9, _x10, _x11) {
@@ -1397,24 +1415,24 @@
         }, {
           key: "getRouteId",
           value: function () {
-            var _getRouteId = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9() {
+            var _getRouteId = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10() {
               var active;
-              return regeneratorRuntime.wrap(function _callee9$(_context9) {
+              return regeneratorRuntime.wrap(function _callee10$(_context10) {
                 while (1) {
-                  switch (_context9.prev = _context9.next) {
+                  switch (_context10.prev = _context10.next) {
                     case 0:
                       active = this.activeEl;
-                      return _context9.abrupt("return", active ? {
+                      return _context10.abrupt("return", active ? {
                         id: active.tagName,
                         element: active
                       } : undefined);
 
                     case 2:
                     case "end":
-                      return _context9.stop();
+                      return _context10.stop();
                   }
                 }
-              }, _callee9, this);
+              }, _callee10, this);
             }));
 
             function getRouteId() {
@@ -1426,46 +1444,46 @@
         }, {
           key: "setRoot",
           value: function () {
-            var _setRoot = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10(component, params, opts) {
+            var _setRoot = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee11(component, params, opts) {
               var leavingEl, enteringEl;
-              return regeneratorRuntime.wrap(function _callee10$(_context10) {
+              return regeneratorRuntime.wrap(function _callee11$(_context11) {
                 while (1) {
-                  switch (_context10.prev = _context10.next) {
+                  switch (_context11.prev = _context11.next) {
                     case 0:
                       if (!(this.activeComponent === component)) {
-                        _context10.next = 2;
+                        _context11.next = 2;
                         break;
                       }
 
-                      return _context10.abrupt("return", false);
+                      return _context11.abrupt("return", false);
 
                     case 2:
                       // attach entering view to DOM
                       leavingEl = this.activeEl;
-                      _context10.next = 5;
+                      _context11.next = 5;
                       return Object(_framework_delegate_4584ab5a_js__WEBPACK_IMPORTED_MODULE_6__["a"])(this.delegate, this.el, component, ['ion-page', 'ion-page-invisible'], params);
 
                     case 5:
-                      enteringEl = _context10.sent;
+                      enteringEl = _context11.sent;
                       this.activeComponent = component;
                       this.activeEl = enteringEl; // commit animation
 
-                      _context10.next = 10;
+                      _context11.next = 10;
                       return this.commit(enteringEl, leavingEl, opts);
 
                     case 10:
-                      _context10.next = 12;
+                      _context11.next = 12;
                       return Object(_framework_delegate_4584ab5a_js__WEBPACK_IMPORTED_MODULE_6__["d"])(this.delegate, leavingEl);
 
                     case 12:
-                      return _context10.abrupt("return", true);
+                      return _context11.abrupt("return", true);
 
                     case 13:
                     case "end":
-                      return _context10.stop();
+                      return _context11.stop();
                   }
                 }
-              }, _callee10, this);
+              }, _callee11, this);
             }));
 
             function setRoot(_x12, _x13, _x14) {
@@ -1477,7 +1495,7 @@
         }, {
           key: "transition",
           value: function () {
-            var _transition = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee11(enteringEl, leavingEl) {
+            var _transition = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee12(enteringEl, leavingEl) {
               var _this7 = this;
 
               var opts,
@@ -1485,19 +1503,19 @@
                   mode,
                   animated,
                   animationBuilder,
-                  _args11 = arguments;
-              return regeneratorRuntime.wrap(function _callee11$(_context11) {
+                  _args12 = arguments;
+              return regeneratorRuntime.wrap(function _callee12$(_context12) {
                 while (1) {
-                  switch (_context11.prev = _context11.next) {
+                  switch (_context12.prev = _context12.next) {
                     case 0:
-                      opts = _args11.length > 2 && _args11[2] !== undefined ? _args11[2] : {};
+                      opts = _args12.length > 2 && _args12[2] !== undefined ? _args12[2] : {};
 
                       if (!(leavingEl === enteringEl)) {
-                        _context11.next = 3;
+                        _context12.next = 3;
                         break;
                       }
 
-                      return _context11.abrupt("return", false);
+                      return _context12.abrupt("return", false);
 
                     case 3:
                       // emit nav will change event
@@ -1505,8 +1523,8 @@
                       el = this.el, mode = this.mode;
                       animated = this.animated && _ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["c"].getBoolean('animated', true);
                       animationBuilder = this.animation || opts.animationBuilder || _ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["c"].get('navAnimation');
-                      _context11.next = 9;
-                      return Object(_index_4e81e1e8_js__WEBPACK_IMPORTED_MODULE_3__["t"])(Object.assign(Object.assign({
+                      _context12.next = 9;
+                      return Object(_index_1eeeab2e_js__WEBPACK_IMPORTED_MODULE_3__["t"])(Object.assign(Object.assign({
                         mode: mode,
                         animated: animated,
                         enteringEl: enteringEl,
@@ -1522,14 +1540,14 @@
                     case 9:
                       // emit nav changed event
                       this.ionNavDidChange.emit();
-                      return _context11.abrupt("return", true);
+                      return _context12.abrupt("return", true);
 
                     case 11:
                     case "end":
-                      return _context11.stop();
+                      return _context12.stop();
                   }
                 }
-              }, _callee11, this);
+              }, _callee12, this);
             }));
 
             function transition(_x15, _x16) {
@@ -1541,11 +1559,11 @@
         }, {
           key: "lock",
           value: function () {
-            var _lock = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee12() {
+            var _lock = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee13() {
               var p, resolve;
-              return regeneratorRuntime.wrap(function _callee12$(_context12) {
+              return regeneratorRuntime.wrap(function _callee13$(_context13) {
                 while (1) {
-                  switch (_context12.prev = _context12.next) {
+                  switch (_context13.prev = _context13.next) {
                     case 0:
                       p = this.waitPromise;
                       this.waitPromise = new Promise(function (r) {
@@ -1553,22 +1571,22 @@
                       });
 
                       if (!(p !== undefined)) {
-                        _context12.next = 5;
+                        _context13.next = 5;
                         break;
                       }
 
-                      _context12.next = 5;
+                      _context13.next = 5;
                       return p;
 
                     case 5:
-                      return _context12.abrupt("return", resolve);
+                      return _context13.abrupt("return", resolve);
 
                     case 6:
                     case "end":
-                      return _context12.stop();
+                      return _context13.stop();
                   }
                 }
-              }, _callee12, this);
+              }, _callee13, this);
             }));
 
             function lock() {

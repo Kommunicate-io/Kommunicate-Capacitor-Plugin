@@ -48,15 +48,15 @@
       /* harmony import */
 
 
-      var _helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-      /*! ./helpers-fde0057c.js */
-      "./node_modules/@ionic/core/dist/esm/helpers-fde0057c.js");
+      var _helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! ./helpers-90f46169.js */
+      "./node_modules/@ionic/core/dist/esm/helpers-90f46169.js");
       /* harmony import */
 
 
-      var _animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-      /*! ./animation-8c514e52.js */
-      "./node_modules/@ionic/core/dist/esm/animation-8c514e52.js");
+      var _animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! ./animation-54fe0237.js */
+      "./node_modules/@ionic/core/dist/esm/animation-54fe0237.js");
       /* harmony import */
 
 
@@ -78,15 +78,15 @@
       /* harmony import */
 
 
-      var _hardware_back_button_389954a0_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
-      /*! ./hardware-back-button-389954a0.js */
-      "./node_modules/@ionic/core/dist/esm/hardware-back-button-389954a0.js");
+      var _hardware_back_button_4a6b37fb_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      /*! ./hardware-back-button-4a6b37fb.js */
+      "./node_modules/@ionic/core/dist/esm/hardware-back-button-4a6b37fb.js");
       /* harmony import */
 
 
-      var _overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
-      /*! ./overlays-46020acc.js */
-      "./node_modules/@ionic/core/dist/esm/overlays-46020acc.js");
+      var _overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+      /*! ./overlays-12c20431.js */
+      "./node_modules/@ionic/core/dist/esm/overlays-12c20431.js");
       /* harmony import */
 
 
@@ -111,9 +111,9 @@
 
 
       var iosEnterAnimation = function iosEnterAnimation(baseEl) {
-        var baseAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
-        var backdropAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
-        var wrapperAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
+        var baseAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
+        var backdropAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
+        var wrapperAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
         backdropAnimation.addElement(baseEl.querySelector('ion-backdrop')).fromTo('opacity', 0.01, 'var(--backdrop-opacity)').beforeStyles({
           'pointer-events': 'none'
         }).afterClearStyles(['pointer-events']);
@@ -134,9 +134,9 @@
 
 
       var iosLeaveAnimation = function iosLeaveAnimation(baseEl) {
-        var baseAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
-        var backdropAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
-        var wrapperAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
+        var baseAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
+        var backdropAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
+        var wrapperAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
         backdropAnimation.addElement(baseEl.querySelector('ion-backdrop')).fromTo('opacity', 'var(--backdrop-opacity)', 0);
         wrapperAnimation.addElement(baseEl.querySelector('.alert-wrapper')).keyframes([{
           offset: 0,
@@ -155,9 +155,9 @@
 
 
       var mdEnterAnimation = function mdEnterAnimation(baseEl) {
-        var baseAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
-        var backdropAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
-        var wrapperAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
+        var baseAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
+        var backdropAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
+        var wrapperAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
         backdropAnimation.addElement(baseEl.querySelector('ion-backdrop')).fromTo('opacity', 0.01, 'var(--backdrop-opacity)').beforeStyles({
           'pointer-events': 'none'
         }).afterClearStyles(['pointer-events']);
@@ -178,9 +178,9 @@
 
 
       var mdLeaveAnimation = function mdLeaveAnimation(baseEl) {
-        var baseAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
-        var backdropAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
-        var wrapperAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
+        var baseAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
+        var backdropAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
+        var wrapperAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
         backdropAnimation.addElement(baseEl.querySelector('ion-backdrop')).fromTo('opacity', 'var(--backdrop-opacity)', 0);
         wrapperAnimation.addElement(baseEl.querySelector('.alert-wrapper')).fromTo('opacity', 0.99, 0);
         return baseAnimation.addElement(baseEl).easing('ease-in-out').duration(150).addAnimation([backdropAnimation, wrapperAnimation]);
@@ -237,13 +237,13 @@
           this.animated = true;
 
           this.onBackdropTap = function () {
-            _this.dismiss(undefined, _overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_8__["B"]);
+            _this.dismiss(undefined, _overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_8__["B"]);
           };
 
           this.dispatchCancelHandler = function (ev) {
             var role = ev.detail.role;
 
-            if (Object(_overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_8__["i"])(role)) {
+            if (Object(_overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_8__["i"])(role)) {
               var cancelButton = _this.processedButtons.find(function (b) {
                 return b.role === 'cancel';
               });
@@ -281,13 +281,13 @@
             var nextEl; // If hitting arrow down or arrow right, move to the next radio
             // If we're on the last radio, move to the first radio
 
-            if (['ArrowDown', 'ArrowRight'].includes(ev.key)) {
+            if (['ArrowDown', 'ArrowRight'].includes(ev.code)) {
               nextEl = index === radios.length - 1 ? radios[0] : radios[index + 1];
             } // If hitting arrow up or arrow left, move to the previous radio
             // If we're on the first radio, move to the last radio
 
 
-            if (['ArrowUp', 'ArrowLeft'].includes(ev.key)) {
+            if (['ArrowUp', 'ArrowLeft'].includes(ev.code)) {
               nextEl = index === 0 ? radios[radios.length - 1] : radios[index - 1];
             }
 
@@ -363,7 +363,7 @@
         }, {
           key: "connectedCallback",
           value: function connectedCallback() {
-            Object(_overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_8__["e"])(this.el);
+            Object(_overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_8__["e"])(this.el);
           }
         }, {
           key: "componentWillLoad",
@@ -404,7 +404,7 @@
         }, {
           key: "present",
           value: function present() {
-            return Object(_overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_8__["d"])(this, 'alertEnter', iosEnterAnimation, mdEnterAnimation);
+            return Object(_overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_8__["d"])(this, 'alertEnter', iosEnterAnimation, mdEnterAnimation);
           }
           /**
            * Dismiss the alert overlay after it has been presented.
@@ -419,7 +419,7 @@
         }, {
           key: "dismiss",
           value: function dismiss(data, role) {
-            return Object(_overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_8__["f"])(this, data, role, 'alertLeave', iosLeaveAnimation, mdLeaveAnimation);
+            return Object(_overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_8__["f"])(this, data, role, 'alertLeave', iosLeaveAnimation, mdLeaveAnimation);
           }
           /**
            * Returns a promise that resolves when the alert did dismiss.
@@ -428,7 +428,7 @@
         }, {
           key: "onDidDismiss",
           value: function onDidDismiss() {
-            return Object(_overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_8__["g"])(this.el, 'ionAlertDidDismiss');
+            return Object(_overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_8__["g"])(this.el, 'ionAlertDidDismiss');
           }
           /**
            * Returns a promise that resolves when the alert will dismiss.
@@ -437,7 +437,7 @@
         }, {
           key: "onWillDismiss",
           value: function onWillDismiss() {
-            return Object(_overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_8__["g"])(this.el, 'ionAlertWillDismiss');
+            return Object(_overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_8__["g"])(this.el, 'ionAlertWillDismiss');
           }
         }, {
           key: "rbClick",
@@ -458,14 +458,14 @@
             }
 
             this.activeId = selectedInput.id;
-            Object(_overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_8__["s"])(selectedInput.handler, selectedInput);
+            Object(_overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_8__["s"])(selectedInput.handler, selectedInput);
             Object(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["j"])(this);
           }
         }, {
           key: "cbClick",
           value: function cbClick(selectedInput) {
             selectedInput.checked = !selectedInput.checked;
-            Object(_overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_8__["s"])(selectedInput.handler, selectedInput);
+            Object(_overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_8__["s"])(selectedInput.handler, selectedInput);
             Object(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["j"])(this);
           }
         }, {
@@ -474,7 +474,7 @@
             var role = button.role;
             var values = this.getValues();
 
-            if (Object(_overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_8__["i"])(role)) {
+            if (Object(_overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_8__["i"])(role)) {
               return this.dismiss({
                 values: values
               }, role);
@@ -496,7 +496,7 @@
             if (button && button.handler) {
               // a handler has been provided, execute it
               // pass the handler the values from the inputs
-              var returnData = Object(_overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_8__["s"])(button.handler, data);
+              var returnData = Object(_overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_8__["s"])(button.handler, data);
 
               if (returnData === false) {
                 // if the return value of the handler is false then do not dismiss
@@ -547,21 +547,21 @@
           }
         }, {
           key: "renderAlertInputs",
-          value: function renderAlertInputs(labelledBy) {
+          value: function renderAlertInputs() {
             switch (this.inputType) {
               case 'checkbox':
-                return this.renderCheckbox(labelledBy);
+                return this.renderCheckbox();
 
               case 'radio':
-                return this.renderRadio(labelledBy);
+                return this.renderRadio();
 
               default:
-                return this.renderInput(labelledBy);
+                return this.renderInput();
             }
           }
         }, {
           key: "renderCheckbox",
-          value: function renderCheckbox(labelledby) {
+          value: function renderCheckbox() {
             var _this3 = this;
 
             var inputs = this.processedInputs;
@@ -572,8 +572,7 @@
             }
 
             return Object(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["h"])("div", {
-              "class": "alert-checkbox-group",
-              "aria-labelledby": labelledby
+              "class": "alert-checkbox-group"
             }, inputs.map(function (i) {
               return Object(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["h"])("button", {
                 type: "button",
@@ -605,7 +604,7 @@
           }
         }, {
           key: "renderRadio",
-          value: function renderRadio(labelledby) {
+          value: function renderRadio() {
             var _this4 = this;
 
             var inputs = this.processedInputs;
@@ -617,7 +616,6 @@
             return Object(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["h"])("div", {
               "class": "alert-radio-group",
               role: "radiogroup",
-              "aria-labelledby": labelledby,
               "aria-activedescendant": this.activeId
             }, inputs.map(function (i) {
               return Object(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["h"])("button", {
@@ -650,7 +648,7 @@
           }
         }, {
           key: "renderInput",
-          value: function renderInput(labelledby) {
+          value: function renderInput() {
             var inputs = this.processedInputs;
 
             if (inputs.length === 0) {
@@ -658,8 +656,7 @@
             }
 
             return Object(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["h"])("div", {
-              "class": "alert-input-group",
-              "aria-labelledby": labelledby
+              "class": "alert-input-group"
             }, inputs.map(function (i) {
               var _a, _b, _c, _d;
 
@@ -750,14 +747,6 @@
             var hdrId = "alert-".concat(overlayIndex, "-hdr");
             var subHdrId = "alert-".concat(overlayIndex, "-sub-hdr");
             var msgId = "alert-".concat(overlayIndex, "-msg");
-            var labelledById;
-
-            if (header !== undefined) {
-              labelledById = hdrId;
-            } else if (subHeader !== undefined) {
-              labelledById = subHdrId;
-            }
-
             return Object(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["h"])(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["H"], {
               role: "dialog",
               "aria-modal": "true",
@@ -789,7 +778,7 @@
               id: msgId,
               "class": "alert-message",
               innerHTML: Object(_index_9e3fe806_js__WEBPACK_IMPORTED_MODULE_6__["s"])(this.message)
-            }), this.renderAlertInputs(labelledById), this.renderAlertButtons()), Object(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["h"])("div", {
+            }), this.renderAlertInputs(), this.renderAlertButtons()), Object(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["h"])("div", {
               tabindex: "0"
             }));
           }

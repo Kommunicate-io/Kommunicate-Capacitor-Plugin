@@ -13,8 +13,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ion_refresher_content", function() { return RefresherContent; });
 /* harmony import */ var _index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index-e806d1f6.js */ "./node_modules/@ionic/core/dist/esm/index-e806d1f6.js");
 /* harmony import */ var _ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ionic-global-9d5c8ee3.js */ "./node_modules/@ionic/core/dist/esm/ionic-global-9d5c8ee3.js");
-/* harmony import */ var _helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers-fde0057c.js */ "./node_modules/@ionic/core/dist/esm/helpers-fde0057c.js");
-/* harmony import */ var _animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./animation-8c514e52.js */ "./node_modules/@ionic/core/dist/esm/animation-8c514e52.js");
+/* harmony import */ var _helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers-90f46169.js */ "./node_modules/@ionic/core/dist/esm/helpers-90f46169.js");
+/* harmony import */ var _animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./animation-54fe0237.js */ "./node_modules/@ionic/core/dist/esm/animation-54fe0237.js");
 /* harmony import */ var _cubic_bezier_eea9a7a9_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./cubic-bezier-eea9a7a9.js */ "./node_modules/@ionic/core/dist/esm/cubic-bezier-eea9a7a9.js");
 /* harmony import */ var _index_9e3fe806_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./index-9e3fe806.js */ "./node_modules/@ionic/core/dist/esm/index-9e3fe806.js");
 /* harmony import */ var _haptic_27b3f981_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./haptic-27b3f981.js */ "./node_modules/@ionic/core/dist/esm/haptic-27b3f981.js");
@@ -42,10 +42,10 @@ const createBaseAnimation = (pullingRefresherIcon) => {
   const spinnerArrowContainer = pullingRefresherIcon.querySelector('.spinner-arrow-container');
   const arrowContainer = pullingRefresherIcon.querySelector('.arrow-container');
   const arrow = (arrowContainer) ? arrowContainer.querySelector('ion-icon') : null;
-  const baseAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])()
+  const baseAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])()
     .duration(1000)
     .easing('ease-out');
-  const spinnerArrowContainerAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])()
+  const spinnerArrowContainerAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])()
     .addElement(spinnerArrowContainer)
     .keyframes([
     { offset: 0, opacity: '0.3' },
@@ -53,7 +53,7 @@ const createBaseAnimation = (pullingRefresherIcon) => {
     { offset: 0.55, opacity: '1' },
     { offset: 1, opacity: '1' }
   ]);
-  const circleInnerAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])()
+  const circleInnerAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])()
     .addElement(circle)
     .keyframes([
     { offset: 0, strokeDasharray: '1px, 200px' },
@@ -61,7 +61,7 @@ const createBaseAnimation = (pullingRefresherIcon) => {
     { offset: 0.55, strokeDasharray: '100px, 200px' },
     { offset: 1, strokeDasharray: '100px, 200px' }
   ]);
-  const circleOuterAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])()
+  const circleOuterAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])()
     .addElement(spinner)
     .keyframes([
     { offset: 0, transform: 'rotate(-90deg)' },
@@ -73,7 +73,7 @@ const createBaseAnimation = (pullingRefresherIcon) => {
    * without errors being thrown
    */
   if (arrowContainer && arrow) {
-    const arrowContainerAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])()
+    const arrowContainerAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])()
       .addElement(arrowContainer)
       .keyframes([
       { offset: 0, transform: 'rotate(0deg)' },
@@ -81,7 +81,7 @@ const createBaseAnimation = (pullingRefresherIcon) => {
       { offset: 0.55, transform: 'rotate(280deg)' },
       { offset: 1, transform: 'rotate(400deg)' }
     ]);
-    const arrowAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])()
+    const arrowAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])()
       .addElement(arrow)
       .keyframes([
       { offset: 0, transform: 'translateX(2px) scale(0)' },
@@ -95,7 +95,7 @@ const createBaseAnimation = (pullingRefresherIcon) => {
 };
 const createScaleAnimation = (pullingRefresherIcon) => {
   const height = pullingRefresherIcon.clientHeight;
-  const spinnerAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])()
+  const spinnerAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])()
     .addElement(pullingRefresherIcon)
     .keyframes([
     { offset: 0, transform: `scale(0) translateY(-${height + 20}px)` },
@@ -105,7 +105,7 @@ const createScaleAnimation = (pullingRefresherIcon) => {
 };
 const createTranslateAnimation = (pullingRefresherIcon) => {
   const height = pullingRefresherIcon.clientHeight;
-  const spinnerAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])()
+  const spinnerAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])()
     .addElement(pullingRefresherIcon)
     .keyframes([
     { offset: 0, transform: `translateY(-${height + 20}px)` },
@@ -114,7 +114,7 @@ const createTranslateAnimation = (pullingRefresherIcon) => {
   return createBaseAnimation(pullingRefresherIcon).addAnimation([spinnerAnimation]);
 };
 const createSnapBackAnimation = (pullingRefresherIcon) => {
-  return Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])()
+  return Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])()
     .duration(125)
     .addElement(pullingRefresherIcon)
     .fromTo('transform', 'translateY(var(--ion-pulling-refresher-translate, 100px))', 'translateY(0px)');
@@ -155,9 +155,14 @@ const translateElement = (el, value) => {
 };
 // Utils
 // -----------------------------
-const shouldUseNativeRefresher = (referenceEl, mode) => {
-  const pullingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-pulling ion-spinner');
-  const refreshingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-refreshing ion-spinner');
+const shouldUseNativeRefresher = async (referenceEl, mode) => {
+  const refresherContent = referenceEl.querySelector('ion-refresher-content');
+  if (!refresherContent) {
+    return Promise.resolve(false);
+  }
+  await refresherContent.componentOnReady();
+  const pullingSpinner = refresherContent.querySelector('.refresher-pulling ion-spinner');
+  const refreshingSpinner = refresherContent.querySelector('.refresher-refreshing ion-spinner');
   return (pullingSpinner !== null &&
     refreshingSpinner !== null &&
     ((mode === 'ios' && Object(_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["i"])('mobile') && referenceEl.style.webkitOverflowScrolling !== undefined) ||
@@ -282,8 +287,8 @@ const Refresher = class {
       this.gesture.enable(!this.disabled);
     }
   }
-  checkNativeRefresher() {
-    const useNativeRefresher = shouldUseNativeRefresher(this.el, Object(_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["b"])(this));
+  async checkNativeRefresher() {
+    const useNativeRefresher = await shouldUseNativeRefresher(this.el, Object(_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["b"])(this));
     if (useNativeRefresher && !this.nativeRefresher) {
       const contentEl = this.el.closest('ion-content');
       this.setupNativeRefresher(contentEl);
@@ -336,7 +341,7 @@ const Refresher = class {
            * progressively fade refresher out/in
            */
           if (this.state === 8 /* Refreshing */) {
-            const ratio = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, scrollTop / (refresherHeight * 0.5), 1);
+            const ratio = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, scrollTop / (refresherHeight * 0.5), 1);
             Object(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["c"])(() => setSpinnerOpacity(refreshingSpinner, 1 - ratio));
             return;
           }
@@ -354,9 +359,9 @@ const Refresher = class {
           }
         }
         // delay showing the next tick marks until user has pulled 30px
-        const opacity = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, Math.abs(scrollTop) / refresherHeight, 0.99);
-        const pullAmount = this.progress = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, (Math.abs(scrollTop) - 30) / MAX_PULL, 1);
-        const currentTickToShow = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, Math.floor(pullAmount * NUM_TICKS), NUM_TICKS - 1);
+        const opacity = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, Math.abs(scrollTop) / refresherHeight, 0.99);
+        const pullAmount = this.progress = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, (Math.abs(scrollTop) - 30) / MAX_PULL, 1);
+        const currentTickToShow = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, Math.floor(pullAmount * NUM_TICKS), NUM_TICKS - 1);
         const shouldShowRefreshingSpinner = this.state === 8 /* Refreshing */ || currentTickToShow === NUM_TICKS - 1;
         if (shouldShowRefreshingSpinner) {
           if (this.pointerDown) {
@@ -423,9 +428,9 @@ const Refresher = class {
     this.disabledChanged();
   }
   async setupMDNativeRefresher(contentEl, pullingSpinner, refreshingSpinner) {
-    const circle = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["g"])(pullingSpinner).querySelector('circle');
+    const circle = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["g"])(pullingSpinner).querySelector('circle');
     const pullingRefresherIcon = this.el.querySelector('ion-refresher-content .refresher-pulling-icon');
-    const refreshingCircle = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["g"])(refreshingSpinner).querySelector('circle');
+    const refreshingCircle = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["g"])(refreshingSpinner).querySelector('circle');
     if (circle !== null && refreshingCircle !== null) {
       Object(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["c"])(() => {
         circle.style.setProperty('animation', 'none');
@@ -464,7 +469,7 @@ const Refresher = class {
           return;
         }
         // Since we are using an easing curve, slow the gesture tracking down a bit
-        this.progress = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, (ev.deltaY / 180) * 0.5, 1);
+        this.progress = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, (ev.deltaY / 180) * 0.5, 1);
         ev.data.animation.progressStep(this.progress);
         this.ionPull.emit();
       },
@@ -503,6 +508,14 @@ const Refresher = class {
     if (this.scrollListenerCallback || !contentEl || this.nativeRefresher || !this.scrollEl) {
       return;
     }
+    /**
+     * If using non-native refresher before make sure
+     * we clean up any old CSS. This can happen when
+     * a user manually calls the refresh method in a
+     * component create callback before the native
+     * refresher is setup.
+     */
+    this.setCss(0, '', false, '');
     this.nativeRefresher = true;
     const pullingSpinner = this.el.querySelector('ion-refresher-content .refresher-pulling ion-spinner');
     const refreshingSpinner = this.el.querySelector('ion-refresher-content .refresher-refreshing ion-spinner');
@@ -528,8 +541,8 @@ const Refresher = class {
     }
     await contentEl.componentOnReady();
     this.scrollEl = await contentEl.getScrollElement();
-    this.backgroundContentEl = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["g"])(contentEl).querySelector('#background-content');
-    if (shouldUseNativeRefresher(this.el, Object(_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["b"])(this))) {
+    this.backgroundContentEl = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["g"])(contentEl).querySelector('#background-content');
+    if (await shouldUseNativeRefresher(this.el, Object(_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["b"])(this))) {
       this.setupNativeRefresher(contentEl);
     }
     else {
@@ -570,7 +583,7 @@ const Refresher = class {
       this.needsCompletion = true;
       // Do not reset scroll el until user removes pointer from screen
       if (!this.pointerDown) {
-        Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["r"])(() => Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["r"])(() => this.resetNativeRefresher(this.elementToTransform, 32 /* Completing */)));
+        Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["r"])(() => Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["r"])(() => this.resetNativeRefresher(this.elementToTransform, 32 /* Completing */)));
       }
     }
     else {
@@ -584,7 +597,7 @@ const Refresher = class {
     if (this.nativeRefresher) {
       // Do not reset scroll el until user removes pointer from screen
       if (!this.pointerDown) {
-        Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["r"])(() => Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["r"])(() => this.resetNativeRefresher(this.elementToTransform, 16 /* Cancelling */)));
+        Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["r"])(() => Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["r"])(() => this.resetNativeRefresher(this.elementToTransform, 16 /* Cancelling */)));
       }
     }
     else {

@@ -58,9 +58,9 @@
       /* harmony import */
 
 
-      var _helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-      /*! ./helpers-fde0057c.js */
-      "./node_modules/@ionic/core/dist/esm/helpers-fde0057c.js");
+      var _helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! ./helpers-90f46169.js */
+      "./node_modules/@ionic/core/dist/esm/helpers-90f46169.js");
       /* harmony import */
 
 
@@ -316,7 +316,7 @@
               return;
             }
 
-            var _Object = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["p"])(detail.event),
+            var _Object = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["p"])(detail.event),
                 x = _Object.x,
                 y = _Object.y;
 
@@ -619,8 +619,8 @@
 
             if (segmentEl) {
               this.updateState();
-              Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["a"])(segmentEl, 'ionSelect', this.updateState);
-              Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["a"])(segmentEl, 'ionStyle', this.updateStyle);
+              Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["a"])(segmentEl, 'ionSelect', this.updateState);
+              Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["a"])(segmentEl, 'ionStyle', this.updateStyle);
             }
           }
         }, {
@@ -629,8 +629,8 @@
             var segmentEl = this.segmentEl;
 
             if (segmentEl) {
-              Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["b"])(segmentEl, 'ionSelect', this.updateState);
-              Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["b"])(segmentEl, 'ionStyle', this.updateStyle);
+              Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["b"])(segmentEl, 'ionSelect', this.updateState);
+              Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["b"])(segmentEl, 'ionStyle', this.updateStyle);
               this.segmentEl = null;
             }
           }

@@ -46,9 +46,9 @@
       /* harmony import */
 
 
-      var _helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-      /*! ./helpers-fde0057c.js */
-      "./node_modules/@ionic/core/dist/esm/helpers-fde0057c.js");
+      var _helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! ./helpers-90f46169.js */
+      "./node_modules/@ionic/core/dist/esm/helpers-90f46169.js");
       /* harmony import */
 
 
@@ -106,7 +106,6 @@
 
           this.onClick = function (ev) {
             ev.preventDefault();
-            ev.stopPropagation();
 
             if (_this.lastDrag + 300 < Date.now()) {
               _this.checked = !_this.checked;
@@ -257,13 +256,13 @@
                 name = this.name;
             var mode = Object(_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["b"])(this);
 
-            var _Object = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["c"])(el, inputId),
+            var _Object = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["c"])(el, inputId),
                 label = _Object.label,
                 labelId = _Object.labelId,
                 labelText = _Object.labelText;
 
             var value = this.getValue();
-            Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["d"])(true, el, name, checked ? value : '', disabled);
+            Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["d"])(true, el, name, checked ? value : '', disabled);
             return Object(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["h"])(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["H"], {
               onClick: this.onClick,
               "aria-labelledby": label ? labelId : null,

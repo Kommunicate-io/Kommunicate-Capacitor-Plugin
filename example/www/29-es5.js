@@ -78,9 +78,9 @@
       /* harmony import */
 
 
-      var _helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-      /*! ./helpers-fde0057c.js */
-      "./node_modules/@ionic/core/dist/esm/helpers-fde0057c.js");
+      var _helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! ./helpers-90f46169.js */
+      "./node_modules/@ionic/core/dist/esm/helpers-90f46169.js");
       /* harmony import */
 
 
@@ -652,7 +652,9 @@
             return {
               id: route.id,
               path: route.path,
-              params: mergeParams(route.params, allparams[i])
+              params: mergeParams(route.params, allparams[i]),
+              beforeEnter: route.beforeEnter,
+              beforeLeave: route.beforeLeave
             };
           });
         }
@@ -973,8 +975,8 @@
         }, {
           key: "componentDidLoad",
           value: function componentDidLoad() {
-            window.addEventListener('ionRouteRedirectChanged', Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["m"])(this.onRedirectChanged.bind(this), 10));
-            window.addEventListener('ionRouteDataChanged', Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["m"])(this.onRoutesChanged.bind(this), 100));
+            window.addEventListener('ionRouteRedirectChanged', Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["m"])(this.onRedirectChanged.bind(this), 10));
+            window.addEventListener('ionRouteDataChanged', Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["m"])(this.onRoutesChanged.bind(this), 100));
           }
         }, {
           key: "onPopState",

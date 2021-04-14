@@ -46,21 +46,21 @@
       /* harmony import */
 
 
-      var _helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-      /*! ./helpers-fde0057c.js */
-      "./node_modules/@ionic/core/dist/esm/helpers-fde0057c.js");
+      var _helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! ./helpers-90f46169.js */
+      "./node_modules/@ionic/core/dist/esm/helpers-90f46169.js");
       /* harmony import */
 
 
-      var _animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-      /*! ./animation-8c514e52.js */
-      "./node_modules/@ionic/core/dist/esm/animation-8c514e52.js");
+      var _animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! ./animation-54fe0237.js */
+      "./node_modules/@ionic/core/dist/esm/animation-54fe0237.js");
       /* harmony import */
 
 
-      var _index_4e81e1e8_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
-      /*! ./index-4e81e1e8.js */
-      "./node_modules/@ionic/core/dist/esm/index-4e81e1e8.js");
+      var _index_1eeeab2e_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      /*! ./index-1eeeab2e.js */
+      "./node_modules/@ionic/core/dist/esm/index-1eeeab2e.js");
       /* harmony import */
 
 
@@ -82,15 +82,15 @@
       /* harmony import */
 
 
-      var _hardware_back_button_389954a0_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
-      /*! ./hardware-back-button-389954a0.js */
-      "./node_modules/@ionic/core/dist/esm/hardware-back-button-389954a0.js");
+      var _hardware_back_button_4a6b37fb_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+      /*! ./hardware-back-button-4a6b37fb.js */
+      "./node_modules/@ionic/core/dist/esm/hardware-back-button-4a6b37fb.js");
       /* harmony import */
 
 
-      var _overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
-      /*! ./overlays-46020acc.js */
-      "./node_modules/@ionic/core/dist/esm/overlays-46020acc.js");
+      var _overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+      /*! ./overlays-12c20431.js */
+      "./node_modules/@ionic/core/dist/esm/overlays-12c20431.js");
       /* harmony import */
 
 
@@ -137,13 +137,13 @@
         };
 
         var onMove = function onMove(detail) {
-          var step = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0.0001, detail.deltaY / height, 0.9999);
+          var step = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0.0001, detail.deltaY / height, 0.9999);
           animation.progressStep(step);
         };
 
         var onEnd = function onEnd(detail) {
           var velocity = detail.velocityY;
-          var step = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0.0001, detail.deltaY / height, 0.9999);
+          var step = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0.0001, detail.deltaY / height, 0.9999);
           var threshold = (detail.deltaY + velocity * 1000) / height;
           var shouldComplete = threshold >= 0.5;
           var newStepValue = shouldComplete ? -0.001 : 0.001;
@@ -185,7 +185,7 @@
       };
 
       var computeDuration = function computeDuration(remaining, velocity) {
-        return Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(400, remaining / Math.abs(velocity * 1.1), 500);
+        return Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(400, remaining / Math.abs(velocity * 1.1), 500);
       };
       /**
        * iOS Modal Enter Animation for the Card presentation style
@@ -193,18 +193,18 @@
 
 
       var iosEnterAnimation = function iosEnterAnimation(baseEl, presentingEl) {
-        var backdropAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])().addElement(baseEl.querySelector('ion-backdrop')).fromTo('opacity', 0.01, 'var(--backdrop-opacity)').beforeStyles({
+        var backdropAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])().addElement(baseEl.querySelector('ion-backdrop')).fromTo('opacity', 0.01, 'var(--backdrop-opacity)').beforeStyles({
           'pointer-events': 'none'
         }).afterClearStyles(['pointer-events']);
-        var wrapperAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])().addElement(baseEl.querySelectorAll('.modal-wrapper, .modal-shadow')).beforeStyles({
+        var wrapperAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])().addElement(baseEl.querySelectorAll('.modal-wrapper, .modal-shadow')).beforeStyles({
           'opacity': 1
         }).fromTo('transform', 'translateY(100vh)', 'translateY(0vh)');
-        var baseAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])().addElement(baseEl).easing('cubic-bezier(0.32,0.72,0,1)').duration(500).addAnimation(wrapperAnimation);
+        var baseAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])().addElement(baseEl).easing('cubic-bezier(0.32,0.72,0,1)').duration(500).addAnimation(wrapperAnimation);
 
         if (presentingEl) {
           var isMobile = window.innerWidth < 768;
           var hasCardModal = presentingEl.tagName === 'ION-MODAL' && presentingEl.presentingElement !== undefined;
-          var presentingAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])().beforeStyles({
+          var presentingAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])().beforeStyles({
             'transform': 'translateY(0)',
             'transform-origin': 'top center',
             'overflow': 'hidden'
@@ -258,7 +258,7 @@
                 filter: 'contrast(0.85)',
                 transform: _finalTransform
               }]);
-              var shadowAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])().afterStyles({
+              var shadowAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])().afterStyles({
                 'transform': _finalTransform
               }).addElement(presentingEl.querySelector('.modal-shadow')).keyframes([{
                 offset: 0,
@@ -285,16 +285,16 @@
 
       var iosLeaveAnimation = function iosLeaveAnimation(baseEl, presentingEl) {
         var duration = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 500;
-        var backdropAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])().addElement(baseEl.querySelector('ion-backdrop')).fromTo('opacity', 'var(--backdrop-opacity)', 0.0);
-        var wrapperAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])().addElement(baseEl.querySelectorAll('.modal-wrapper, .modal-shadow')).beforeStyles({
+        var backdropAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])().addElement(baseEl.querySelector('ion-backdrop')).fromTo('opacity', 'var(--backdrop-opacity)', 0.0);
+        var wrapperAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])().addElement(baseEl.querySelectorAll('.modal-wrapper, .modal-shadow')).beforeStyles({
           'opacity': 1
         }).fromTo('transform', 'translateY(0vh)', 'translateY(100vh)');
-        var baseAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])().addElement(baseEl).easing('cubic-bezier(0.32,0.72,0,1)').duration(duration).addAnimation(wrapperAnimation);
+        var baseAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])().addElement(baseEl).easing('cubic-bezier(0.32,0.72,0,1)').duration(duration).addAnimation(wrapperAnimation);
 
         if (presentingEl) {
           var isMobile = window.innerWidth < 768;
           var hasCardModal = presentingEl.tagName === 'ION-MODAL' && presentingEl.presentingElement !== undefined;
-          var presentingAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])().beforeClearStyles(['transform']).afterClearStyles(['transform']).onFinish(function (currentStep) {
+          var presentingAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])().beforeClearStyles(['transform']).afterClearStyles(['transform']).onFinish(function (currentStep) {
             // only reset background color if this is the last card-style modal
             if (currentStep !== 1) {
               return;
@@ -349,7 +349,7 @@
                 filter: 'contrast(1)',
                 transform: 'translateY(0) scale(1)'
               }]);
-              var shadowAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])().addElement(presentingEl.querySelector('.modal-shadow')).afterStyles({
+              var shadowAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])().addElement(presentingEl.querySelector('.modal-shadow')).afterStyles({
                 'transform': 'translateY(0) scale(1)'
               }).keyframes([{
                 offset: 0,
@@ -375,9 +375,9 @@
 
 
       var mdEnterAnimation = function mdEnterAnimation(baseEl) {
-        var baseAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
-        var backdropAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
-        var wrapperAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
+        var baseAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
+        var backdropAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
+        var wrapperAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
         backdropAnimation.addElement(baseEl.querySelector('ion-backdrop')).fromTo('opacity', 0.01, 'var(--backdrop-opacity)').beforeStyles({
           'pointer-events': 'none'
         }).afterClearStyles(['pointer-events']);
@@ -398,9 +398,9 @@
 
 
       var mdLeaveAnimation = function mdLeaveAnimation(baseEl) {
-        var baseAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
-        var backdropAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
-        var wrapperAnimation = Object(_animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
+        var baseAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
+        var backdropAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
+        var wrapperAnimation = Object(_animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
         var wrapperEl = baseEl.querySelector('.modal-wrapper');
         backdropAnimation.addElement(baseEl.querySelector('ion-backdrop')).fromTo('opacity', 'var(--backdrop-opacity)', 0.0);
         wrapperAnimation.addElement(wrapperEl).keyframes([{
@@ -459,7 +459,7 @@
           this.swipeToClose = false;
 
           this.onBackdropTap = function () {
-            _this.dismiss(undefined, _overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_9__["B"]);
+            _this.dismiss(undefined, _overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_9__["B"]);
           };
 
           this.onDismiss = function (ev) {
@@ -496,7 +496,7 @@
         }, {
           key: "connectedCallback",
           value: function connectedCallback() {
-            Object(_overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_9__["e"])(this.el);
+            Object(_overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_9__["e"])(this.el);
           }
           /**
            * Present the modal overlay after it has been created.
@@ -540,14 +540,14 @@
                     case 8:
                       this.usersElement = _context.sent;
                       _context.next = 11;
-                      return Object(_index_4e81e1e8_js__WEBPACK_IMPORTED_MODULE_4__["e"])(this.usersElement);
+                      return Object(_index_1eeeab2e_js__WEBPACK_IMPORTED_MODULE_4__["e"])(this.usersElement);
 
                     case 11:
                       Object(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["c"])(function () {
                         return _this2.el.classList.add('show-modal');
                       });
                       _context.next = 14;
-                      return Object(_overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_9__["d"])(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, this.presentingElement);
+                      return Object(_overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_9__["d"])(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, this.presentingElement);
 
                     case 14:
                       if (this.swipeToClose) {
@@ -641,9 +641,9 @@
                       return _context3.abrupt("return", false);
 
                     case 2:
-                      enteringAnimation = _overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_9__["h"].get(this) || [];
+                      enteringAnimation = _overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_9__["h"].get(this) || [];
                       _context3.next = 5;
-                      return Object(_overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_9__["f"])(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation, this.presentingElement);
+                      return Object(_overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_9__["f"])(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation, this.presentingElement);
 
                     case 5:
                       dismissed = _context3.sent;
@@ -690,7 +690,7 @@
         }, {
           key: "onDidDismiss",
           value: function onDidDismiss() {
-            return Object(_overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_9__["g"])(this.el, 'ionModalDidDismiss');
+            return Object(_overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_9__["g"])(this.el, 'ionModalDidDismiss');
           }
           /**
            * Returns a promise that resolves when the modal will dismiss.
@@ -699,7 +699,7 @@
         }, {
           key: "onWillDismiss",
           value: function onWillDismiss() {
-            return Object(_overlays_46020acc_js__WEBPACK_IMPORTED_MODULE_9__["g"])(this.el, 'ionModalWillDismiss');
+            return Object(_overlays_12c20431_js__WEBPACK_IMPORTED_MODULE_9__["g"])(this.el, 'ionModalWillDismiss');
           }
         }, {
           key: "render",

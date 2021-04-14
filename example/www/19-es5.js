@@ -58,15 +58,15 @@
       /* harmony import */
 
 
-      var _helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-      /*! ./helpers-fde0057c.js */
-      "./node_modules/@ionic/core/dist/esm/helpers-fde0057c.js");
+      var _helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! ./helpers-90f46169.js */
+      "./node_modules/@ionic/core/dist/esm/helpers-90f46169.js");
       /* harmony import */
 
 
-      var _animation_8c514e52_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-      /*! ./animation-8c514e52.js */
-      "./node_modules/@ionic/core/dist/esm/animation-8c514e52.js");
+      var _animation_54fe0237_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! ./animation-54fe0237.js */
+      "./node_modules/@ionic/core/dist/esm/animation-54fe0237.js");
       /* harmony import */
 
 
@@ -82,15 +82,15 @@
       /* harmony import */
 
 
-      var _hardware_back_button_389954a0_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
-      /*! ./hardware-back-button-389954a0.js */
-      "./node_modules/@ionic/core/dist/esm/hardware-back-button-389954a0.js");
+      var _hardware_back_button_4a6b37fb_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      /*! ./hardware-back-button-4a6b37fb.js */
+      "./node_modules/@ionic/core/dist/esm/hardware-back-button-4a6b37fb.js");
       /* harmony import */
 
 
-      var _index_1e47c645_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
-      /*! ./index-1e47c645.js */
-      "./node_modules/@ionic/core/dist/esm/index-1e47c645.js");
+      var _index_3a75d1af_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      /*! ./index-3a75d1af.js */
+      "./node_modules/@ionic/core/dist/esm/index-3a75d1af.js");
       /* harmony import */
 
 
@@ -179,7 +179,7 @@
         }, {
           key: "sideChanged",
           value: function sideChanged() {
-            this.isEndSide = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["l"])(this.side);
+            this.isEndSide = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["l"])(this.side);
           }
         }, {
           key: "swipeGestureChanged",
@@ -226,7 +226,7 @@
                       this.typeChanged(this.type, undefined);
                       this.sideChanged(); // register this menu with the app's menu controller
 
-                      _index_1e47c645_js__WEBPACK_IMPORTED_MODULE_7__["m"]._register(this);
+                      _index_3a75d1af_js__WEBPACK_IMPORTED_MODULE_7__["m"]._register(this);
 
                       _context.next = 15;
                       return Promise.resolve().then(__webpack_require__.bind(null,
@@ -305,7 +305,7 @@
           value: function disconnectedCallback() {
             this.blocker.destroy();
 
-            _index_1e47c645_js__WEBPACK_IMPORTED_MODULE_7__["m"]._unregister(this);
+            _index_3a75d1af_js__WEBPACK_IMPORTED_MODULE_7__["m"]._unregister(this);
 
             if (this.animation) {
               this.animation.destroy();
@@ -401,7 +401,7 @@
           key: "setOpen",
           value: function setOpen(shouldOpen) {
             var animated = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-            return _index_1e47c645_js__WEBPACK_IMPORTED_MODULE_7__["m"]._setOpen(this, shouldOpen, animated);
+            return _index_3a75d1af_js__WEBPACK_IMPORTED_MODULE_7__["m"]._setOpen(this, shouldOpen, animated);
           }
         }, {
           key: "_setOpen",
@@ -479,7 +479,7 @@
 
 
                       _context4.next = 7;
-                      return _index_1e47c645_js__WEBPACK_IMPORTED_MODULE_7__["m"]._createAnimation(this.type, this);
+                      return _index_3a75d1af_js__WEBPACK_IMPORTED_MODULE_7__["m"]._createAnimation(this.type, this);
 
                     case 7:
                       this.animation = _context4.sent;
@@ -576,7 +576,7 @@
 
             if (this._isOpen) {
               return true; // TODO error
-            } else if (_index_1e47c645_js__WEBPACK_IMPORTED_MODULE_7__["m"]._getOpenSync()) {
+            } else if (_index_3a75d1af_js__WEBPACK_IMPORTED_MODULE_7__["m"]._getOpenSync()) {
               return false;
             }
 
@@ -592,7 +592,7 @@
           key: "onStart",
           value: function onStart() {
             if (!this.isAnimating || !this.animation) {
-              Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["k"])(false, 'isAnimating has to be true');
+              Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["k"])(false, 'isAnimating has to be true');
               return;
             } // the cloned animation should not use an easing curve during seek
 
@@ -603,7 +603,7 @@
           key: "onMove",
           value: function onMove(detail) {
             if (!this.isAnimating || !this.animation) {
-              Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["k"])(false, 'isAnimating has to be true');
+              Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["k"])(false, 'isAnimating has to be true');
               return;
             }
 
@@ -617,7 +617,7 @@
             var _this2 = this;
 
             if (!this.isAnimating || !this.animation) {
-              Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["k"])(false, 'isAnimating has to be true');
+              Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["k"])(false, 'isAnimating has to be true');
               return;
             }
 
@@ -657,7 +657,7 @@
              * in terms of a linear curve.
              */
 
-            newStepValue += Object(_cubic_bezier_eea9a7a9_js__WEBPACK_IMPORTED_MODULE_4__["g"])([0, 0], [0.4, 0], [0.6, 1], [1, 1], Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, adjustedStepValue, 0.9999))[0] || 0;
+            newStepValue += Object(_cubic_bezier_eea9a7a9_js__WEBPACK_IMPORTED_MODULE_4__["g"])([0, 0], [0.4, 0], [0.6, 1], [1, 1], Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, adjustedStepValue, 0.9999))[0] || 0;
             var playTo = this._isOpen ? !shouldComplete : shouldComplete;
             this.animation.easing('cubic-bezier(0.4, 0.0, 0.6, 1)').onFinish(function () {
               return _this2.afterAnimation(shouldOpen);
@@ -668,7 +668,7 @@
         }, {
           key: "beforeAnimation",
           value: function beforeAnimation(shouldOpen) {
-            Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["k"])(!this.isAnimating, '_before() should not be called while animating'); // this places the menu into the correct location before it animates in
+            Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["k"])(!this.isAnimating, '_before() should not be called while animating'); // this places the menu into the correct location before it animates in
             // this css class doesn't actually kick off any animations
 
             this.el.classList.add(SHOW_MENU);
@@ -689,7 +689,7 @@
         }, {
           key: "afterAnimation",
           value: function afterAnimation(isOpen) {
-            Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["k"])(this.isAnimating, '_before() should be called while animating'); // keep opening/closing the menu disabled for a touch more yet
+            Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["k"])(this.isAnimating, '_before() should be called while animating'); // keep opening/closing the menu disabled for a touch more yet
             // only add listeners/css if it's enabled and isOpen
             // and only remove listeners/css if it's not open
             // emit opened/closed events
@@ -745,15 +745,15 @@
             }
 
             if (!this.disabled) {
-              _index_1e47c645_js__WEBPACK_IMPORTED_MODULE_7__["m"]._setActiveMenu(this);
+              _index_3a75d1af_js__WEBPACK_IMPORTED_MODULE_7__["m"]._setActiveMenu(this);
             }
 
-            Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["k"])(!this.isAnimating, 'can not be animating');
+            Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["k"])(!this.isAnimating, 'can not be animating');
           }
         }, {
           key: "forceClosing",
           value: function forceClosing() {
-            Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["k"])(this._isOpen, 'menu cannot be closed');
+            Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["k"])(this._isOpen, 'menu cannot be closed');
             this.isAnimating = true;
             var ani = this.animation.direction('reverse');
             ani.play({
@@ -839,7 +839,7 @@
               switch (_context6.prev = _context6.next) {
                 case 0:
                   _context6.next = 2;
-                  return _index_1e47c645_js__WEBPACK_IMPORTED_MODULE_7__["m"].get(menu);
+                  return _index_3a75d1af_js__WEBPACK_IMPORTED_MODULE_7__["m"].get(menu);
 
                 case 2:
                   menuEl = _context6.sent;
@@ -903,7 +903,7 @@
               while (1) {
                 switch (_context7.prev = _context7.next) {
                   case 0:
-                    return _context7.abrupt("return", _index_1e47c645_js__WEBPACK_IMPORTED_MODULE_7__["m"].toggle(_this4.menu));
+                    return _context7.abrupt("return", _index_3a75d1af_js__WEBPACK_IMPORTED_MODULE_7__["m"].toggle(_this4.menu));
 
                   case 1:
                   case "end":
@@ -1018,7 +1018,7 @@
           this.autoHide = true;
 
           this.onClick = function () {
-            return _index_1e47c645_js__WEBPACK_IMPORTED_MODULE_7__["m"].toggle(_this5.menu);
+            return _index_3a75d1af_js__WEBPACK_IMPORTED_MODULE_7__["m"].toggle(_this5.menu);
           };
         }
 

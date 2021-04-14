@@ -46,9 +46,9 @@
       /* harmony import */
 
 
-      var _helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-      /*! ./helpers-fde0057c.js */
-      "./node_modules/@ionic/core/dist/esm/helpers-fde0057c.js");
+      var _helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! ./helpers-90f46169.js */
+      "./node_modules/@ionic/core/dist/esm/helpers-90f46169.js");
       /* harmony import */
 
 
@@ -237,7 +237,7 @@
         _createClass(Searchbar, [{
           key: "debounceChanged",
           value: function debounceChanged() {
-            this.ionChange = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["e"])(this.ionChange, this.debounce);
+            this.ionChange = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["e"])(this.ionChange, this.debounce);
           }
         }, {
           key: "valueChanged",
@@ -379,7 +379,7 @@
               tempSpan.innerText = this.placeholder || '';
               doc.body.appendChild(tempSpan); // Get the width of the span then remove it
 
-              Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["r"])(function () {
+              Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["r"])(function () {
                 var textWidth = tempSpan.offsetWidth;
                 tempSpan.remove(); // Calculate the input padding
 

@@ -12,7 +12,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ion_range", function() { return Range; });
 /* harmony import */ var _index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index-e806d1f6.js */ "./node_modules/@ionic/core/dist/esm/index-e806d1f6.js");
 /* harmony import */ var _ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ionic-global-9d5c8ee3.js */ "./node_modules/@ionic/core/dist/esm/ionic-global-9d5c8ee3.js");
-/* harmony import */ var _helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers-fde0057c.js */ "./node_modules/@ionic/core/dist/esm/helpers-fde0057c.js");
+/* harmony import */ var _helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers-90f46169.js */ "./node_modules/@ionic/core/dist/esm/helpers-90f46169.js");
 /* harmony import */ var _theme_ff3fc52f_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./theme-ff3fc52f.js */ "./node_modules/@ionic/core/dist/esm/theme-ff3fc52f.js");
 
 
@@ -85,7 +85,7 @@ const Range = class {
      */
     this.value = 0;
     this.clampBounds = (value) => {
-      return Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(this.min, value, this.max);
+      return Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(this.min, value, this.max);
     };
     this.ensureValueInBounds = (value) => {
       if (this.dualKnobs) {
@@ -121,10 +121,10 @@ const Range = class {
         step *= -1;
       }
       if (knob === 'A') {
-        this.ratioA = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, this.ratioA + step, 1);
+        this.ratioA = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, this.ratioA + step, 1);
       }
       else {
-        this.ratioB = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, this.ratioB + step, 1);
+        this.ratioB = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, this.ratioB + step, 1);
       }
       this.updateValue();
     };
@@ -144,7 +144,7 @@ const Range = class {
     };
   }
   debounceChanged() {
-    this.ionChange = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["e"])(this.ionChange, this.debounce);
+    this.ionChange = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["e"])(this.ionChange, this.debounce);
   }
   minChanged() {
     if (!this.noUpdate) {
@@ -221,7 +221,7 @@ const Range = class {
     const rect = this.rect = this.rangeSlider.getBoundingClientRect();
     const currentX = detail.currentX;
     // figure out which knob they started closer to
-    let ratio = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, (currentX - rect.left) / rect.width, 1);
+    let ratio = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, (currentX - rect.left) / rect.width, 1);
     if (document.dir === 'rtl') {
       ratio = 1 - ratio;
     }
@@ -245,7 +245,7 @@ const Range = class {
     // figure out where the pointer is currently at
     // update the knob being interacted with
     const rect = this.rect;
-    let ratio = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, (currentX - rect.left) / rect.width, 1);
+    let ratio = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, (currentX - rect.left) / rect.width, 1);
     if (document.dir === 'rtl') {
       ratio = 1 - ratio;
     }
@@ -341,7 +341,7 @@ const Range = class {
         ticks.push(tick);
       }
     }
-    Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["d"])(true, el, this.name, JSON.stringify(this.getValue()), disabled);
+    Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["d"])(true, el, this.name, JSON.stringify(this.getValue()), disabled);
     return (Object(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["h"])(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["H"], { onFocusin: this.onFocus, onFocusout: this.onBlur, class: Object(_theme_ff3fc52f_js__WEBPACK_IMPORTED_MODULE_3__["c"])(this.color, {
         [mode]: true,
         'in-item': Object(_theme_ff3fc52f_js__WEBPACK_IMPORTED_MODULE_3__["h"])('ion-item', el),
@@ -415,10 +415,10 @@ const ratioToValue = (ratio, min, max, step) => {
   if (step > 0) {
     value = Math.round(value / step) * step + min;
   }
-  return Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(min, value, max);
+  return Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(min, value, max);
 };
 const valueToRatio = (value, min, max) => {
-  return Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, (value - min) / (max - min), 1);
+  return Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, (value - min) / (max - min), 1);
 };
 Range.style = {
   ios: rangeIosCss,

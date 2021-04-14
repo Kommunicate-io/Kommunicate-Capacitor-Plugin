@@ -58,9 +58,9 @@
       /* harmony import */
 
 
-      var _helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-      /*! ./helpers-fde0057c.js */
-      "./node_modules/@ionic/core/dist/esm/helpers-fde0057c.js");
+      var _helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! ./helpers-90f46169.js */
+      "./node_modules/@ionic/core/dist/esm/helpers-90f46169.js");
       /* harmony import */
 
 
@@ -206,7 +206,7 @@
             var _class;
 
             var mode = Object(_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["b"])(this);
-            var isEnd = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["l"])(this.side);
+            var isEnd = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["l"])(this.side);
             return Object(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["h"])(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["H"], {
               "class": (_class = {}, _defineProperty(_class, mode, true), _defineProperty(_class, "item-options-".concat(mode), true), _defineProperty(_class, 'item-options-start', !isEnd), _defineProperty(_class, 'item-options-end', isEnd), _class)
             });
@@ -398,7 +398,7 @@
                       } // In RTL we want to switch the sides
 
 
-                      side = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["l"])(side) ? 'end' : 'start';
+                      side = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["l"])(side) ? 'end' : 'start';
                       isStartOpen = this.openAmount < 0;
                       isEndOpen = this.openAmount > 0;
                       /**
@@ -565,7 +565,7 @@
 
                     case 7:
                       option = _context6.sent;
-                      side = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["l"])(option.side) ? 'end' : 'start';
+                      side = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["l"])(option.side) ? 'end' : 'start';
 
                       if (side === 'start') {
                         this.leftOptions = option;

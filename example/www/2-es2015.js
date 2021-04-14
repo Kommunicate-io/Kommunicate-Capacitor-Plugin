@@ -19,8 +19,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ion_toolbar", function() { return Toolbar; });
 /* harmony import */ var _index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index-e806d1f6.js */ "./node_modules/@ionic/core/dist/esm/index-e806d1f6.js");
 /* harmony import */ var _ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ionic-global-9d5c8ee3.js */ "./node_modules/@ionic/core/dist/esm/ionic-global-9d5c8ee3.js");
-/* harmony import */ var _helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers-fde0057c.js */ "./node_modules/@ionic/core/dist/esm/helpers-fde0057c.js");
-/* harmony import */ var _index_4e81e1e8_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./index-4e81e1e8.js */ "./node_modules/@ionic/core/dist/esm/index-4e81e1e8.js");
+/* harmony import */ var _helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers-90f46169.js */ "./node_modules/@ionic/core/dist/esm/helpers-90f46169.js");
+/* harmony import */ var _index_1eeeab2e_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./index-1eeeab2e.js */ "./node_modules/@ionic/core/dist/esm/index-1eeeab2e.js");
 /* harmony import */ var _cubic_bezier_eea9a7a9_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./cubic-bezier-eea9a7a9.js */ "./node_modules/@ionic/core/dist/esm/cubic-bezier-eea9a7a9.js");
 /* harmony import */ var _theme_ff3fc52f_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./theme-ff3fc52f.js */ "./node_modules/@ionic/core/dist/esm/theme-ff3fc52f.js");
 /* harmony import */ var _framework_delegate_4584ab5a_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./framework-delegate-4584ab5a.js */ "./node_modules/@ionic/core/dist/esm/framework-delegate-4584ab5a.js");
@@ -40,19 +40,23 @@ const App = class {
   }
   componentDidLoad() {
     {
-      rIC(() => {
+      rIC(async () => {
         const isHybrid = Object(_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["i"])(window, 'hybrid');
         if (!_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["c"].getBoolean('_testing')) {
-          __webpack_require__.e(/*! import() | tap-click-b009fc27-js */ "tap-click-b009fc27-js").then(__webpack_require__.bind(null, /*! ./tap-click-b009fc27.js */ "./node_modules/@ionic/core/dist/esm/tap-click-b009fc27.js")).then(module => module.startTapClick(_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["c"]));
+          __webpack_require__.e(/*! import() | tap-click-71d2324a-js */ "tap-click-71d2324a-js").then(__webpack_require__.bind(null, /*! ./tap-click-71d2324a.js */ "./node_modules/@ionic/core/dist/esm/tap-click-71d2324a.js")).then(module => module.startTapClick(_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["c"]));
         }
         if (_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["c"].getBoolean('statusTap', isHybrid)) {
           __webpack_require__.e(/*! import() | status-tap-b46a1b02-js */ "status-tap-b46a1b02-js").then(__webpack_require__.bind(null, /*! ./status-tap-b46a1b02.js */ "./node_modules/@ionic/core/dist/esm/status-tap-b46a1b02.js")).then(module => module.startStatusTap());
         }
         if (_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["c"].getBoolean('inputShims', needInputShims())) {
-          __webpack_require__.e(/*! import() | input-shims-05babe9d-js */ "input-shims-05babe9d-js").then(__webpack_require__.bind(null, /*! ./input-shims-05babe9d.js */ "./node_modules/@ionic/core/dist/esm/input-shims-05babe9d.js")).then(module => module.startInputShims(_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["c"]));
+          __webpack_require__.e(/*! import() | input-shims-bc550f99-js */ "input-shims-bc550f99-js").then(__webpack_require__.bind(null, /*! ./input-shims-bc550f99.js */ "./node_modules/@ionic/core/dist/esm/input-shims-bc550f99.js")).then(module => module.startInputShims(_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["c"]));
         }
+        const hardwareBackButtonModule = await Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ./hardware-back-button-4a6b37fb.js */ "./node_modules/@ionic/core/dist/esm/hardware-back-button-4a6b37fb.js"));
         if (_ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["c"].getBoolean('hardwareBackButton', isHybrid)) {
-          Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ./hardware-back-button-389954a0.js */ "./node_modules/@ionic/core/dist/esm/hardware-back-button-389954a0.js")).then(module => module.startHardwareBackButton());
+          hardwareBackButtonModule.startHardwareBackButton();
+        }
+        else {
+          hardwareBackButtonModule.blockHardwareBackButton();
         }
         if (typeof window !== 'undefined') {
           __webpack_require__.e(/*! import() | keyboard-5742b5da-js */ "keyboard-5742b5da-js").then(__webpack_require__.bind(null, /*! ./keyboard-5742b5da.js */ "./node_modules/@ionic/core/dist/esm/keyboard-5742b5da.js")).then(module => module.startKeyboardAssist(window));
@@ -485,7 +489,7 @@ const createHeaderIndex = (headerEl) => {
 const handleContentScroll = (scrollEl, scrollHeaderIndex, contentEl) => {
   Object(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["f"])(() => {
     const scrollTop = scrollEl.scrollTop;
-    const scale = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(1, 1 + (-scrollTop / 500), 1.1);
+    const scale = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(1, 1 + (-scrollTop / 500), 1.1);
     // Native refresher should not cause titles to scale
     const nativeRefresher = contentEl.querySelector('ion-refresher.refresher-native');
     if (nativeRefresher === null) {
@@ -730,7 +734,7 @@ const RouterOutlet = class {
     }
   }
   async connectedCallback() {
-    this.gesture = (await __webpack_require__.e(/*! import() | swipe-back-271cf974-js */ "swipe-back-271cf974-js").then(__webpack_require__.bind(null, /*! ./swipe-back-271cf974.js */ "./node_modules/@ionic/core/dist/esm/swipe-back-271cf974.js"))).createSwipeBackGesture(this.el, () => !!this.swipeHandler && this.swipeHandler.canStart() && this.animationEnabled, () => this.swipeHandler && this.swipeHandler.onStart(), step => this.ani && this.ani.progressStep(step), (shouldComplete, step, dur) => {
+    this.gesture = (await __webpack_require__.e(/*! import() | swipe-back-2154c9a7-js */ "swipe-back-2154c9a7-js").then(__webpack_require__.bind(null, /*! ./swipe-back-2154c9a7.js */ "./node_modules/@ionic/core/dist/esm/swipe-back-2154c9a7.js"))).createSwipeBackGesture(this.el, () => !!this.swipeHandler && this.swipeHandler.canStart() && this.animationEnabled, () => this.swipeHandler && this.swipeHandler.onStart(), step => this.ani && this.ani.progressStep(step), (shouldComplete, step, dur) => {
       if (this.ani) {
         this.animationEnabled = false;
         this.ani.onFinish(() => {
@@ -826,7 +830,7 @@ const RouterOutlet = class {
     const { el, mode } = this;
     const animated = this.animated && _ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["c"].getBoolean('animated', true);
     const animationBuilder = this.animation || opts.animationBuilder || _ionic_global_9d5c8ee3_js__WEBPACK_IMPORTED_MODULE_1__["c"].get('navAnimation');
-    await Object(_index_4e81e1e8_js__WEBPACK_IMPORTED_MODULE_3__["t"])(Object.assign(Object.assign({ mode,
+    await Object(_index_1eeeab2e_js__WEBPACK_IMPORTED_MODULE_3__["t"])(Object.assign(Object.assign({ mode,
       animated,
       enteringEl,
       leavingEl, baseEl: el, progressCallback: (opts.progressAnimation

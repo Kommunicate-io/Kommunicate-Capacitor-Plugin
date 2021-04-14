@@ -46,9 +46,9 @@
       /* harmony import */
 
 
-      var _helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-      /*! ./helpers-fde0057c.js */
-      "./node_modules/@ionic/core/dist/esm/helpers-fde0057c.js");
+      var _helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! ./helpers-90f46169.js */
+      "./node_modules/@ionic/core/dist/esm/helpers-90f46169.js");
       /* harmony import */
 
 
@@ -137,7 +137,7 @@
           this.value = 0;
 
           this.clampBounds = function (value) {
-            return Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(_this.min, value, _this.max);
+            return Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(_this.min, value, _this.max);
           };
 
           this.ensureValueInBounds = function (value) {
@@ -206,9 +206,9 @@
             }
 
             if (knob === 'A') {
-              _this.ratioA = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, _this.ratioA + step, 1);
+              _this.ratioA = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, _this.ratioA + step, 1);
             } else {
-              _this.ratioB = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, _this.ratioB + step, 1);
+              _this.ratioB = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, _this.ratioB + step, 1);
             }
 
             _this.updateValue();
@@ -238,7 +238,7 @@
         _createClass(Range, [{
           key: "debounceChanged",
           value: function debounceChanged() {
-            this.ionChange = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["e"])(this.ionChange, this.debounce);
+            this.ionChange = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["e"])(this.ionChange, this.debounce);
           }
         }, {
           key: "minChanged",
@@ -342,7 +342,7 @@
             var rect = this.rect = this.rangeSlider.getBoundingClientRect();
             var currentX = detail.currentX; // figure out which knob they started closer to
 
-            var ratio = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, (currentX - rect.left) / rect.width, 1);
+            var ratio = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, (currentX - rect.left) / rect.width, 1);
 
             if (document.dir === 'rtl') {
               ratio = 1 - ratio;
@@ -370,7 +370,7 @@
             // figure out where the pointer is currently at
             // update the knob being interacted with
             var rect = this.rect;
-            var ratio = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, (currentX - rect.left) / rect.width, 1);
+            var ratio = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, (currentX - rect.left) / rect.width, 1);
 
             if (document.dir === 'rtl') {
               ratio = 1 - ratio;
@@ -472,7 +472,7 @@
               }
             }
 
-            Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["d"])(true, el, this.name, JSON.stringify(this.getValue()), disabled);
+            Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["d"])(true, el, this.name, JSON.stringify(this.getValue()), disabled);
             return Object(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["h"])(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["H"], {
               onFocusin: this.onFocus,
               onFocusout: this.onBlur,
@@ -641,11 +641,11 @@
           value = Math.round(value / step) * step + min;
         }
 
-        return Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(min, value, max);
+        return Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(min, value, max);
       };
 
       var valueToRatio = function valueToRatio(value, min, max) {
-        return Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, (value - min) / (max - min), 1);
+        return Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, (value - min) / (max - min), 1);
       };
 
       Range.style = {

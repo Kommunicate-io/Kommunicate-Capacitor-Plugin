@@ -1,15 +1,6 @@
 var capacitorPlugin = (function (exports, core) {
     'use strict';
 
-    var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-        function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-        return new (P || (P = Promise))(function (resolve, reject) {
-            function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-            function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-            function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-            step((generator = generator.apply(thisArg, _arguments || [])).next());
-        });
-    };
     class KommunicateCapacitorPluginWeb extends core.WebPlugin {
         constructor() {
             super({
@@ -19,7 +10,7 @@ var capacitorPlugin = (function (exports, core) {
         }
         buildConversation(options) {
             return new Promise((resolve, reject) => {
-                var kmUser;
+                let kmUser;
                 if (this.isUserLoggedIn()) {
                     this.init((response) => {
                         console.log(response);
@@ -56,52 +47,48 @@ var capacitorPlugin = (function (exports, core) {
         }
         updateChatContext(options) {
             return new Promise((resolve, reject) => {
-                if (this.isUserLoggedIn()) {
-                    this.init((response) => {
-                        console.log(response);
-                        window.Kommunicate.updateChatContext(options);
-                        resolve("Chat context updated");
-                    }, (error) => {
-                        console.log(error);
-                        reject(error);
-                    });
-                }
-                else {
+                if (!this.isUserLoggedIn()) {
                     reject("User not logged in. Call buildConversation function once before updating the chat context");
                 }
+                this.init((response) => {
+                    console.log(response);
+                    window.Kommunicate.updateChatContext(options);
+                    resolve("Chat context updated");
+                }, (error) => {
+                    console.log(error);
+                    reject(error);
+                });
             });
         }
         updateUserDetails(options) {
             return new Promise((resolve, reject) => {
-                if (this.isUserLoggedIn()) {
-                    this.init((response) => {
-                        console.log(response);
-                        var userDetails = {};
-                        if (options.email) {
-                            userDetails.email = options.email;
-                        }
-                        if (options.displayName) {
-                            userDetails.displayName = options.displayName;
-                        }
-                        if (options.imageLink) {
-                            userDetails.imageLink = options.imageLink;
-                        }
-                        if (options.contactNumber) {
-                            userDetails.contactNumber = options.contactNumber;
-                        }
-                        if (options.metadata) {
-                            userDetails.metadata = options.metadata;
-                        }
-                        window.Kommunicate.updateUser(userDetails);
-                        resolve("user details updated");
-                    }, (error) => {
-                        console.log(error);
-                        reject(error);
-                    });
-                }
-                else {
+                if (!this.isUserLoggedIn()) {
                     reject("User not logged in. Call buildConversation function once before updating the details");
                 }
+                this.init((response) => {
+                    console.log(response);
+                    var userDetails = {};
+                    if (options.email) {
+                        userDetails.email = options.email;
+                    }
+                    if (options.displayName) {
+                        userDetails.displayName = options.displayName;
+                    }
+                    if (options.imageLink) {
+                        userDetails.imageLink = options.imageLink;
+                    }
+                    if (options.contactNumber) {
+                        userDetails.contactNumber = options.contactNumber;
+                    }
+                    if (options.metadata) {
+                        userDetails.metadata = options.metadata;
+                    }
+                    window.Kommunicate.updateUser(userDetails);
+                    resolve("user details updated");
+                }, (error) => {
+                    console.log(error);
+                    reject(error);
+                });
             });
         }
         logout() {
@@ -123,23 +110,16 @@ var capacitorPlugin = (function (exports, core) {
                 }
             });
         }
-        echo(options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                console.log('ECHO', options);
-                return options;
-            });
-        }
         init(successCallback, errorCallback) {
-            if (this.isUserLoggedIn()) {
-                if (typeof window.Kommunicate != 'undefined' && window.Kommunicate) {
-                    successCallback("success");
-                }
-                else {
-                    this.initPlugin(null, successCallback, errorCallback);
-                }
+            if (!this.isUserLoggedIn()) {
+                errorCallback("User not logged in, call login first");
+                return;
+            }
+            if (typeof window.Kommunicate != 'undefined' && window.Kommunicate) {
+                successCallback("success");
             }
             else {
-                errorCallback("User not logged in, call login first");
+                this.initPlugin(null, successCallback, errorCallback);
             }
         }
         initPlugin(kmUser, successCallback, errorCallback) {

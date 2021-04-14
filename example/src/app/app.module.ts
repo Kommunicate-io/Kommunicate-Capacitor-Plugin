@@ -21,4 +21,6 @@ import 'capacitor-plugin-kommunicate'
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+  
+}

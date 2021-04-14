@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title>\n      Kommunicate Sample App\n    </ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"vertical-align-content\">\n  <ion-grid>\n    <ion-row>\n      <button class=\"ion-activatable ripple-parent\" (click) =\"launchConversation()\">\n        Launch Support chat\n        <ion-ripple-effect type=\"unbounded\"></ion-ripple-effect>\n      </button>\n    </ion-row>\n\n    <ion-row>\n      <button class=\"ion-activatable ripple-parent\" (click) =\"updateChatContext()\">\n        Update chat context\n        <ion-ripple-effect type=\"unbounded\"></ion-ripple-effect>\n      </button>\n    </ion-row>\n\n    <ion-row>\n      <button class=\"ion-activatable ripple-parent\" (click) =\"updateUserDetails()\">\n        Update user details\n        <ion-ripple-effect type=\"unbounded\"></ion-ripple-effect>\n      </button>\n    </ion-row>\n\n    <ion-row>\n      <button class=\"ion-activatable ripple-parent\" (click) =\"logout()\">\n        Logout\n        <ion-ripple-effect type=\"unbounded\"></ion-ripple-effect>\n      </button>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title>\n      Kommunicate Sample App\n    </ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"vertical-align-content\">\n  <ion-grid>\n    <ion-row>\n      <button class=\"ion-activatable ripple-parent\" (click) =\"launchConversation()\">\n        Launch Support chat\n        <ion-ripple-effect type=\"unbounded\"></ion-ripple-effect>\n      </button>\n    </ion-row>\n\n    <ion-row>\n      <button class=\"ion-activatable ripple-parent\" (click) =\"launchAndCreateIfEmpty()\">\n        Launch and create if empty\n        <ion-ripple-effect type=\"unbounded\"></ion-ripple-effect>\n      </button>\n    </ion-row>\n\n    <ion-row>\n      <button class=\"ion-activatable ripple-parent\" (click) =\"updateChatContext()\">\n        Update chat context\n        <ion-ripple-effect type=\"unbounded\"></ion-ripple-effect>\n      </button>\n    </ion-row>\n\n    <ion-row>\n      <button class=\"ion-activatable ripple-parent\" (click) =\"updateUserDetails()\">\n        Update user details\n        <ion-ripple-effect type=\"unbounded\"></ion-ripple-effect>\n      </button>\n    </ion-row>\n\n    <ion-row>\n      <button class=\"ion-activatable ripple-parent\" (click) =\"logout()\">\n        Logout\n        <ion-ripple-effect type=\"unbounded\"></ion-ripple-effect>\n      </button>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n");
 
 /***/ }),
 
@@ -123,25 +123,32 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 const { KommunicateCapacitorPlugin } = _capacitor_core__WEBPACK_IMPORTED_MODULE_3__["Plugins"];
 let HomePage = class HomePage {
     constructor() {
     }
-    launchConversation() {
-        KommunicateCapacitorPlugin.echo({ 'value': "KmTest" }).then((res) => {
-            console.log("Echo success : " + JSON.stringify(res));
+    launchAndCreateIfEmpty() {
+        KommunicateCapacitorPlugin.buildConversation({
+            appId: '22823b4a764f9944ad7913ddb3e43cae1',
+            launchAndCreateIfEmpty: true
+        }).then((res) => {
+            console.log("Conversation builder success : " + JSON.stringify(res));
         }).catch((error) => {
-            console.log("Echo error : " + error);
+            console.log("Conversation builder error : " + error);
         });
+    }
+    launchConversation() {
         console.log("Click received from launch conversation again");
         let kmUser = {
-            userId: "reytum",
+            applicationId: '22823b4a764f9944ad7913ddb3e43cae1',
+            userId: "reytum1",
             password: "reytum"
         };
         let conversationObject = {
             appId: '22823b4a764f9944ad7913ddb3e43cae1',
             isSingleConversation: true,
-            withPreChat: true
+            kmUser: JSON.stringify(kmUser)
         };
         KommunicateCapacitorPlugin.buildConversation(conversationObject).then((res) => {
             console.log("Conversation builder success : " + JSON.stringify(res));
@@ -152,7 +159,7 @@ let HomePage = class HomePage {
     updateChatContext() {
         console.log("Click received from update chat context");
         let chatContext = {
-            'key': 'Value from cap android'
+            'key': 'Value from cap ' + _capacitor_core__WEBPACK_IMPORTED_MODULE_3__["Capacitor"].getPlatform()
         };
         KommunicateCapacitorPlugin.updateChatContext(chatContext).then((res) => {
             console.log("Update chat context success : " + JSON.stringify(res));
@@ -163,7 +170,10 @@ let HomePage = class HomePage {
     updateUserDetails() {
         console.log("Click received from update user details");
         let userDetails = {
-            'displayName': 'CapAndroid'
+            'displayName': _capacitor_core__WEBPACK_IMPORTED_MODULE_3__["Capacitor"].getPlatform() === 'android' ? 'CapAndroid' : (_capacitor_core__WEBPACK_IMPORTED_MODULE_3__["Capacitor"].getPlatform() === 'ios' ? 'CapIOS' : 'CapWeb'),
+            'metadata': {
+                'platform': _capacitor_core__WEBPACK_IMPORTED_MODULE_3__["Capacitor"].getPlatform() === 'android' ? 'Android' : (_capacitor_core__WEBPACK_IMPORTED_MODULE_3__["Capacitor"].getPlatform() === 'ios' ? 'iOS' : 'Web')
+            }
         };
         KommunicateCapacitorPlugin.updateUserDetails(userDetails).then((res) => {
             console.log("Update user details success : " + JSON.stringify(res));

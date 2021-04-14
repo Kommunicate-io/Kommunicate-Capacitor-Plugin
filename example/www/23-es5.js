@@ -42,9 +42,9 @@
       /* harmony import */
 
 
-      var _helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-      /*! ./helpers-fde0057c.js */
-      "./node_modules/@ionic/core/dist/esm/helpers-fde0057c.js");
+      var _helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! ./helpers-90f46169.js */
+      "./node_modules/@ionic/core/dist/esm/helpers-90f46169.js");
       /* harmony import */
 
 
@@ -126,8 +126,8 @@
       };
 
       var renderProgress = function renderProgress(value, buffer) {
-        var finalValue = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, value, 1);
-        var finalBuffer = Object(_helpers_fde0057c_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, buffer, 1);
+        var finalValue = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, value, 1);
+        var finalBuffer = Object(_helpers_90f46169_js__WEBPACK_IMPORTED_MODULE_2__["h"])(0, buffer, 1);
         return [Object(_index_e806d1f6_js__WEBPACK_IMPORTED_MODULE_0__["h"])("div", {
           "class": "progress",
           style: {
