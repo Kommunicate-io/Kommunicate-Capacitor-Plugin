@@ -16,6 +16,13 @@
     </ion-row>
 
     <ion-row>
+      <button class="ion-activatable ripple-parent" (click) ="launchAndCreateIfEmpty()">
+        Launch and create if empty
+        <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+      </button>
+    </ion-row>
+
+    <ion-row>
       <button class="ion-activatable ripple-parent" (click) ="updateChatContext()">
         Update chat context
         <ion-ripple-effect type="unbounded"></ion-ripple-effect>

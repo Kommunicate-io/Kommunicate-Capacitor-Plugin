@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import 'capacitor-plugin-kommunicate';
 import { Plugins } from '@capacitor/core';
+import { Capacitor } from '@capacitor/core';
 const { KommunicateCapacitorPlugin } = Plugins;
+const appId = "<Your-App-Id>"
 
 @Component({
   selector: 'app-home',
@@ -11,27 +13,33 @@ const { KommunicateCapacitorPlugin } = Plugins;
 export class HomePage {
 
   constructor() {
-    
+  }
+
+  launchAndCreateIfEmpty() {
+    KommunicateCapacitorPlugin.buildConversation({
+      appId: appId,
+      launchAndCreateIfEmpty: true
+    }).then((res) => {
+      console.log("Conversation builder success : " + JSON.stringify(res))
+    }).catch((error) => {
+      console.log("Conversation builder error : " + error)
+    });
   }
 
   launchConversation() {
-    KommunicateCapacitorPlugin.echo({'value': "KmTest"}).then((res) => {
-      console.log("Echo success : " + JSON.stringify(res));
-    }).catch((error) => {
-      console.log("Echo error : " + error);
-    });
 
     console.log("Click received from launch conversation again")
 
     let kmUser = {
-      userId: "reytum",
+      applicationId: appId,
+      userId: "reytum1",
       password: "reytum"
     };
 
     let conversationObject = {
-      appId: '22823b4a764f9944ad7913ddb3e43cae1',
+      appId: appId,
       isSingleConversation: true,
-      withPreChat: true
+      kmUser: JSON.stringify(kmUser)
     };
 
     KommunicateCapacitorPlugin.buildConversation(conversationObject).then((res) => {
@@ -45,7 +53,7 @@ export class HomePage {
     console.log("Click received from update chat context")
 
     let chatContext = {
-       'key' : 'Value from cap android'
+       'key' : 'Value from cap ' + Capacitor.getPlatform()
     };
 
     KommunicateCapacitorPlugin.updateChatContext(chatContext).then((res) => {
@@ -59,7 +67,10 @@ export class HomePage {
     console.log("Click received from update user details")
 
     let userDetails = {
-      'displayName': 'CapAndroid'
+      'displayName': Capacitor.getPlatform() === 'android' ? 'CapAndroid' : (Capacitor.getPlatform() === 'ios' ? 'CapIOS' : 'CapWeb'),
+      'metadata': {
+        'platform': Capacitor.getPlatform() === 'android' ? 'Android' : (Capacitor.getPlatform() === 'ios' ? 'iOS' : 'Web')
+      }
     }
     KommunicateCapacitorPlugin.updateUserDetails(userDetails).then((res) => {
       console.log("Update user details success : " + JSON.stringify(res))

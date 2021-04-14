@@ -4,9 +4,13 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.applozic.mobicomkit.api.account.user.AlUserUpdateTask;
+import com.applozic.mobicomkit.api.conversation.ApplozicConversation;
+import com.applozic.mobicomkit.api.conversation.Message;
 import com.applozic.mobicomkit.channel.service.ChannelService;
+import com.applozic.mobicomkit.exception.ApplozicException;
 import com.applozic.mobicomkit.feed.ChannelFeedApiResponse;
 import com.applozic.mobicomkit.listners.AlCallback;
+import com.applozic.mobicomkit.listners.MessageListHandler;
 import com.applozic.mobicommons.commons.core.utils.Utils;
 import com.applozic.mobicommons.json.GsonUtils;
 import com.getcapacitor.JSObject;
@@ -15,7 +19,10 @@ import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 
+import org.json.JSONException;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.kommunicate.KmConversationBuilder;
@@ -43,7 +50,7 @@ public class KommunicateCapacitorPlugin extends Plugin {
             call.getData().remove("kmUser");
         }
 
-        KmConversationBuilder conversationBuilder = (KmConversationBuilder) GsonUtils.getObjectFromJson(call.getData().toString(), KmConversationBuilder.class);
+        final KmConversationBuilder conversationBuilder = (KmConversationBuilder) GsonUtils.getObjectFromJson(call.getData().toString(), KmConversationBuilder.class);
         conversationBuilder.setContext(getActivity());
 
         if (!call.getData().has("isSingleConversation")) {
@@ -57,11 +64,15 @@ public class KommunicateCapacitorPlugin extends Plugin {
             conversationBuilder.setKmUser((KMUser) GsonUtils.getObjectFromJson(kmUserString, KMUser.class));
         }
 
-        KmCallback callback = new KmCallback() {
+        final KmCallback callback = new KmCallback() {
             @Override
             public void onSuccess(Object message) {
-                String clientConversationId = ChannelService.getInstance(getActivity()).getChannel((Integer) message).getClientGroupId();
-                call.success(getJsObject("clientConversationId", clientConversationId));
+                if (message instanceof Integer) {
+                    String clientConversationId = ChannelService.getInstance(getActivity()).getChannel((Integer) message).getClientGroupId();
+                    call.success(getJsObject("clientConversationId", clientConversationId));
+                } else {
+                    call.success(getJsObject("message", message));
+                }
             }
 
             @Override
@@ -72,10 +83,29 @@ public class KommunicateCapacitorPlugin extends Plugin {
 
         if (call.getData().has("createOnly") && call.getData().has("createOnly")) {
             conversationBuilder.createConversation(callback);
-        } else if (call.getData().has("launchAndCreateIfEmpty") && call.getData().has("launchAndCreateIfEmpty")) {
-            conversationBuilder.launchAndCreateIfEmpty(callback);
         } else {
-            conversationBuilder.launchConversation(callback);
+            try {
+                if (call.getData().has("launchAndCreateIfEmpty") && call.getData().getBoolean("launchAndCreateIfEmpty")) {
+                    ApplozicConversation.getLatestMessageList(getActivity(), false, new MessageListHandler() {
+                        @Override
+                        public void onResult(List<Message> messageList, ApplozicException e) {
+                            if (e == null) {
+                                if (messageList.isEmpty()) {
+                                    conversationBuilder.setSkipConversationList(false);
+                                    conversationBuilder.launchConversation(callback);
+                                } else {
+                                    Kommunicate.openConversation(getActivity(), callback);
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    conversationBuilder.launchConversation(callback);
+                }
+            } catch (JSONException e) {
+                callback.onFailure("launchAndCreateIfEmpty needs to be boolean");
+                e.printStackTrace();
+            }
         }
     }
 
