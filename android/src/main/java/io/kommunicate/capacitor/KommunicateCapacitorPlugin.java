@@ -71,7 +71,7 @@ public class KommunicateCapacitorPlugin extends Plugin {
                     String clientConversationId = ChannelService.getInstance(getActivity()).getChannel((Integer) message).getClientGroupId();
                     call.success(getJsObject("clientConversationId", clientConversationId));
                 } else {
-                    call.success(getJsObject("message", message));
+                    call.success(getJsObject("success", message));
                 }
             }
 

@@ -3,6 +3,7 @@ import 'capacitor-plugin-kommunicate';
 import { Plugins } from '@capacitor/core';
 import { Capacitor } from '@capacitor/core';
 const { KommunicateCapacitorPlugin } = Plugins;
+import { LoadingController } from '@ionic/angular';
 const appId = "<Your-App-Id>"
 
 @Component({
@@ -12,16 +13,27 @@ const appId = "<Your-App-Id>"
 })
 export class HomePage {
 
-  constructor() {
+  constructor(public loadingController: LoadingController) {
   }
 
-  launchAndCreateIfEmpty() {
+  async launchAndCreateIfEmpty() {
+    const loading = await this.loadingController.create({
+      spinner: null,
+      message: 'Please wait while we configure conversation for you...',
+      translucent: true,
+      cssClass: 'custom-class custom-loading',
+      backdropDismiss: true
+    });
+    await loading.present();
+
     KommunicateCapacitorPlugin.buildConversation({
       appId: appId,
       launchAndCreateIfEmpty: true
     }).then((res) => {
+      loading.dismiss();
       console.log("Conversation builder success : " + JSON.stringify(res))
-    }).catch((error) => {
+    }).catch(async (error) => {
+      loading.dismiss();
       console.log("Conversation builder error : " + error)
     });
   }
