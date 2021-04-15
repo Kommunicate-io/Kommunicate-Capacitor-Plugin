@@ -279,7 +279,7 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
             if let messages = messageList, messages.count > 0, error == nil {
                 DispatchQueue.main.async {
                     Kommunicate.showConversations(from: viewController)
-                    self.callback?.success(["message": "Successfully launched chat list"])
+                    self.callback?.success(["success": "Successfully launched chat list"])
                 }
             } else {
                 self.processConversationBuilder(openWithList: true)

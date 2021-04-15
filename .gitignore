@@ -85,4 +85,4 @@ lint/tmp/
 # lint/reports/
 node_modules/
 example/node_modules
-example/
+example/www/

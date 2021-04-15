@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "516703107709",
+    "project_id": "capacitor-sample",
+    "storage_bucket": "capacitor-sample.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516703107709:android:a862071317c37b0e278f14",
+        "android_client_info": {
+          "package_name": "io.ionic.starter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "516703107709-iclftbso89s43j08do0cj97pbqa2jfuc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZ2TZWKznkkXUKDJ8NbJWgQmvAf3LugTM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "516703107709-iclftbso89s43j08do0cj97pbqa2jfuc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
