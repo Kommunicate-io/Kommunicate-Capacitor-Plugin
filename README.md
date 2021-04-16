@@ -184,4 +184,120 @@ You can call the logout method to logout the user from kommunicate. Use the meth
   });
 ```
 
+## Push Notification setup:
+
+### Android:
+
+ 1) Create your app on firebase and download the google-services.json file: https://console.firebase.google.com/project
+ 2) Copy the firebase server key and add it in Kommunicate dashboard under Developer -> Push notifications -> Android -> FCM/GCM Key
+ 3) Download the google-services.json file from firebase dashboard and paste it under your project/android/app/ directory
+ 4) Copy the KmFirebaseService file from here: https://github.com/Kommunicate-io/Kommunicate-Capacitor-Plugin/example/android/app/src/main/java/io/ionic/starter/KmFirebaseService.java and paste it under your project/android/app/src/main/java/ directory
+
+ 5) Add the below configurations in your AndroidManifest.xml file inside the <application tag:
+```xml
+        <service
+            android:name="com.getcapacitor.CapacitorFirebaseMessagingService"
+            tools:node="remove" />
+
+        <service
+            android:name="com.applozic.mobicomkit.uiwidgets.KmFirebaseMessagingService"
+            tools:node="remove" />
+
+        <service
+            android:name=".KmFirebaseService"
+            android:stopWithTask="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+```
+ 6) Add the below entry inside the <manifest tag in your AndroidManifest.xml file:
+     ```xml
+     xmlns:tools="http://schemas.android.com/tools"
+     ```
+
+### iOS:
+
+1) Generate your debug and production certificates from your apple developer account and upload on Kommunicate dashboard.
+2) Follow the steps from here to upload the certificates and add notification capabilities: https://docs.kommunicate.io/docs/ios-pushnotification#certificates
+3) Download the KommunicateWrapper.swift file from here: 
+4) Add the KommunicateWrapper.swift file to the project target. Click on <YourProject> -> Add files to 'YourProject' -> Select the downloaded KommunicateWrapper.swift file
+
+5) Do the below changes in your AppDelgate.swift file:
+   a) Add import for UserNotifications:
+      `import UserNotifications`
+
+   b) implement the UNUserNotificationCenterDelegate:
+      ```swift
+      @UIApplicationMain
+      class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+      ```
+
+   c) Call the KommunicateWrapper methods in the respective AppDelegate methods as below:
+ ```swift
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    // Override point for customization after application launch.
+    UNUserNotificationCenter.current().delegate = self
+    KommunicateWrapper.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+    return true
+  }
+    
+ func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping       (UNNotificationPresentationOptions) -> Void) {
+            KommunicateWrapper.shared.userNotificationCenter(center, willPresent: notification, withCompletionHandler: { options in
+                completionHandler(options)
+            })
+    }
+    
+func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+            KommunicateWrapper.shared.userNotificationCenter(center, didReceive: response, withCompletionHandler: {
+                completionHandler()
+            })
+        }
+
+func applicationDidEnterBackground(_ application: UIApplication) {
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
+    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    KommunicateWrapper.shared.applicationDidEnterBackground(application: application)
+  }
+
+func applicationWillEnterForeground(_ application: UIApplication) {
+    // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+    KommunicateWrapper.shared.applicationDidEnterForeground(application: application)
+    UIApplication.shared.applicationIconBadgeNumber = 0
+  }
+
+func applicationWillTerminate(_ application: UIApplication) {
+    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    KommunicateWrapper.shared.applicationWillTerminate(application: application)
+  }
+
+func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    NotificationCenter.default.post(name: Notification.Name(CAPNotifications.DidRegisterForRemoteNotificationsWithDeviceToken.name()), object: deviceToken)
+    print("DEVICE_TOKEN_DATA :: \(deviceToken.description)") // (SWIFT = 3) : TOKEN PARSING
+    KommunicateWrapper.shared.application(application, didRegisterForRemoteNotificationsWithDeviceToken: deviceToken)
+  }
+```
+
+## Customizations:
+
+### Android:
+1) Copy the `applozic-settings.json` file from here: https://github.com/Kommunicate-io/Kommunicate-Capacitor-Plugin/example/android/app/src/main/assets/applozic-settings.json
+and paste it under project/android/app/src/main/assets/ directory.
+2) See the customization options here: https://docs.kommunicate.io/docs/android-customization
+
+iOS: 
+1) Add the KommunicateWrapper.swift file in the project as mentioned under Push notifications iOS steps 3 and 4 (Ignore if already added)
+2) Add the call to KommunicateWrapper's didFinishLaunch method in AppDelegate's method as below(Ignore if already added):
+ ```swift
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    // Override point for customization after application launch.
+    UNUserNotificationCenter.current().delegate = self
+    KommunicateWrapper.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+    return true
+  }
+ ```
+3) Search for function `useCustomConfigurations()` in `KommunicateWrapper.swift` file and add the settings inside it.
+   See the customization options here: https://docs.kommunicate.io/docs/ios-customization
+
+
 
