@@ -130,7 +130,7 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
     
     func handleCreateConversation() {
         if self.launchAndCreateIfEmpty {
-            self.launchAndCreateIfEmpty(from: UIApplication.topViewController()!, completion: {
+            self.launchAndCreateIfEmpty(completion: {
                 error in
                 if let error = error {
                     print("Error while create/show: ", error)
@@ -267,7 +267,6 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
     }
     
     func launchAndCreateIfEmpty (
-        from viewController: UIViewController,
         completion: @escaping (_ error: Kommunicate.KommunicateError?) -> ()) {
         
         let applozicClient = ApplozicClient(applicationKey: KMUserDefaultHandler.getApplicationKey())
@@ -278,6 +277,10 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
             // If more than 1 thread is present then the list will be shown
             if let messages = messageList, messages.count > 0, error == nil {
                 DispatchQueue.main.async {
+                    guard let viewController = UIApplication.topViewController() else {
+                        self.callback?.error("Unable to open conversations")
+                        return
+                    }
                     Kommunicate.showConversations(from: viewController)
                     self.callback?.success(["success": "Successfully launched chat list"])
                 }
