@@ -2,6 +2,7 @@ import Foundation
 import Capacitor
 import Kommunicate
 import Applozic
+import ApplozicSwift
 
 /**
  * Please read the Capacitor iOS Plugin Development Guide
@@ -18,6 +19,7 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
     var callback: CAPPluginCall?
     var conversationAssignee: String? = nil;
     var clientConversationId: String? = nil;
+    var launchAndCreateIfEmpty: Bool = false;
     var teamId: String? = nil;
     
     @objc func buildConversation(_ call: CAPPluginCall) {
@@ -42,6 +44,7 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
         self.agentIds = call.options["agentIds"] as? [String] ?? []
         self.botIds = call.options["botIds"] as? [String] ?? []
         self.teamId = call.options["teamId"] as? String ?? nil
+        self.launchAndCreateIfEmpty = call.options["launchAndCreateIfEmpty"] as? Bool ?? false
         
         if Kommunicate.isLoggedIn {
             self.handleCreateConversation()
@@ -125,67 +128,56 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
         }
     }
     
-    func handleCreateConversation(){
-        let builder = KMConversationBuilder();
-        
-        if let agentIds = self.agentIds, !agentIds.isEmpty {
-            builder.withAgentIds(agentIds)
+    func handleCreateConversation() {
+        if self.launchAndCreateIfEmpty {
+            self.launchAndCreateIfEmpty(completion: {
+                error in
+                if let error = error {
+                    print("Error while create/show: ", error)
+                }
+            })
+        } else {
+            processConversationBuilder(openWithList: false)
         }
-        
-        if let botIds = self.botIds, !botIds.isEmpty {
-            builder.withBotIds(botIds)
-        }
-        
-        builder.useLastConversation(self.isSingleConversation)
-        
-        if let assignee = self.conversationAssignee {
-            builder.withConversationAssignee(assignee)
-        }
-        
-        if let clientConversationId = self.clientConversationId {
-            builder.withClientConversationId(clientConversationId)
-        }
-        
-        if let teamId = self.teamId {
-            builder.withTeamId(teamId)
-        }
-        
-        Kommunicate.createConversation(conversation: builder.build(),
-                                       completion: { response in
-                                        switch response {
-                                        case .success(let conversationId):
-                                            if self.createOnly {
-                                                self.callback?.success([
-                                                    "clientConversationId": conversationId
-                                                ])
-                                            } else {
-                                                self.openParticularConversation(conversationId, true, self.callback!)
-                                            }
-                                            self.callback?.success([
-                                                "clientConversationId": conversationId
-                                            ])
-                                            
-                                        case .failure(let error):
-                                            self.callback?.error(error.localizedDescription)
-                                        }
-                                       })
     }
     
-    func openParticularConversation(_ conversationId: String,_ skipConversationList: Bool, _ callback: CAPPluginCall) -> Void {
-        DispatchQueue.main.async{
+    func openParticularConversation(_ conversationId: String) -> Void {
+        DispatchQueue.main.async {
             if let top = UIApplication.topViewController() {
                 Kommunicate.showConversationWith(groupId: conversationId, from: top, completionHandler: ({ (shown) in
                     if(shown) {
-                        callback.success([
+                        self.callback?.success([
                             "clientConversationId": conversationId
                         ])
                     } else {
-                        callback.error("Failed to launch conversation with conversationId : " + conversationId)
+                        self.callback?.error("Failed to launch conversation with conversationId : " + conversationId)
                     }
                 }))
             } else {
-                callback.error("Failed to launch conversation with conversationId : " + conversationId)
+                self.callback?.error("Failed to launch conversation with conversationId : " + conversationId)
             }}
+    }
+    
+    func openConversationWithList(response: String, viewController: UIViewController) {
+        DispatchQueue.main.async {
+            let conversationVC = Kommunicate.conversationListViewController()
+            let navVC = ALKBaseNavigationViewController(rootViewController: conversationVC)
+            navVC.modalPresentationStyle = .fullScreen
+            viewController.present(navVC, animated: false, completion: {
+                // show conversation
+                Kommunicate.showConversationWith(
+                    groupId: response,
+                    from: conversationVC,
+                    completionHandler: { success in
+                        guard success else {
+                            // error
+                            return
+                        }
+                        self.callback?.success(["clientConversationId": response])
+                        print("Kommunicate: conversation was shown")
+                    })
+            })
+        }
     }
     
     public func userSubmittedResponse(name: String, email: String, phoneNumber: String) {
@@ -272,6 +264,74 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
                 "success": "User details updated"
             ])
         })
+    }
+    
+    func launchAndCreateIfEmpty (
+        completion: @escaping (_ error: Kommunicate.KommunicateError?) -> ()) {
+        
+        let applozicClient = ApplozicClient(applicationKey: KMUserDefaultHandler.getApplicationKey())
+        applozicClient?.getLatestMessages(false, withCompletionHandler: {
+            messageList, error in
+            print("Kommunicate: message list received")
+            
+            // If more than 1 thread is present then the list will be shown
+            if let messages = messageList, messages.count > 0, error == nil {
+                DispatchQueue.main.async {
+                    guard let viewController = UIApplication.topViewController() else {
+                        self.callback?.error("Unable to open conversations")
+                        return
+                    }
+                    Kommunicate.showConversations(from: viewController)
+                    self.callback?.success(["success": "Successfully launched chat list"])
+                }
+            } else {
+                self.processConversationBuilder(openWithList: true)
+            }
+        })
+    }
+    
+    func processConversationBuilder(openWithList: Bool) {
+        let builder = KMConversationBuilder();
+        
+        if let agentIds = self.agentIds, !agentIds.isEmpty {
+            builder.withAgentIds(agentIds)
+        }
+        
+        if let botIds = self.botIds, !botIds.isEmpty {
+            builder.withBotIds(botIds)
+        }
+        
+        builder.useLastConversation(self.isSingleConversation)
+        
+        if let assignee = self.conversationAssignee {
+            builder.withConversationAssignee(assignee)
+        }
+        
+        if let clientConversationId = self.clientConversationId {
+            builder.withClientConversationId(clientConversationId)
+        }
+        
+        if let teamId = self.teamId {
+            builder.withTeamId(teamId)
+        }
+        
+        Kommunicate.createConversation(conversation: builder.build(),
+                                       completion: { response in
+                                        switch response {
+                                        case .success(let conversationId):
+                                            if self.createOnly {
+                                                self.callback?.success(["clientConversationId": conversationId])
+                                            } else {
+                                                if openWithList {
+                                                    self.openConversationWithList(response: conversationId, viewController: UIApplication.topViewController()!)
+                                                } else {
+                                                    self.openParticularConversation(conversationId)
+                                                }
+                                            }
+                                        case .failure(let error):
+                                            self.callback?.error(error.errorDescription ?? "")
+                                        }
+                                       })
     }
 }
 
