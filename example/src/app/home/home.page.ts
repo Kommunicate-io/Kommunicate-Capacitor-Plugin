@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import 'capacitor-plugin-kommunicate';
 import { Plugins } from '@capacitor/core';
 import { Capacitor } from '@capacitor/core';
-const { KommunicateCapacitorPlugin } = Plugins;
+const { KommunicateCapacitorPlugin, Modals } = Plugins;
 import { LoadingController } from '@ionic/angular';
-const appId = "<Your-App-Id>"
+const appId = "3feda0b49919a44210e5c1ed301a73fdf"
 
 @Component({
   selector: 'app-home',
@@ -35,6 +35,22 @@ export class HomePage {
     }).catch(async (error) => {
       loading.dismiss();
       console.log("Conversation builder error : " + error)
+    });
+  }
+
+  getUnreadCount() {
+    KommunicateCapacitorPlugin.getUnreadCount().then(async (res) => {
+      console.log("Unread count : " + JSON.stringify(res))
+      await Modals.alert({
+        title: 'Unread count success',
+        message: 'Unread count is : ' + res.unreadCount,
+      });
+    }).catch(async (error) => {
+      console.log("Unread count error : " + error)
+      await Modals.alert({
+        title: 'Unread count error',
+        message: error,
+      });
     });
   }
 

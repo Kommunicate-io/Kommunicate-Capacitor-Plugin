@@ -7,5 +7,6 @@ CAP_PLUGIN(KommunicateCapacitorPlugin, "KommunicateCapacitorPlugin",
            CAP_PLUGIN_METHOD(buildConversation, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(updateChatContext, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(updateUserDetails, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(getUnreadCount, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(logout, CAPPluginReturnPromise);
            );
