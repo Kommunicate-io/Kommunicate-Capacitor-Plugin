@@ -4,7 +4,7 @@ import { Plugins } from '@capacitor/core';
 import { Capacitor } from '@capacitor/core';
 const { KommunicateCapacitorPlugin, Modals } = Plugins;
 import { LoadingController } from '@ionic/angular';
-const appId = "3feda0b49919a44210e5c1ed301a73fdf"
+const appId = "<Your-App-Id>"
 
 @Component({
   selector: 'app-home',
