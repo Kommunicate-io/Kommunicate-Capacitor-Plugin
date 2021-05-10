@@ -37,6 +37,13 @@
     </ion-row>
 
     <ion-row>
+      <button class="ion-activatable ripple-parent" (click) ="getUnreadCount()">
+        Get unread message count
+        <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+      </button>
+    </ion-row>
+
+    <ion-row>
       <button class="ion-activatable ripple-parent" (click) ="logout()">
         Logout
         <ion-ripple-effect type="unbounded"></ion-ripple-effect>

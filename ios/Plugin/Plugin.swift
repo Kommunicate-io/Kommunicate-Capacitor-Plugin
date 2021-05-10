@@ -103,7 +103,7 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
     }
     
     @objc func updateUserDetails(_ call: CAPPluginCall) {
-        if(Kommunicate.isLoggedIn) {
+        if (Kommunicate.isLoggedIn) {
             self.updateUser(displayName: call.options["displayName"] as? String,
                             imageLink: call.options["imageLink"] as? String,
                             status: call.options["status"] as? String,
@@ -115,6 +115,14 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
         }
     }
     
+    @objc func getUnreadCount(_ call: CAPPluginCall) {
+        if (Kommunicate.isLoggedIn) {
+            call.success(["unreadCount":  ALUserService().getTotalUnreadCount()])
+        } else {
+            call.error("User not authorised. This usually happens when calling the function before conversationBuilder or loginUser. Make sure you call either of the two functions before getting the unread count")
+        }
+    }
+
     @objc func logout(_ call: CAPPluginCall) {
         Kommunicate.logoutUser { (logoutResult) in
             switch logoutResult {
