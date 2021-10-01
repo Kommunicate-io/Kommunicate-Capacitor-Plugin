@@ -1,6 +1,6 @@
 {
   "name": "capacitor-plugin-kommunicate",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A smart customer support plugin for capacitor",
   "main": "dist/plugin.js",
   "module": "dist/esm/index.js",
