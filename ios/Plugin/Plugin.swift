@@ -1,8 +1,8 @@
 import Foundation
 import Capacitor
 import Kommunicate
-import Applozic
-import ApplozicSwift
+import KommunicateCore_iOS_SDK
+import KommunicateChatUI_iOS_SDK
 
 /**
  * Please read the Capacitor iOS Plugin Development Guide
