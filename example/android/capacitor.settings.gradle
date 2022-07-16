@@ -3,4 +3,4 @@ include ':capacitor-android'
 project(':capacitor-android').projectDir = new File('../node_modules/@capacitor/android/capacitor')
 
 include ':capacitor-plugin-kommunicate'
-project(':capacitor-plugin-kommunicate').projectDir = new File('../node_modules/capacitor-plugin-kommunicate/android')
+project(':capacitor-plugin-kommunicate').projectDir = new File('../../android')

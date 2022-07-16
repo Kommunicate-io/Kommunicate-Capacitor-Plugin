@@ -1,9 +1,3 @@
-// @ts-ignore
-declare module '@capacitor/core' {
-  interface PluginRegistry {
-    KommunicatePlugin: KommunicateCapacitorPlugin;
-  }
-}
 
 export interface KommunicateCapacitorPlugin {
   buildConversation(options: any): Promise<void>;

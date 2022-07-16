@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import 'capacitor-plugin-kommunicate';
+import {KommunicatePlugin} from 'capacitor-plugin-kommunicate';
 import { Plugins } from '@capacitor/core';
 import { Capacitor } from '@capacitor/core';
-const { KommunicateCapacitorPlugin, Modals } = Plugins;
+const {Modals } = Plugins;
 import { LoadingController } from '@ionic/angular';
-const appId = "<Your-App-Id>"
+const appId = "eb775c44211eb7719203f5664b27b59f"
 
 @Component({
   selector: 'app-home',
@@ -25,8 +25,8 @@ export class HomePage {
       backdropDismiss: true
     });
     await loading.present();
-
-    KommunicateCapacitorPlugin.buildConversation({
+    
+    KommunicatePlugin.buildConversation({
       appId: appId,
       launchAndCreateIfEmpty: true
     }).then((res) => {
@@ -39,19 +39,19 @@ export class HomePage {
   }
 
   getUnreadCount() {
-    KommunicateCapacitorPlugin.getUnreadCount().then(async (res) => {
-      console.log("Unread count : " + JSON.stringify(res))
-      await Modals.alert({
-        title: 'Unread count success',
-        message: 'Unread count is : ' + res.unreadCount,
-      });
-    }).catch(async (error) => {
-      console.log("Unread count error : " + error)
-      await Modals.alert({
-        title: 'Unread count error',
-        message: error,
-      });
-    });
+    // KommunicatePlugin.getUnreadCount().then(async (res) => {
+    //   console.log("Unread count : " + JSON.stringify(res))
+    //   await Modals.alert({
+    //     title: 'Unread count success',
+    //     message: 'Unread count is : ' + res.unreadCount,
+    //   });
+    // }).catch(async (error) => {
+    //   console.log("Unread count error : " + error)
+    //   await Modals.alert({
+    //     title: 'Unread count error',
+    //     message: error,
+    //   });
+    // });
   }
 
   launchConversation() {
@@ -70,7 +70,7 @@ export class HomePage {
       kmUser: JSON.stringify(kmUser)
     };
 
-    KommunicateCapacitorPlugin.buildConversation(conversationObject).then((res) => {
+    KommunicatePlugin.buildConversation(conversationObject).then((res) => {
       console.log("Conversation builder success : " + JSON.stringify(res))
     }).catch((error) => {
       console.log("Conversation builder error : " + error)
@@ -84,7 +84,7 @@ export class HomePage {
        'key' : 'Value from cap ' + Capacitor.getPlatform()
     };
 
-    KommunicateCapacitorPlugin.updateChatContext(chatContext).then((res) => {
+    KommunicatePlugin.updateChatContext(chatContext).then((res) => {
       console.log("Update chat context success : " + JSON.stringify(res))
     }).catch((error) => {
       console.log("Update chat context error : " + error)
@@ -100,7 +100,7 @@ export class HomePage {
         'platform': Capacitor.getPlatform() === 'android' ? 'Android' : (Capacitor.getPlatform() === 'ios' ? 'iOS' : 'Web')
       }
     }
-    KommunicateCapacitorPlugin.updateUserDetails(userDetails).then((res) => {
+    KommunicatePlugin.updateUserDetails(userDetails).then((res) => {
       console.log("Update user details success : " + JSON.stringify(res))
     }).catch((error) => {
       console.log("Update user details error : " + error)
@@ -110,7 +110,7 @@ export class HomePage {
   logout() {
     console.log("Click received from logout")
 
-    KommunicateCapacitorPlugin.logout().then((res) => {
+    KommunicatePlugin.logout().then((res) => {
       console.log("Logout success : " + JSON.stringify(res))
     }).catch((error) => {
       console.log("Logout error : " + error)

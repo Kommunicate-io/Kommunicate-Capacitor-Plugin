@@ -18,6 +18,8 @@ import com.getcapacitor.NativePlugin;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
+import com.getcapacitor.annotation.CapacitorPlugin;
+
 import io.kommunicate.KmConversationBuilder;
 import io.kommunicate.KmSettings;
 import io.kommunicate.Kommunicate;
@@ -29,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 import org.json.JSONException;
 
-@NativePlugin
+@CapacitorPlugin
 public class KommunicateCapacitorPlugin extends Plugin {
 
     private static final String ERROR = "error";

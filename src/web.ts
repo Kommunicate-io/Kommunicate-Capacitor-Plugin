@@ -8,6 +8,9 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin implements Kommunic
       platforms: ['web'],
     });
   }
+  getUnreadCount(options: any): Promise<void> {
+    throw new Error('Method not implemented.' + options);
+  }
 
   buildConversation(options: any): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -312,10 +315,3 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin implements Kommunic
     return clientId;
   }
 }
-
-const KommunicatePlugin = new KommunicateCapacitorPluginWeb();
-
-export { KommunicatePlugin };
-
-import { registerWebPlugin } from '@capacitor/core';
-registerWebPlugin(KommunicatePlugin);
