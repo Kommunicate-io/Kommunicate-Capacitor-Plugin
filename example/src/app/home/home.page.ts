@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {KommunicatePlugin} from 'capacitor-plugin-kommunicate';
+import {KommunicateCapacitorPlugin} from 'capacitor-plugin-kommunicate';
 import { Plugins } from '@capacitor/core';
 import { Capacitor } from '@capacitor/core';
 const {Modals } = Plugins;
@@ -26,7 +26,7 @@ export class HomePage {
     });
     await loading.present();
     
-    KommunicatePlugin.buildConversation({
+    KommunicateCapacitorPlugin.buildConversation({
       appId: appId,
       withPreChat: true,
       launchAndCreateIfEmpty: true
@@ -40,7 +40,7 @@ export class HomePage {
   }
 
   getUnreadCount() {
-    KommunicatePlugin.getUnreadCount().then((res) => {
+    KommunicateCapacitorPlugin.getUnreadCount().then((res) => {
       console.log("Unread count : " + JSON.stringify(res))
     }).catch(async (error) => {
       console.log("Unread count error : " + error)
@@ -63,7 +63,7 @@ export class HomePage {
       kmUser: JSON.stringify(kmUser)
     };
 
-    KommunicatePlugin.buildConversation(conversationObject).then((res) => {
+    KommunicateCapacitorPlugin.buildConversation(conversationObject).then((res) => {
       console.log("Conversation builder success : " + JSON.stringify(res))
     }).catch((error) => {
       console.log("Conversation builder error : " + error)
@@ -77,7 +77,7 @@ export class HomePage {
        'key' : 'Value from cap ' + Capacitor.getPlatform()
     };
 
-    KommunicatePlugin.updateChatContext(chatContext).then((res) => {
+    KommunicateCapacitorPlugin.updateChatContext(chatContext).then((res) => {
       console.log("Update chat context success : " + JSON.stringify(res))
     }).catch((error) => {
       console.log("Update chat context error : " + error)
@@ -93,7 +93,7 @@ export class HomePage {
         'platform': Capacitor.getPlatform() === 'android' ? 'Android' : (Capacitor.getPlatform() === 'ios' ? 'iOS' : 'Web')
       }
     }
-    KommunicatePlugin.updateUserDetails(userDetails).then((res) => {
+    KommunicateCapacitorPlugin.updateUserDetails(userDetails).then((res) => {
       console.log("Update user details success : " + JSON.stringify(res))
     }).catch((error) => {
       console.log("Update user details error : " + error)
@@ -103,7 +103,7 @@ export class HomePage {
   logout() {
     console.log("Click received from logout")
 
-    KommunicatePlugin.logout().then((res) => {
+    KommunicateCapacitorPlugin.logout().then((res) => {
       console.log("Logout success : " + JSON.stringify(res))
     }).catch((error) => {
       console.log("Logout error : " + error)

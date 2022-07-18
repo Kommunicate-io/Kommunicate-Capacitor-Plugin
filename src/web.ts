@@ -1,7 +1,7 @@
 import { WebPlugin } from '@capacitor/core';
-import { KommunicateCapacitorPlugin } from './definitions';
+import { KommunicateCapacitor } from './definitions';
 
-export class KommunicateCapacitorPluginWeb extends WebPlugin implements KommunicateCapacitorPlugin {
+export class KommunicateCapacitorPluginWeb extends WebPlugin implements KommunicateCapacitor {
   constructor() {
     super({
       name: 'KommunicateCapacitorPlugin',

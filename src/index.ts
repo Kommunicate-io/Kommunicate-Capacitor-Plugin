@@ -1,9 +1,9 @@
 import { registerPlugin } from '@capacitor/core';
-import type { KommunicateCapacitorPlugin } from './definitions';
+import type { KommunicateCapacitor } from './definitions';
 
-const KommunicatePlugin = registerPlugin<KommunicateCapacitorPlugin>('KommunicateCapacitorPlugin', {
+const KommunicateCapacitorPlugin = registerPlugin<KommunicateCapacitor>('KommunicateCapacitorPlugin', {
   web: () => import('./web').then((m) => new m.KommunicateCapacitorPluginWeb()),
 });
 export * from './definitions';
 
-export { KommunicatePlugin };
+export { KommunicateCapacitorPlugin };

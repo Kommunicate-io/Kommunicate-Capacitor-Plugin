@@ -40,7 +40,7 @@ rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
-                maven { url 'https://kommunicate.jfrog.io/artifactory/kommunicate-android-sdk' }
+        maven { url 'https://kommunicate.jfrog.io/artifactory/kommunicate-android-sdk' }
 
     }
 }
