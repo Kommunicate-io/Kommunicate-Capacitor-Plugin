@@ -28,6 +28,7 @@ export class HomePage {
     
     KommunicatePlugin.buildConversation({
       appId: appId,
+      withPreChat: true,
       launchAndCreateIfEmpty: true
     }).then((res) => {
       loading.dismiss();
@@ -39,19 +40,11 @@ export class HomePage {
   }
 
   getUnreadCount() {
-    // KommunicatePlugin.getUnreadCount().then(async (res) => {
-    //   console.log("Unread count : " + JSON.stringify(res))
-    //   await Modals.alert({
-    //     title: 'Unread count success',
-    //     message: 'Unread count is : ' + res.unreadCount,
-    //   });
-    // }).catch(async (error) => {
-    //   console.log("Unread count error : " + error)
-    //   await Modals.alert({
-    //     title: 'Unread count error',
-    //     message: error,
-    //   });
-    // });
+    KommunicatePlugin.getUnreadCount().then((res) => {
+      console.log("Unread count : " + JSON.stringify(res))
+    }).catch(async (error) => {
+      console.log("Unread count error : " + error)
+    });
   }
 
   launchConversation() {
