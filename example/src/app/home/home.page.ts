@@ -4,7 +4,7 @@ import { Plugins } from '@capacitor/core';
 import { Capacitor } from '@capacitor/core';
 const {Modals } = Plugins;
 import { LoadingController } from '@ionic/angular';
-const appId = "eb775c44211eb7719203f5664b27b59f"
+const appId = "<Your-App-Id>"
 
 @Component({
   selector: 'app-home',
@@ -53,8 +53,8 @@ export class HomePage {
 
     let kmUser = {
       applicationId: appId,
-      userId: "reytum1",
-      password: "reytum"
+      userId: "aman",
+      password: "aman"
     };
 
     let conversationObject = {
