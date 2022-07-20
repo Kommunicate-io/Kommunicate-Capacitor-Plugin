@@ -1,12 +1,15 @@
 import { WebPlugin } from '@capacitor/core';
-import { KommunicateCapacitorPlugin } from './definitions';
+import { KommunicateCapacitor } from './definitions';
 
-export class KommunicateCapacitorPluginWeb extends WebPlugin implements KommunicateCapacitorPlugin {
+export class KommunicateCapacitorPluginWeb extends WebPlugin implements KommunicateCapacitor {
   constructor() {
     super({
       name: 'KommunicateCapacitorPlugin',
       platforms: ['web'],
     });
+  }
+  getUnreadCount(): Promise<void> {
+    throw new Error('Method not implemented.');
   }
 
   buildConversation(options: any): Promise<void> {
@@ -312,10 +315,3 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin implements Kommunic
     return clientId;
   }
 }
-
-const KommunicatePlugin = new KommunicateCapacitorPluginWeb();
-
-export { KommunicatePlugin };
-
-import { registerWebPlugin } from '@capacitor/core';
-registerWebPlugin(KommunicatePlugin);

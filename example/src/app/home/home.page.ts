@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import 'capacitor-plugin-kommunicate';
+import {KommunicateCapacitorPlugin} from 'capacitor-plugin-kommunicate';
 import { Plugins } from '@capacitor/core';
 import { Capacitor } from '@capacitor/core';
-const { KommunicateCapacitorPlugin, Modals } = Plugins;
+const {Modals } = Plugins;
 import { LoadingController } from '@ionic/angular';
 const appId = "<Your-App-Id>"
 
@@ -25,9 +25,10 @@ export class HomePage {
       backdropDismiss: true
     });
     await loading.present();
-
+    
     KommunicateCapacitorPlugin.buildConversation({
       appId: appId,
+      withPreChat: true,
       launchAndCreateIfEmpty: true
     }).then((res) => {
       loading.dismiss();
@@ -39,18 +40,10 @@ export class HomePage {
   }
 
   getUnreadCount() {
-    KommunicateCapacitorPlugin.getUnreadCount().then(async (res) => {
+    KommunicateCapacitorPlugin.getUnreadCount().then((res) => {
       console.log("Unread count : " + JSON.stringify(res))
-      await Modals.alert({
-        title: 'Unread count success',
-        message: 'Unread count is : ' + res.unreadCount,
-      });
     }).catch(async (error) => {
       console.log("Unread count error : " + error)
-      await Modals.alert({
-        title: 'Unread count error',
-        message: error,
-      });
     });
   }
 
@@ -60,8 +53,8 @@ export class HomePage {
 
     let kmUser = {
       applicationId: appId,
-      userId: "reytum1",
-      password: "reytum"
+      userId: "aman",
+      password: "aman"
     };
 
     let conversationObject = {

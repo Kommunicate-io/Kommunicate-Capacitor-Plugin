@@ -10,6 +10,37 @@ import KommunicateChatUI_iOS_SDK
  */
 @objc(KommunicateCapacitorPlugin)
 public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerDelegate {
+    public func userSubmittedResponse(name: String, email: String, phoneNumber: String, password: String) {
+        //
+        UIApplication.topViewController()?.dismiss(animated: false, completion: nil)
+                
+                let kmUser = KMUser.init()
+                guard let applicationKey = appId else {
+                    return
+                }
+                
+                kmUser.applicationId = applicationKey
+                
+                if(!email.isEmpty){
+                    kmUser.userId = email
+                    kmUser.email = email
+                }else if(!phoneNumber.isEmpty){
+                    kmUser.contactNumber = phoneNumber
+                }
+                
+                kmUser.contactNumber = phoneNumber
+                kmUser.displayName = name
+                Kommunicate.setup(applicationId: applicationKey)
+                Kommunicate.registerUser(kmUser, completion:{
+                    response, error in
+                    guard error == nil else{
+                        return
+                    }
+                    self.handleCreateConversation()
+                })
+    }
+    
+    
     
     var appId: String?
     var agentIds: [String]? = [];
@@ -28,15 +59,11 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
         var kmUser : KMUser? = nil
         
         guard let appId = call.options["appId"] as? String else {
-            call.error("appId is required, cannot be left blank or nil")
+            call.reject("appId is required, cannot be left blank or nil")
             return
         }
         self.appId = appId
-        
-        if call.hasOption("withPreChat") {
-            withPrechat = call.getBool("withPreChat") ?? false
-        }
-        
+        withPrechat = call.getBool("withPreChat", false)
         self.isSingleConversation = call.options["isSingleConversation"] as? Bool ?? true
         self.createOnly = call.options["createOnly"] as? Bool ?? false
         self.conversationAssignee = call.options["conversationAssignee"] as? String ?? nil
@@ -52,11 +79,11 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
             Kommunicate.setup(applicationId: appId)
             
             if !withPrechat {
-                if call.hasOption("kmUser") {
-                    var jsonSt = call.getString("kmUser")!
-                    jsonSt = jsonSt.replacingOccurrences(of: "\\\"", with: "\"")
-                    jsonSt = "\(jsonSt)"
-                    kmUser = KMUser(jsonString: jsonSt)
+                
+                if var kmUserString = call.getString("kmUser") {
+                    kmUserString = kmUserString.replacingOccurrences(of: "\\\"", with: "\"")
+                    kmUserString = "\(kmUserString)"
+                    kmUser = KMUser(jsonString: kmUserString)
                     kmUser?.applicationId = appId
                 } else {
                     kmUser = KMUser.init()
@@ -67,7 +94,7 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
                 Kommunicate.registerUser(kmUser!, completion:{
                     response, error in
                     guard error == nil else{
-                        call.error(error!.localizedDescription)
+                        call.reject(error!.localizedDescription)
                         return
                     }
                     self.handleCreateConversation()
@@ -90,15 +117,15 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
         do {
             if(Kommunicate.isLoggedIn) {
                 try Kommunicate.defaultConfiguration.updateChatContext(with: chatContext)
-                call.success([
+                call.resolve([
                     "success": "Chat context updated"
                 ])
             } else {
-                call.error("User not authorised. This usually happens when calling the function before conversationBuilder or loginUser. Make sure you call either of the two functions before updating the chatContext")
+                call.reject("User not authorised. This usually happens when calling the function before conversationBuilder or loginUser. Make sure you call either of the two functions before updating the chatContext")
             }
         } catch  {
             print(error)
-            call.error(error.localizedDescription)
+            call.reject(error.localizedDescription)
         }
     }
     
@@ -111,15 +138,15 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
                             phoneNumber: call.options["contactNumber"] as? String,
                             email: call.options["email"] as? String, call: call)
         } else {
-            call.error("User not authorised. This usually happens when calling the function before conversationBuilder or loginUser. Make sure you call either of the two functions before updating the user details")
+            call.reject("User not authorised. This usually happens when calling the function before conversationBuilder or loginUser. Make sure you call either of the two functions before updating the user details")
         }
     }
     
     @objc func getUnreadCount(_ call: CAPPluginCall) {
         if (Kommunicate.isLoggedIn) {
-            call.success(["unreadCount":  ALUserService().getTotalUnreadCount()])
+            call.resolve(["unreadCount":  ALUserService().getTotalUnreadCount() ?? 0])
         } else {
-            call.error("User not authorised. This usually happens when calling the function before conversationBuilder or loginUser. Make sure you call either of the two functions before getting the unread count")
+            call.reject("User not authorised. This usually happens when calling the function before conversationBuilder or loginUser. Make sure you call either of the two functions before getting the unread count")
         }
     }
 
@@ -127,11 +154,11 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
         Kommunicate.logoutUser { (logoutResult) in
             switch logoutResult {
             case .success(_):
-                call.success([
+                call.resolve([
                     "success":  "Logout successful"
                 ])
             case .failure( _):
-                call.error("Error in logout")
+                call.reject("Error in logout")
             }
         }
     }
@@ -154,15 +181,15 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
             if let top = UIApplication.topViewController() {
                 Kommunicate.showConversationWith(groupId: conversationId, from: top, completionHandler: ({ (shown) in
                     if(shown) {
-                        self.callback?.success([
+                        self.callback?.resolve([
                             "clientConversationId": conversationId
                         ])
                     } else {
-                        self.callback?.error("Failed to launch conversation with conversationId : " + conversationId)
+                        self.callback?.reject("Failed to launch conversation with conversationId : " + conversationId)
                     }
                 }))
             } else {
-                self.callback?.error("Failed to launch conversation with conversationId : " + conversationId)
+                self.callback?.reject("Failed to launch conversation with conversationId : " + conversationId)
             }}
     }
     
@@ -181,7 +208,7 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
                             // error
                             return
                         }
-                        self.callback?.success(["clientConversationId": response])
+                        self.callback?.resolve(["clientConversationId": response])
                         print("Kommunicate: conversation was shown")
                     })
             })
@@ -211,7 +238,7 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
         Kommunicate.registerUser(kmUser, completion:{
             response, error in
             guard error == nil else {
-                self.callback?.error("Unable to login")
+                self.callback?.reject("Unable to login")
                 return
             }
             self.handleCreateConversation()
@@ -249,7 +276,7 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
         do {
             postdata = try JSONSerialization.data(withJSONObject: dictionary, options: [])
         } catch {
-            call.error(error.localizedDescription)
+            call.reject(error.localizedDescription)
             return
         }
         var theParamString: String? = nil
@@ -257,18 +284,18 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
             theParamString = String(data: postdata, encoding: .utf8)
         }
         let theRequest = ALRequestHandler.createPOSTRequest(withUrlString: theUrlString, paramString: theParamString)
-        ALResponseHandler.authenticateAndProcessRequest(theRequest,andTag: "UPDATE_DISPLAY_NAME_AND_PROFILE_IMAGE", withCompletionHandler: {
+        ALResponseHandler().authenticateAndProcessRequest(theRequest,andTag: "UPDATE_DISPLAY_NAME_AND_PROFILE_IMAGE", withCompletionHandler: {
             theJson, theError in
             guard theError == nil else {
-                call.error(theError!.localizedDescription)
+                call.reject(theError!.localizedDescription)
                 return
             }
             guard let apiResponse = ALAPIResponse(jsonString: theJson as? String),apiResponse.status != "error"  else {
                 let reponseError = NSError(domain: "Kommunicate", code: 1, userInfo: [NSLocalizedDescriptionKey : "ERROR IN JSON STATUS WHILE UPDATING USER STATUS"])
-                call.error(reponseError.localizedDescription)
+                call.reject(reponseError.localizedDescription)
                 return
             }
-            call.success([
+            call.resolve([
                 "success": "User details updated"
             ])
         })
@@ -286,11 +313,11 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
             if let messages = messageList, messages.count > 0, error == nil {
                 DispatchQueue.main.async {
                     guard let viewController = UIApplication.topViewController() else {
-                        self.callback?.error("Unable to open conversations")
+                        self.callback?.reject("Unable to open conversations")
                         return
                     }
                     Kommunicate.showConversations(from: viewController)
-                    self.callback?.success(["success": "Successfully launched chat list"])
+                    self.callback?.resolve(["success": "Successfully launched chat list"])
                 }
             } else {
                 self.processConversationBuilder(openWithList: true)
@@ -328,7 +355,7 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
                                         switch response {
                                         case .success(let conversationId):
                                             if self.createOnly {
-                                                self.callback?.success(["clientConversationId": conversationId])
+                                                self.callback?.resolve(["clientConversationId": conversationId])
                                             } else {
                                                 if openWithList {
                                                     self.openConversationWithList(response: conversationId, viewController: UIApplication.topViewController()!)
@@ -337,7 +364,7 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
                                                 }
                                             }
                                         case .failure(let error):
-                                            self.callback?.error(error.errorDescription ?? "")
+                                            self.callback?.reject(error.errorDescription ?? "")
                                         }
                                        })
     }

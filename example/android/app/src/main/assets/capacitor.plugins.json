@@ -1,0 +1,6 @@
+[
+	{
+		"pkg": "capacitor-plugin-kommunicate",
+		"classpath": "io.kommunicate.capacitor.KommunicateCapacitorPlugin"
+	}
+]
