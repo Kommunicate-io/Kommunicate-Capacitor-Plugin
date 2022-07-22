@@ -1,6 +1,6 @@
 {
   "name": "capacitor-plugin-kommunicate",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A smart customer support plugin for capacitor",
   "main": "dist/plugin.js",
   "module": "dist/esm/index.js",
@@ -14,7 +14,7 @@
     "watch": "tsc --watch",
     "prepublishOnly": "npm run build"
   },
-  "author": "ashish@kommunicate.io",
+  "author": "aman.toppo@kommunicate.io",
   "license": "BSD-3",
   "devDependencies": {
     "@capacitor/android": "^3.6.0",

@@ -30,11 +30,12 @@ npx cap open android
 Register the plugin in your `android/app/java/<App-Package>/MainActivity.java` file as below:
 
 ```java
- this.init(savedInstanceState, new ArrayList<Class<? extends Plugin>>() {{
-      // Additional plugins you've installed go here
-      // Ex: add(TotallyAwesomePlugin.class);
-      add(KommunicateCapacitorPlugin.class);   //append this line
-    }});
+@Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    registerPlugin(KommunicateCapacitorPlugin.class);
+  }
 ```
 
 ### iOS
@@ -52,9 +53,8 @@ npx cap open iOS
 Import the plugin in the file where you would like to call the kommunicate functions as below:
 
 ```js
-import 'capacitor-plugin-kommunicate';
-import { Plugins } from '@capacitor/core';
-const { KommunicateCapacitorPlugin } = Plugins;
+import {KommunicateCapacitorPlugin} from 'capacitor-plugin-kommunicate';
+
 ```
 
 Now you can start calling the functions from `KommunicateCapacitorPlugin`.
