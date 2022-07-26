@@ -1,7 +1,10 @@
 package io.kommunicate.capacitor;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.text.TextUtils;
+
+import com.applozic.mobicomkit.api.account.register.RegistrationResponse;
 import com.applozic.mobicomkit.api.account.user.AlUserUpdateTask;
 import com.applozic.mobicomkit.api.conversation.ApplozicConversation;
 import com.applozic.mobicomkit.api.conversation.Message;
@@ -13,6 +16,7 @@ import com.applozic.mobicomkit.listners.AlCallback;
 import com.applozic.mobicomkit.listners.MessageListHandler;
 import com.applozic.mobicommons.commons.core.utils.Utils;
 import com.applozic.mobicommons.json.GsonUtils;
+import com.applozic.mobicommons.people.channel.Channel;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.NativePlugin;
 import com.getcapacitor.Plugin;
@@ -21,15 +25,23 @@ import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
 
 import io.kommunicate.KmConversationBuilder;
+import io.kommunicate.KmConversationHelper;
+import io.kommunicate.KmException;
 import io.kommunicate.KmSettings;
 import io.kommunicate.Kommunicate;
+import io.kommunicate.async.KmConversationInfoTask;
+import io.kommunicate.callbacks.KMLoginHandler;
 import io.kommunicate.callbacks.KMLogoutHandler;
 import io.kommunicate.callbacks.KmCallback;
+import io.kommunicate.callbacks.KmGetConversationInfoCallback;
 import io.kommunicate.users.KMUser;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 @CapacitorPlugin
 public class KommunicateCapacitorPlugin extends Plugin {
@@ -123,6 +135,215 @@ public class KommunicateCapacitorPlugin extends Plugin {
                 callback.onFailure("launchAndCreateIfEmpty needs to be boolean");
                 e.printStackTrace();
             }
+        }
+    }
+
+    @PluginMethod
+    public void login(PluginCall call) {
+        try {
+            if (call.getData().has("appId") && !TextUtils.isEmpty(call.getString("appId"))) {
+                Kommunicate.init(getContext(), call.getString("appId"));
+            } else {
+                result.error(ERROR, "appId is missing", null);
+                return;
+            }
+            KMUser user = (KMUser) GsonUtils.getObjectFromJson(call.getData().toString(), KMUser.class);
+
+            Kommunicate.login(getContext(), user, new KMLoginHandler() {
+                @Override
+                public void onSuccess(RegistrationResponse registrationResponse, Context context) {
+                    call.success(getJsObject(SUCCESS, GsonUtils.getJsonFromObject(registrationResponse, RegistrationResponse.class)));
+                }
+
+                @Override
+                public void onFailure(RegistrationResponse registrationResponse, Exception exception) {
+                    call.error(ERROR, registrationResponse != null ? GsonUtils.getJsonFromObject(registrationResponse, RegistrationResponse.class) : exception != null ? exception.getMessage() : null, null);
+                }
+            });
+        } catch (Exception e) {
+            call.error(ERROR, e.toString(), null);
+        }
+    }
+
+    @PluginMethod
+    public void loginAsVisitor(PluginCall call) {
+        try {
+            if (call.getData().has("appId") && !TextUtils.isEmpty(call.getString("appId"))) {
+                Kommunicate.init(getContext(), call.getString("appId"));
+            } else {
+                call.error(ERROR, "appId is missing", null);
+                return;
+            }
+
+            Kommunicate.loginAsVisitor(getContext(), new KMLoginHandler() {
+                @Override
+                public void onSuccess(RegistrationResponse registrationResponse, Context context) {
+                    call.success(getJsObject(SUCCESS, GsonUtils.getJsonFromObject(registrationResponse, RegistrationResponse.class)));
+                }
+
+                @Override
+                public void onFailure(RegistrationResponse registrationResponse, Exception exception) {
+                    call.error(ERROR, registrationResponse != null ? GsonUtils.getJsonFromObject(registrationResponse, RegistrationResponse.class) : exception != null ? exception.getMessage() : null, null);
+                }
+            });
+        } catch (Exception e) {
+            call.error(ERROR, e.toString(), null);
+        }
+    }
+
+    @PluginMethod
+    public void openConversation(PluginCall call) {
+        Kommunicate.openConversation(getContext(), new KmCallback() {
+            @Override
+            public void onSuccess(Object message) {
+                call.success(getJsObject(SUCCESS, message.toString()));
+            }
+
+            @Override
+            public void onFailure(Object error) {
+                call.error(ERROR, error.toString(), null);
+            }
+        });
+    }
+
+    @PluginMethod
+    public void openParticularConversation(PluginCall call) {
+        try {
+
+            if(call.getData().has("clientConversationId")) {
+
+                new KmConversationInfoTask(getContext(), call.getString("clientConversationId"), new KmGetConversationInfoCallback() {
+                    @Override
+                    public void onSuccess(Channel channel, Context context) {
+                        if (channel != null) {
+                            try {
+                                KmConversationHelper.openConversation(context, true, channel.getKey(), new KmCallback() {
+                                    @Override
+                                    public void onSuccess(Object message) {
+                                        call.success(getJsObject(SUCCESS, message.toString()));
+                                    }
+
+                                    @Override
+                                    public void onFailure(Object error) {
+                                        call.error(ERROR, error.toString(), null);
+                                    }
+                                });
+                            } catch (KmException k) {
+                                call.error(ERROR, k.getMessage(), null);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Exception e, Context context) {
+
+                    }
+                }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+
+            if(call.getData().has("conversationId")) {
+                new KmConversationInfoTask(getContext(), call.getInt("conversationId"), new KmGetConversationInfoCallback() {
+                    @Override
+                    public void onSuccess(Channel channel, Context context) {
+                        if (channel != null) {
+
+                            Kommunicate.openConversation(context, channel.getKey(), new KmCallback() {
+                                @Override
+                                public void onSuccess(Object message) {
+                                    call.success(getJsObject(SUCCESS, message.toString()));
+                                }
+
+                                @Override
+                                public void onFailure(Object error) {
+                                    call.error(ERROR, error.toString(), null);
+                                }
+                            });
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Exception e, Context context) {
+                        call.error(ERROR, e.getMessage(), null);
+                    }
+                }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+
+        } catch (Exception e) {
+            call.error(ERROR, e.toString(), null);
+        }
+    }
+
+    @PluginMethod
+    public void updateTeamId(PluginCall call) {
+        try {
+            final String clientConversationId = call.getData().has("clientConversationId") ? (String) call.getString("clientConversationId") : null;
+            final Integer conversationId = call.getData().has("conversationId") ? (Integer) call.getInt("conversationId") : null;
+            final String teamId = call.getData().has("teamId") ? (String) call.getString("teamId") : null;
+            if (TextUtils.isEmpty(clientConversationId) && conversationId == null) {
+                call.error(ERROR, "Invalid or empty clientConversationId", null);
+                return;
+            }
+            if (TextUtils.isEmpty(teamId)) {
+                call.error(ERROR, "Invalid or empty teamID", null);
+                return;
+            }
+            if (Kommunicate.isLoggedIn(getContext())) {
+                KmSettings.updateTeamId(getContext(),
+                        conversationId,
+                        clientConversationId,
+                        teamId,
+                        new KmCallback() {
+                            @Override
+                            public void onSuccess(Object o) {
+                                call.success(getJsObject(SUCCESS, o.toString()));
+                            }
+
+                            @Override
+                            public void onFailure(Object o) {
+                                call.error(ERROR, o.toString(), null);
+                            }
+                        });
+            } else {
+                call.error(ERROR, "User not authorised. This usually happens when calling the function before conversationBuilder or loginUser. Make sure you call either of the two functions before updating the chatContext", null);
+
+            }
+        } catch(Exception e) {
+            call.error(ERROR, e.toString(), null);
+        }
+    }
+
+    @PluginMethod
+    public void updateDefaultSettings(PluginCall call) {
+        try {
+            KmSettings.clearDefaultSettings();
+            JSONObject settingObject = new JSONObject(call.getData().toString());
+            if (settingObject.has("defaultAgentIds") && !TextUtils.isEmpty(settingObject.get("defaultAgentIds").toString())) {
+                List<String> agentList = new ArrayList<String>();
+                for(int i = 0; i < settingObject.getJSONArray("defaultAgentIds").length(); i++){
+                    agentList.add(settingObject.getJSONArray("defaultAgentIds").get(i).toString());
+                }
+                KmSettings.setDefaultAgentIds(agentList);
+            }
+            if (settingObject.has("defaultBotIds") && !TextUtils.isEmpty(settingObject.get("defaultBotIds").toString())) {
+                List<String> botList = new ArrayList<String>();
+                for(int i = 0; i < settingObject.getJSONArray("defaultBotIds").length(); i++){
+                    botList.add(settingObject.getJSONArray("defaultBotIds").get(i).toString());
+                }
+                KmSettings.setDefaultBotIds(botList);
+            }
+            if (settingObject.has("defaultAssignee") && !TextUtils.isEmpty(settingObject.get("defaultAssignee").toString())) {
+                KmSettings.setDefaultAssignee(settingObject.get("defaultAssignee").toString());
+            }
+            if (settingObject.has("teamId")) {
+                KmSettings.setDefaultTeamId(settingObject.get("teamId").toString());
+            }
+            if (settingObject.has("skipRouting")) {
+                KmSettings.setSkipRouting(Boolean.valueOf(settingObject.get("skipRouting").toString()));
+            }
+            call.success(getJsObject(SUCCESS, "Default setting updated"));
+        } catch(Exception e) {
+            call.error(ERROR, e.toString(), null);
         }
     }
 

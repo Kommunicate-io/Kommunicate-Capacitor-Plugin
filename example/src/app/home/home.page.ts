@@ -37,6 +37,8 @@ export class HomePage {
       loading.dismiss();
       console.log("Conversation builder error : " + error)
     });
+
+
   }
 
   getUnreadCount() {
@@ -45,6 +47,7 @@ export class HomePage {
     }).catch(async (error) => {
       console.log("Unread count error : " + error)
     });
+  
   }
 
   launchConversation() {
@@ -109,4 +112,72 @@ export class HomePage {
       console.log("Logout error : " + error)
     });
   }
+
+  login() {
+    KommunicateCapacitorPlugin.login({
+      appId: appId,
+      userId: 'aman',
+      password: 'aman'
+
+    }).then((res) => {
+      console.log("Login success", JSON.stringify(res))
+    }).catch(async (error) => {
+      console.log("login error : " + error)
+    });
+  }
+
+  loginAsVisitor() {
+    KommunicateCapacitorPlugin.loginAsVisitor({appId: appId}).then((res) => {
+      console.log("Login as visitor" + JSON.stringify(res))
+    }).catch(async (error) => {
+      console.log("login error : " + error)
+    });
+  }
+
+  openConversation() {
+    KommunicateCapacitorPlugin.openConversation().then((res) => {
+      console.log("Open conversation" + JSON.stringify(res))
+    }).catch(async (error) => {
+      console.log("login error : " + error)
+    });
+  }
+  updateSettings() {
+    let settings = {
+      "defaultAgentIds": ["amantoppo3199@gmail.com", "amantoppo@kommunicate.io"], //list of agentID
+      "defaultBotIds": ["bot-e8xil"], // list of BotID
+      "defaultAssignee": "amantoppo3199@gmail.com", 
+      "skipRouting": true,
+      "teamId": "63773459"
+      };
+
+    KommunicateCapacitorPlugin.updateDefaultSettings(settings).then((res) => {
+      console.log("Update setting" + JSON.stringify(res))
+    }).catch(async (error) => {
+      console.log("login error : " + error)
+    });
+  }
+
+  updateTeamId() {
+    KommunicateCapacitorPlugin.updateTeamId({
+      'clientConversationId': '69360869',
+      'teamId': '63641656'
+    }).then((res) => {
+      console.log("Open conversation" + JSON.stringify(res))
+    }).catch(async (error) => {
+      console.log("login error : " + error)
+    });
+  }
+
+  openParticularConversation() {
+    KommunicateCapacitorPlugin.openParticularConversation({
+      'clientConversationId': '69360869',
+'teamId': '63641656'
+    }).then((res) => {
+      console.log("Open conversation" + JSON.stringify(res))
+    }).catch(async (error) => {
+      console.log("login error : " + error)
+    });
+  }
+
+
 }
