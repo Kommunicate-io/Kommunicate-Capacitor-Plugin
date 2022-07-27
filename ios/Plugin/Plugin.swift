@@ -250,12 +250,16 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
                                     }
                                     else {
                                         guard let conversationId = jsonObj[KommunicateCapacitorPlugin.CONVERSATION_ID] as? Int else {
+                                            call.reject("Invalid or Empty conversationID")
                                             return
                                         }
                                         let alChannelService = ALChannelService()
                                             alChannelService.getChannelInformation(NSNumber(value: conversationId), orClientChannelKey: nil) { (channel) in
-                                                if channel != nil && channel?.clientChannelKey != nil {
+                                                if (channel != nil && channel?.clientChannelKey != nil) {
                                                     clientConversationId = channel!.clientChannelKey
+                                                }
+                                                else {
+                                                    call.reject("Conversation not found, please enter correct Conversation ID")
                                                 }
                                             }
                                     }

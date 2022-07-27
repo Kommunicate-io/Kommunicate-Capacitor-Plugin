@@ -236,12 +236,13 @@ public class KommunicateCapacitorPlugin extends Plugin {
 
                     @Override
                     public void onFailure(Exception e, Context context) {
+                        call.error(ERROR, e.getMessage(), null);
 
                     }
                 }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
 
-            if(call.getData().has("conversationId")) {
+            else if(call.getData().has("conversationId")) {
                 new KmConversationInfoTask(getContext(), call.getInt("conversationId"), new KmGetConversationInfoCallback() {
                     @Override
                     public void onSuccess(Channel channel, Context context) {

@@ -37,8 +37,6 @@ export class HomePage {
       loading.dismiss();
       console.log("Conversation builder error : " + error)
     });
-
-
   }
 
   getUnreadCount() {
