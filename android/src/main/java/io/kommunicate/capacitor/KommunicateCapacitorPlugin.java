@@ -144,7 +144,7 @@ public class KommunicateCapacitorPlugin extends Plugin {
             if (call.getData().has("appId") && !TextUtils.isEmpty(call.getString("appId"))) {
                 Kommunicate.init(getContext(), call.getString("appId"));
             } else {
-                result.error(ERROR, "appId is missing", null);
+                call.error(ERROR, "appId is missing", null);
                 return;
             }
             KMUser user = (KMUser) GsonUtils.getObjectFromJson(call.getData().toString(), KMUser.class);
