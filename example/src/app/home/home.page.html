@@ -8,12 +8,49 @@
 
 <ion-content class="vertical-align-content">
   <ion-grid>
+
     <ion-row>
-      <button class="ion-activatable ripple-parent" (click) ="launchConversation()">
-        Launch Support chat
+      <button class="ion-activatable ripple-parent" (click) ="login()">
+        Login
         <ion-ripple-effect type="unbounded"></ion-ripple-effect>
       </button>
     </ion-row>
+
+    <ion-row>
+      <button class="ion-activatable ripple-parent" (click) ="loginAsVisitor()">
+        Login As Visitor
+        <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+      </button>
+    </ion-row>
+
+    <ion-row>
+      <button class="ion-activatable ripple-parent" (click) ="openConversation()">
+        Open chat
+        <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+      </button>
+    </ion-row>
+    <ion-row>
+      <button class="ion-activatable ripple-parent" (click) ="openParticularConversation()">
+        open Particular Conversation
+        <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+      </button>
+    </ion-row>
+
+    <ion-row>
+      <button class="ion-activatable ripple-parent" (click) ="updateSettings()">
+        Update setting
+        <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+      </button>
+    </ion-row>
+
+
+    <ion-row>
+      <button class="ion-activatable ripple-parent" (click) ="updateTeamId()">
+        Update team
+        <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+      </button>
+    </ion-row>
+
 
     <ion-row>
       <button class="ion-activatable ripple-parent" (click) ="launchAndCreateIfEmpty()">
