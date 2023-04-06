@@ -106,9 +106,9 @@ If you already have the user details then create a KMUser object using the detai
 
 ```js
    let kmUser = {
-      userId: "reytum", //unique userId
-      password: "reytum", //optional,
-      displayName: "Rey" //optional
+      userId: "<userId>", //unique userId
+      password: "<password>", //optional,
+      displayName: "<displayName>" //optional
       imageLink: "" //optional
     };
     
