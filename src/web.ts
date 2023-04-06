@@ -8,10 +8,22 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin implements Kommunic
       platforms: ['web'],
     });
   }
-  login(options: any): Promise<void> {
+  openConversation(): Promise<void> {
     throw new Error('Method not implemented.');
   }
-  loginAsVisitor(options: any): Promise<void> {
+  openParticularConversation(_options: any): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+  updateTeamId(_options: any): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+  updateDefaultSettings(_options: any): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+  login(_options: any): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+  loginAsVisitor(_options: any): Promise<void> {
     throw new Error('Method not implemented.');
   }
   getUnreadCount(): Promise<void> {
