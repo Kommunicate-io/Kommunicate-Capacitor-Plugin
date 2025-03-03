@@ -166,39 +166,41 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
     }
 
     @objc func login(_ call: CAPPluginCall) {
-
         guard let appId = call.options["appId"] as? String, !appId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             call.reject("AppID is missing")
+            return
+        }
+        
+        Kommunicate.setup(applicationId: appId)
+        
+        do {
+            guard var kmString = call.options as? [String: Any] else {
+                call.reject("Error during login: Invalid JSON")
+                return
+            }
+            
+            kmString.removeValue(forKey: "appId")
+            let jsonData = try JSONSerialization.data(withJSONObject: kmString, options: .prettyPrinted)
+            if let jsonString = String(data: jsonData, encoding: .utf8),
+               let kmUser = KMUser(jsonString: jsonString) {
+                kmUser.applicationId = appId
+                kmUser.platform = NSNumber(value: PLATFORM_CAPACITOR.rawValue)
+                
+                Kommunicate.registerUser(kmUser) { response, error in
+                    if let error = error {
+                        call.reject("Error during login")
                         return
                     }
-                    Kommunicate.setup(applicationId: appId)
-                    
-                    do {
-                        guard var kmString = call.options as? Dictionary<String, Any> else {
-                            call.reject("Error during login: Invalid JSON")
-                            return
-                        }
-                        kmString["appId"] = nil
-                        
-                            let jsonData = try JSONSerialization.data(withJSONObject: kmString, options: .prettyPrinted)
-                            let jsonString = String(bytes: jsonData, encoding: .utf8)
-                        print(jsonString)
-                        let kmUser = KMUser(jsonString: jsonString)
-                        kmUser?.applicationId = appId
-                        
-                        Kommunicate.registerUser(kmUser!, completion: {
-                            response, error in
-                            guard error == nil else {
-                                call.reject("Error during login")
-                                return
-                            }
-                            call.resolve(["Success" : "Login successful"])
-                        })
-                    } catch {
-                        call.reject("Error during login")
-
-                    }
+                    call.resolve(["Success": "Login successful"])
+                }
+            } else {
+                call.reject("Error during login: Invalid JSON String or KMUser")
+            }
+        } catch {
+            call.reject("Error during login")
+        }
     }
+
     @objc func loginAsVisitor(_ call: CAPPluginCall) {
         
         guard let appId = call.options["appId"] as? String, !appId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
@@ -208,10 +210,11 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
                     Kommunicate.setup(applicationId: appId)
                     
                     let kmUser = KMUser()
-    kmUser.userId = Kommunicate.randomId()
+                    kmUser.userId = Kommunicate.randomId()
                     kmUser.applicationId = appId
+                    kmUser.platform =  NSNumber(value: PLATFORM_CAPACITOR.rawValue)
                     
-                    Kommunicate.registerUser(kmUser, completion: {
+                    Kommunicate.registerUserAsVisitor(kmUser, completion: {
                         response, error in
                         guard error == nil else {
                             call.reject("Unable to login as Visitor")
@@ -538,7 +541,9 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
 }
 
 extension UIApplication {
-    class func topViewController(controller: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+    class func topViewController(controller: UIViewController? = UIApplication.shared.connectedScenes
+                                    .compactMap { ($0 as? UIWindowScene)?.windows.first { $0.isKeyWindow } }
+                                    .first?.rootViewController) -> UIViewController? {
         if let navigationController = controller as? UINavigationController {
             return topViewController(controller: navigationController.visibleViewController)
         }
@@ -551,4 +556,5 @@ extension UIApplication {
             return topViewController(controller: presented)
         }
         return controller
-    }}
+    }
+}
