@@ -64,7 +64,10 @@ public class KommunicateCapacitorPlugin extends Plugin {
         if (call.getData().has("appId")) {
             Kommunicate.init(getContext(), call.getString("appId"));
         } else {
-            Kommunicate.isLoggedIn(getContext());
+            if (!Kommunicate.isLoggedIn(getContext())) {
+                call.error(ERROR, "User is not logged in and no appId provided. Please provide an appId or log in first.", null);
+                return;
+            }
         }
 
         final KmConversationBuilder conversationBuilder = (KmConversationBuilder) GsonUtils.getObjectFromJson(
@@ -201,7 +204,8 @@ public class KommunicateCapacitorPlugin extends Plugin {
     public void openConversation(PluginCall call) {
 
         if (!Kommunicate.isLoggedIn(getContext())) {
-            call.error(ERROR, "User is not logged in. Please log in to continue.", null); 
+            call.error(ERROR, "User is not logged in. Please log in to continue.", null);
+            return;
         }
 
         Kommunicate.openConversation(getContext(), new KmCallback() {
@@ -222,7 +226,8 @@ public class KommunicateCapacitorPlugin extends Plugin {
         try {
 
             if (!Kommunicate.isLoggedIn(getContext())) {
-                call.error(ERROR, "User is not logged in. Please log in to continue.", null); 
+                call.error(ERROR, "User is not logged in. Please log in to continue.", null);
+                return;
             }
 
             if(call.getData().has("clientConversationId")) {
