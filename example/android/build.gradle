@@ -3,7 +3,6 @@
 buildscript {
     
     ext {
-        agp_version = '4.2.0'
         agp_version1 = '8.5.2'
     }
     repositories {
