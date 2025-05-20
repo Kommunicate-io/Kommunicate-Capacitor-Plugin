@@ -421,7 +421,7 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
     
     func updateUser (displayName: String?, imageLink : String?, status: String?, metadata: NSMutableDictionary?,phoneNumber: String?,email : String?, call: CAPPluginCall) {
         
-        let theUrlString = "\(ALUserDefaultsHandler.getBASEURL() as String)/rest/ws/user/update"
+        let theUrlString = "\(KMCoreUserDefaultsHandler.getBASEURL() as String)/rest/ws/user/update"
         
         let dictionary = NSMutableDictionary()
         if (displayName != nil) {
@@ -474,8 +474,8 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
     func launchAndCreateIfEmpty (
         completion: @escaping (_ error: Kommunicate.KommunicateError?) -> ()) {
         
-        let applozicClient = ApplozicClient(applicationKey: KMUserDefaultHandler.getApplicationKey())
-        applozicClient?.getLatestMessages(false, withCompletionHandler: {
+        let kommunicateClient = KommunicateClient(applicationKey: KMUserDefaultHandler.getApplicationKey())
+            kommunicateClient?.getLatestMessages(false, withCompletionHandler: {
             messageList, error in
             print("Kommunicate: message list received")
             
