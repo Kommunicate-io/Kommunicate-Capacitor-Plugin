@@ -48,6 +48,11 @@ public class KommunicateCapacitorPlugin extends Plugin {
     private static final String SUCCESS = "success";
     private static final String TAG = "KommunicateCapacitorPlugin";
 
+    /**
+     * Builds and optionally launches a Kommunicate conversation based on the provided configuration.
+     *
+     * Accepts conversation parameters as JSON, including optional user and app ID. If `createOnly` is true, creates the conversation without launching it. If `launchAndCreateIfEmpty` is true, launches the conversation or creates and launches if none exists. Otherwise, launches the conversation. Returns the client conversation ID on success.
+     */
     @PluginMethod
     public void buildConversation(final PluginCall call) {
         JSONObject data = call.getData();
@@ -130,6 +135,11 @@ public class KommunicateCapacitorPlugin extends Plugin {
     }
 
 
+    /**
+     * Logs in a user to Kommunicate using the provided app ID and user details.
+     *
+     * Expects a JSON object containing the "appId" and user information. Initializes Kommunicate with the app ID and attempts to authenticate the user. Returns the registration response on success or an error message on failure.
+     */
     @PluginMethod
     public void login(PluginCall call) {
         JSONObject data = call.getData();
@@ -166,6 +176,11 @@ public class KommunicateCapacitorPlugin extends Plugin {
         }
     }
 
+    /**
+     * Logs in a user as a visitor using the provided app ID.
+     *
+     * Expects the `appId` parameter in the call data. Initializes Kommunicate with the app ID and performs a visitor login. Returns the registration response on success, or an error message if the login fails or the app ID is missing.
+     */
     @PluginMethod
     public void loginAsVisitor(PluginCall call) {
         try {
@@ -197,6 +212,11 @@ public class KommunicateCapacitorPlugin extends Plugin {
         }
     }
 
+    /**
+     * Opens the conversation screen for the currently logged-in user.
+     *
+     * Returns a success callback with a message on successful launch, or an error callback if the user is not logged in or if the operation fails.
+     */
     @PluginMethod
     public void openConversation(PluginCall call) {
 
@@ -219,6 +239,11 @@ public class KommunicateCapacitorPlugin extends Plugin {
         });
     }
 
+    /**
+     * Opens a specific conversation by client or conversation ID.
+     *
+     * Retrieves and opens a conversation using either a client conversation ID or a conversation ID provided in the call data. Returns an error if the user is not logged in, if required parameters are missing or empty, or if the conversation cannot be found.
+     */
     @PluginMethod
     @SuppressWarnings("deprecation") // optional: if Kommunicate uses deprecated APIs internally
     public void openParticularConversation(PluginCall call) {
@@ -304,6 +329,11 @@ public class KommunicateCapacitorPlugin extends Plugin {
             call.errorCallback(e.toString());
         }
     }
+    /**
+     * Updates the team ID associated with a specific conversation.
+     *
+     * Requires either a valid client conversation ID or conversation ID, and a non-empty team ID. The user must be logged in before calling this method.
+     */
     @PluginMethod
     public void updateTeamId(PluginCall call) {
         try {
@@ -347,6 +377,14 @@ public class KommunicateCapacitorPlugin extends Plugin {
         }
     }
 
+    /**
+     * Updates the default conversation settings for Kommunicate.
+     *
+     * Applies new default agent IDs, bot IDs, assignee, team ID, and routing preferences based on the provided configuration.
+     * Existing default settings are cleared before applying the new values.
+     *
+     * The call data should contain any combination of the following keys: "defaultAgentIds" (array), "defaultBotIds" (array), "defaultAssignee" (string), "teamId" (string), and "skipRouting" (boolean).
+     */
     @PluginMethod
     public void updateDefaultSettings(PluginCall call) {
         try {
@@ -383,7 +421,13 @@ public class KommunicateCapacitorPlugin extends Plugin {
         }
     }
 
-    // Helper method moved outside
+    /**
+     * Converts a JSONArray of strings to a List of strings.
+     *
+     * @param jsonArray the JSONArray to convert
+     * @return a List containing all string elements from the JSONArray
+     * @throws JSONException if an element cannot be retrieved as a string
+     */
     private static List<String> jsonArrayToList(JSONArray jsonArray) throws JSONException {
         List<String> list = new ArrayList<>();
         if (jsonArray != null) {
@@ -394,6 +438,11 @@ public class KommunicateCapacitorPlugin extends Plugin {
         return list;
     }
 
+    /**
+     * Updates the chat context for the currently logged-in user.
+     *
+     * Converts the provided call data to a map of string key-value pairs and updates the chat context in Kommunicate. Returns an error if the user is not logged in.
+     */
     @PluginMethod
     @SuppressWarnings({"unchecked"})  // suppress unchecked cast warning for GsonUtils and deprecation if Kommunicate uses deprecated APIs internally
     public void updateChatContext(PluginCall call) {
@@ -422,6 +471,11 @@ public class KommunicateCapacitorPlugin extends Plugin {
         }
     }
 
+    /**
+     * Retrieves the total number of unread messages for the currently logged-in user.
+     *
+     * Returns an error if no user is logged in.
+     */
     @PluginMethod
     public void getUnreadCount(PluginCall call) {
         Utils.printLog(getContext(), TAG, "Called method get unread count");
@@ -436,6 +490,11 @@ public class KommunicateCapacitorPlugin extends Plugin {
     }
 
 
+    /**
+     * Updates the details of the currently logged-in user in Kommunicate.
+     *
+     * Returns a success callback if the user details are updated, or an error callback if the user is not logged in or the update fails.
+     */
     @PluginMethod
     @SuppressWarnings({"deprecation"})  // suppress unchecked cast warning for GsonUtils and deprecation if Kommunicate uses deprecated APIs internally
     public void updateUserDetails(final PluginCall call) {
@@ -470,6 +529,11 @@ public class KommunicateCapacitorPlugin extends Plugin {
     }
 
 
+    /**
+     * Logs out the current user from the Kommunicate session.
+     *
+     * Invokes the Kommunicate SDK logout process and returns a success or error callback based on the outcome.
+     */
     @PluginMethod
     public void logout(final PluginCall call) {
         Utils.printLog(getContext(), TAG, "Called method logout");
@@ -494,6 +558,13 @@ public class KommunicateCapacitorPlugin extends Plugin {
         }
     }
 
+    /**
+     * Creates a PluginResult containing a single key-value pair.
+     *
+     * @param key the key to add to the result
+     * @param value the value associated with the key
+     * @return a PluginResult with the specified key and value
+     */
     private PluginResult getPluginResultObject(String key, Object value) {
         PluginResult result = new PluginResult();
         result.put(key, value);
