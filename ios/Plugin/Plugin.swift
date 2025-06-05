@@ -419,9 +419,21 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
         UIApplication.topViewController()?.dismiss(animated: false, completion: nil)
     }
     
+    /// Updates the user's profile details such as display name, image, status, metadata, phone number, and email.
+    ///
+    /// Sends a request to the server to update the specified user fields. Resolves the call on success, or rejects with an error message if the update fails.
+    ///
+    /// - Parameters:
+    ///   - displayName: The new display name for the user, if provided.
+    ///   - imageLink: The URL of the user's profile image, if provided.
+    ///   - status: The user's status message, if provided.
+    ///   - metadata: Additional metadata for the user, if provided.
+    ///   - phoneNumber: The user's phone number, if provided.
+    ///   - email: The user's email address, if provided.
+    ///   - call: The Capacitor plugin call to resolve or reject based on the update result.
     func updateUser (displayName: String?, imageLink : String?, status: String?, metadata: NSMutableDictionary?,phoneNumber: String?,email : String?, call: CAPPluginCall) {
         
-        let theUrlString = "\(ALUserDefaultsHandler.getBASEURL() as String)/rest/ws/user/update"
+        let theUrlString = "\(KMCoreUserDefaultsHandler.getBASEURL() as String)/rest/ws/user/update"
         
         let dictionary = NSMutableDictionary()
         if (displayName != nil) {
@@ -471,11 +483,15 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
         })
     }
     
+    /// Launches the chat list if conversations exist; otherwise, creates a new conversation.
+    ///
+    /// If there are existing messages, presents the chat list UI. If not, initiates the conversation creation flow.
+    /// - Parameter completion: Completion handler called with an error if the operation fails.
     func launchAndCreateIfEmpty (
         completion: @escaping (_ error: Kommunicate.KommunicateError?) -> ()) {
         
-        let applozicClient = ApplozicClient(applicationKey: KMUserDefaultHandler.getApplicationKey())
-        applozicClient?.getLatestMessages(false, withCompletionHandler: {
+        let kommunicateClient = KommunicateClient(applicationKey: KMUserDefaultHandler.getApplicationKey())
+            kommunicateClient?.getLatestMessages(false, withCompletionHandler: {
             messageList, error in
             print("Kommunicate: message list received")
             
