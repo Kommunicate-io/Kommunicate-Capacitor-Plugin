@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import {KommunicateCapacitorPlugin} from 'capacitor-plugin-kommunicate';
-import { Plugins } from '@capacitor/core';
+// import { Plugins } from '@capacitor/core';
 import { Capacitor } from '@capacitor/core';
-const {Modals } = Plugins;
+// const {Modals } = Plugins;
 import { LoadingController } from '@ionic/angular';
 const appId = "<Your-App-Id>"
 
