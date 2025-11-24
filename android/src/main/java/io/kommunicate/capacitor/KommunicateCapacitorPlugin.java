@@ -6,19 +6,22 @@ import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 
-import com.applozic.mobicomkit.api.account.register.RegistrationResponse;
-import com.applozic.mobicomkit.api.account.user.AlUserUpdateTask;
-import com.applozic.mobicomkit.api.conversation.ApplozicConversation;
-import com.applozic.mobicomkit.api.conversation.Message;
-import com.applozic.mobicomkit.api.conversation.database.MessageDatabaseService;
-import com.applozic.mobicomkit.channel.service.ChannelService;
-import com.applozic.mobicomkit.exception.ApplozicException;
-import com.applozic.mobicomkit.feed.ChannelFeedApiResponse;
-import com.applozic.mobicomkit.listners.AlCallback;
-import com.applozic.mobicomkit.listners.MessageListHandler;
-import com.applozic.mobicommons.commons.core.utils.Utils;
-import com.applozic.mobicommons.json.GsonUtils;
-import com.applozic.mobicommons.people.channel.Channel;
+import io.kommunicate.commons.commons.core.utils.Utils;
+import io.kommunicate.commons.json.GsonUtils;
+import io.kommunicate.commons.people.channel.Channel;
+import io.kommunicate.devkit.api.account.register.RegistrationResponse;
+import io.kommunicate.devkit.api.account.user.MobiComUserPreference;
+import io.kommunicate.devkit.api.account.user.UserUpdateTask;
+import io.kommunicate.devkit.api.conversation.ConversationHelper;
+import io.kommunicate.devkit.api.conversation.Message;
+import io.kommunicate.devkit.api.conversation.MessageBuilder;
+import io.kommunicate.devkit.api.conversation.database.MessageDatabaseService;
+import io.kommunicate.devkit.channel.service.ChannelService;
+import io.kommunicate.devkit.contact.AppContactService;
+import io.kommunicate.devkit.feed.ChannelFeedApiResponse;
+import io.kommunicate.devkit.listners.ResultCallback;
+import io.kommunicate.usecase.UserUpdateUseCase;
+
 import com.getcapacitor.JSObject;
 import com.getcapacitor.NativePlugin;
 import com.getcapacitor.Plugin;
@@ -127,7 +130,7 @@ public class KommunicateCapacitorPlugin extends Plugin {
                 boolean launchAndCreateIfEmpty = call.getData().has("launchAndCreateIfEmpty") && call.getData().getBoolean("launchAndCreateIfEmpty");
 
                 if (launchAndCreateIfEmpty) {
-                    ApplozicConversation.getLatestMessageList(
+                    ConversationHelper.getLatestMessageList(
                             getActivity(),
                             false,
                             new TaskListener<List<Message>>() {
@@ -427,10 +430,10 @@ public class KommunicateCapacitorPlugin extends Plugin {
         try {
             if (KMUser.isLoggedIn(getContext())) {
                 KMUser kmUser = (KMUser) GsonUtils.getObjectFromJson(call.getData().toString(), KMUser.class);
-                new AlUserUpdateTask(
+                new UserUpdateTask(
                     getContext(),
                     kmUser,
-                    new AlCallback() {
+                    new ResultCallback() {
                         @Override
                         public void onSuccess(Object message) {
                             call.successCallback(getPluginResultObject(SUCCESS, "User details updated"));
