@@ -1,6 +1,6 @@
 {
   "name": "capacitor-plugin-kommunicate",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "description": "A smart customer support plugin for capacitor",
   "main": "dist/plugin.js",
   "module": "dist/esm/index.js",
@@ -14,7 +14,7 @@
     "watch": "tsc --watch",
     "prepublishOnly": "npm run build"
   },
-  "author": "aman.toppo@kommunicate.io",
+  "author": "adarsh@kommunicate.io",
   "license": "BSD-3",
   "devDependencies": {
     "@capacitor/android": "^3.6.0",
@@ -25,7 +25,7 @@
     "@rollup/plugin-node-resolve": "^8.1.0",
     "prettier": "^2.7.1",
     "prettier-plugin-java": "^0.8.0",
-    "rimraf": "^3.0.0",
+    "rimraf": "^3.0.2",
     "rollup": "^2.77.0",
     "swiftlint": "^1.0.1",
     "typescript": "~3.8.3"

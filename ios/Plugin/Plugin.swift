@@ -256,7 +256,7 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
                                             call.reject("Invalid or Empty conversationID")
                                             return
                                         }
-                                        let alChannelService = ALChannelService()
+                                        let alChannelService = KMCoreChannelService()
                                             alChannelService.getChannelInformation(NSNumber(value: conversationId), orClientChannelKey: nil) { (channel) in
                                                 if (channel != nil && channel?.clientChannelKey != nil) {
                                                     clientConversationId = channel!.clientChannelKey
@@ -285,7 +285,7 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
     }
     
     @objc func openParticularConversation(_ call: CAPPluginCall) {
-        let alChannelService = ALChannelService()
+        let alChannelService = KMCoreChannelService()
         
         if let conversationId = call.options["conversationId"] as? String, !conversationId.isEmpty {
             alChannelService.getChannelInformation(NSNumber(value: Int(conversationId)!), orClientChannelKey: nil) { (channel) in
@@ -366,7 +366,7 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
     func openConversationWithList(response: String, viewController: UIViewController) {
         DispatchQueue.main.async {
             let conversationVC = Kommunicate.conversationListViewController()
-            let navVC = ALKBaseNavigationViewController(rootViewController: conversationVC)
+            let navVC = KMBaseNavigationViewController(rootViewController: conversationVC)
             navVC.modalPresentationStyle = .fullScreen
             viewController.present(navVC, animated: false, completion: {
                 // show conversation
@@ -421,7 +421,7 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
     
     func updateUser (displayName: String?, imageLink : String?, status: String?, metadata: NSMutableDictionary?,phoneNumber: String?,email : String?, call: CAPPluginCall) {
         
-        let theUrlString = "\(ALUserDefaultsHandler.getBASEURL() as String)/rest/ws/user/update"
+        let theUrlString = "\(KMCoreUserDefaultsHandler.getBASEURL() as String)/rest/ws/user/update"
         
         let dictionary = NSMutableDictionary()
         if (displayName != nil) {
@@ -474,7 +474,7 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
     func launchAndCreateIfEmpty (
         completion: @escaping (_ error: Kommunicate.KommunicateError?) -> ()) {
         
-        let applozicClient = ApplozicClient(applicationKey: KMUserDefaultHandler.getApplicationKey())
+        let applozicClient = KommunicateClient(applicationKey: KMUserDefaultHandler.getApplicationKey())
         applozicClient?.getLatestMessages(false, withCompletionHandler: {
             messageList, error in
             print("Kommunicate: message list received")

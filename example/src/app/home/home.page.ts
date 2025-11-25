@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import {KommunicateCapacitorPlugin} from 'capacitor-plugin-kommunicate';
-import { Plugins } from '@capacitor/core';
+import { registerPlugin } from '@capacitor/core';
 import { Capacitor } from '@capacitor/core';
-const {Modals } = Plugins;
+const KommunicatePlugin = registerPlugin('KommunicateCapacitorPlugin') as any;
 import { LoadingController } from '@ionic/angular';
 const appId = "<Your-App-Id>"
 
@@ -26,7 +25,7 @@ export class HomePage {
     });
     await loading.present();
     
-    KommunicateCapacitorPlugin.buildConversation({
+    KommunicatePlugin.buildConversation({
       appId: appId,
       withPreChat: true,
       launchAndCreateIfEmpty: true
@@ -40,7 +39,7 @@ export class HomePage {
   }
 
   getUnreadCount() {
-    KommunicateCapacitorPlugin.getUnreadCount().then((res) => {
+    KommunicatePlugin.getUnreadCount().then((res) => {
       console.log("Unread count : " + JSON.stringify(res))
     }).catch(async (error) => {
       console.log("Unread count error : " + error)
@@ -64,7 +63,7 @@ export class HomePage {
       kmUser: JSON.stringify(kmUser)
     };
 
-    KommunicateCapacitorPlugin.buildConversation(conversationObject).then((res) => {
+    KommunicatePlugin.buildConversation(conversationObject).then((res) => {
       console.log("Conversation builder success : " + JSON.stringify(res))
     }).catch((error) => {
       console.log("Conversation builder error : " + error)
@@ -78,7 +77,7 @@ export class HomePage {
        'key' : 'Value from cap ' + Capacitor.getPlatform()
     };
 
-    KommunicateCapacitorPlugin.updateChatContext(chatContext).then((res) => {
+    KommunicatePlugin.updateChatContext(chatContext).then((res) => {
       console.log("Update chat context success : " + JSON.stringify(res))
     }).catch((error) => {
       console.log("Update chat context error : " + error)
@@ -94,7 +93,7 @@ export class HomePage {
         'platform': Capacitor.getPlatform() === 'android' ? 'Android' : (Capacitor.getPlatform() === 'ios' ? 'iOS' : 'Web')
       }
     }
-    KommunicateCapacitorPlugin.updateUserDetails(userDetails).then((res) => {
+    KommunicatePlugin.updateUserDetails(userDetails).then((res) => {
       console.log("Update user details success : " + JSON.stringify(res))
     }).catch((error) => {
       console.log("Update user details error : " + error)
@@ -104,7 +103,7 @@ export class HomePage {
   logout() {
     console.log("Click received from logout")
 
-    KommunicateCapacitorPlugin.logout().then((res) => {
+    KommunicatePlugin.logout().then((res) => {
       console.log("Logout success : " + JSON.stringify(res))
     }).catch((error) => {
       console.log("Logout error : " + error)
@@ -112,7 +111,7 @@ export class HomePage {
   }
 
   login() {
-    KommunicateCapacitorPlugin.login({
+    KommunicatePlugin.login({
       appId: appId,
       userId: 'aman',
       password: 'aman'
@@ -125,7 +124,7 @@ export class HomePage {
   }
 
   loginAsVisitor() {
-    KommunicateCapacitorPlugin.loginAsVisitor({appId: appId}).then((res) => {
+    KommunicatePlugin.loginAsVisitor({appId: appId}).then((res) => {
       console.log("Login as visitor" + JSON.stringify(res))
     }).catch(async (error) => {
       console.log("login error : " + error)
@@ -133,7 +132,7 @@ export class HomePage {
   }
 
   openConversation() {
-    KommunicateCapacitorPlugin.openConversation().then((res) => {
+    KommunicatePlugin.openConversation().then((res) => {
       console.log("Open conversation" + JSON.stringify(res))
     }).catch(async (error) => {
       console.log("login error : " + error)
@@ -148,7 +147,7 @@ export class HomePage {
       "teamId": "63773459"
       };
 
-    KommunicateCapacitorPlugin.updateDefaultSettings(settings).then((res) => {
+    KommunicatePlugin.updateDefaultSettings(settings).then((res) => {
       console.log("Update setting" + JSON.stringify(res))
     }).catch(async (error) => {
       console.log("login error : " + error)
@@ -156,7 +155,7 @@ export class HomePage {
   }
 
   updateTeamId() {
-    KommunicateCapacitorPlugin.updateTeamId({
+    KommunicatePlugin.updateTeamId({
       'clientConversationId': '69360869',
       'teamId': '63641656'
     }).then((res) => {
@@ -167,7 +166,7 @@ export class HomePage {
   }
 
   openParticularConversation() {
-    KommunicateCapacitorPlugin.openParticularConversation({
+    KommunicatePlugin.openParticularConversation({
       'clientConversationId': '69360869',
 'teamId': '63641656'
     }).then((res) => {
