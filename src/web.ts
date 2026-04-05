@@ -2,12 +2,6 @@ import { WebPlugin } from '@capacitor/core';
 import { KommunicateCapacitor } from './definitions';
 
 export class KommunicateCapacitorPluginWeb extends WebPlugin implements KommunicateCapacitor {
-  constructor() {
-    super({
-      name: 'KommunicateCapacitorPlugin',
-      platforms: ['web'],
-    });
-  }
   openConversation(): Promise<void> {
     throw new Error('Method not implemented.');
   }

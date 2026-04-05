@@ -1,12 +1,31 @@
 var capacitorPlugin = (function (exports, core) {
     'use strict';
 
+    const KommunicateCapacitorPlugin = core.registerPlugin('KommunicateCapacitorPlugin', {
+        web: () => Promise.resolve().then(function () { return web; }).then((m) => new m.KommunicateCapacitorPluginWeb()),
+    });
+
     class KommunicateCapacitorPluginWeb extends core.WebPlugin {
-        constructor() {
-            super({
-                name: 'KommunicateCapacitorPlugin',
-                platforms: ['web'],
-            });
+        openConversation() {
+            throw new Error('Method not implemented.');
+        }
+        openParticularConversation(_options) {
+            throw new Error('Method not implemented.');
+        }
+        updateTeamId(_options) {
+            throw new Error('Method not implemented.');
+        }
+        updateDefaultSettings(_options) {
+            throw new Error('Method not implemented.');
+        }
+        login(_options) {
+            throw new Error('Method not implemented.');
+        }
+        loginAsVisitor(_options) {
+            throw new Error('Method not implemented.');
+        }
+        getUnreadCount() {
+            throw new Error('Method not implemented.');
         }
         buildConversation(options) {
             return new Promise((resolve, reject) => {
@@ -186,8 +205,8 @@ var capacitorPlugin = (function (exports, core) {
         }
         getPrechatLeadDetails() {
             return [{
-                    "field": "Name",
-                    "required": false,
+                    "field": "Name", // Name of the field you want to add
+                    "required": false, // Set 'true' to make it a mandatory field
                     "placeholder": "enter your name" // add whatever text you want to show in the placeholder
                 },
                 {
@@ -200,7 +219,7 @@ var capacitorPlugin = (function (exports, core) {
                     "field": "Phone",
                     "type": "number",
                     "required": true,
-                    "element": "input",
+                    "element": "input", // Optional field (Possible values: textarea or input) 
                     "placeholder": "Enter your phone number"
                 }
             ];
@@ -261,10 +280,10 @@ var capacitorPlugin = (function (exports, core) {
         }
         startConversation(conversationObj, clientChannelKey, successCallback, errorCallback) {
             var conversationDetail = {
-                "agentIds": conversationObj.agentIds,
-                "botIds": conversationObj.botIds,
-                "skipRouting": conversationObj.skipRouting,
-                "assignee": conversationObj.conversationAssignee,
+                "agentIds": conversationObj.agentIds, // Optional. If you do not pass any agent ID, the default agent will automatically get selected.
+                "botIds": conversationObj.botIds, // Optional. Pass the bot IDs of the bots you want to add in this conversation.
+                "skipRouting": conversationObj.skipRouting, // Optional. If this parameter is set to 'true', then routing rules will be skipped for this conversation.
+                "assignee": conversationObj.conversationAssignee, // Optional. You can assign this conversation to any agent or bot. If you do not pass the ID. the conversation will assigned to the default agent. 
                 "groupName": conversationObj.groupName,
                 'clientGroupId': clientChannelKey
             };
@@ -300,15 +319,17 @@ var capacitorPlugin = (function (exports, core) {
             return clientId;
         }
     }
-    const KommunicatePlugin = new KommunicateCapacitorPluginWeb();
-    core.registerWebPlugin(KommunicatePlugin);
 
-    exports.KommunicateCapacitorPluginWeb = KommunicateCapacitorPluginWeb;
-    exports.KommunicatePlugin = KommunicatePlugin;
+    var web = /*#__PURE__*/Object.freeze({
+        __proto__: null,
+        KommunicateCapacitorPluginWeb: KommunicateCapacitorPluginWeb
+    });
+
+    exports.KommunicateCapacitorPlugin = KommunicateCapacitorPlugin;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
     return exports;
 
-}({}, capacitorExports));
+})({}, capacitorExports);
 //# sourceMappingURL=plugin.js.map

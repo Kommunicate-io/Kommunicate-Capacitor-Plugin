@@ -1,10 +1,25 @@
 import { WebPlugin } from '@capacitor/core';
 export class KommunicateCapacitorPluginWeb extends WebPlugin {
-    constructor() {
-        super({
-            name: 'KommunicateCapacitorPlugin',
-            platforms: ['web'],
-        });
+    openConversation() {
+        throw new Error('Method not implemented.');
+    }
+    openParticularConversation(_options) {
+        throw new Error('Method not implemented.');
+    }
+    updateTeamId(_options) {
+        throw new Error('Method not implemented.');
+    }
+    updateDefaultSettings(_options) {
+        throw new Error('Method not implemented.');
+    }
+    login(_options) {
+        throw new Error('Method not implemented.');
+    }
+    loginAsVisitor(_options) {
+        throw new Error('Method not implemented.');
+    }
+    getUnreadCount() {
+        throw new Error('Method not implemented.');
     }
     buildConversation(options) {
         return new Promise((resolve, reject) => {
@@ -184,8 +199,8 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin {
     }
     getPrechatLeadDetails() {
         return [{
-                "field": "Name",
-                "required": false,
+                "field": "Name", // Name of the field you want to add
+                "required": false, // Set 'true' to make it a mandatory field
                 "placeholder": "enter your name" // add whatever text you want to show in the placeholder
             },
             {
@@ -198,7 +213,7 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin {
                 "field": "Phone",
                 "type": "number",
                 "required": true,
-                "element": "input",
+                "element": "input", // Optional field (Possible values: textarea or input) 
                 "placeholder": "Enter your phone number"
             }
         ];
@@ -259,10 +274,10 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin {
     }
     startConversation(conversationObj, clientChannelKey, successCallback, errorCallback) {
         var conversationDetail = {
-            "agentIds": conversationObj.agentIds,
-            "botIds": conversationObj.botIds,
-            "skipRouting": conversationObj.skipRouting,
-            "assignee": conversationObj.conversationAssignee,
+            "agentIds": conversationObj.agentIds, // Optional. If you do not pass any agent ID, the default agent will automatically get selected.
+            "botIds": conversationObj.botIds, // Optional. Pass the bot IDs of the bots you want to add in this conversation.
+            "skipRouting": conversationObj.skipRouting, // Optional. If this parameter is set to 'true', then routing rules will be skipped for this conversation.
+            "assignee": conversationObj.conversationAssignee, // Optional. You can assign this conversation to any agent or bot. If you do not pass the ID. the conversation will assigned to the default agent. 
             "groupName": conversationObj.groupName,
             'clientGroupId': clientChannelKey
         };
@@ -298,8 +313,4 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin {
         return clientId;
     }
 }
-const KommunicatePlugin = new KommunicateCapacitorPluginWeb();
-export { KommunicatePlugin };
-import { registerWebPlugin } from '@capacitor/core';
-registerWebPlugin(KommunicatePlugin);
 //# sourceMappingURL=web.js.map
