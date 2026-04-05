@@ -13,6 +13,6 @@ Pod::Spec.new do |s|
   s.source_files = 'ios/Plugin/**/*.{swift,h,m,c,cc,mm,cpp}'
   s.ios.deployment_target  = '15.0'
   s.dependency 'Capacitor'
-  s.swift_version = '5.1'
+  s.swift_version = '5.9'
   s.dependency 'Kommunicate', '~> 7.3.4'
 end

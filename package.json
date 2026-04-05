@@ -1,10 +1,6 @@
 {
   "name": "capacitor-plugin-kommunicate",
-<<<<<<< HEAD
-  "version": "6.1.1",
-=======
   "version": "8.0.0",
->>>>>>> c5682da (feat: add Capacitor 8 support)
   "description": "A smart customer support plugin for capacitor",
   "main": "dist/plugin.js",
   "module": "dist/esm/index.js",
