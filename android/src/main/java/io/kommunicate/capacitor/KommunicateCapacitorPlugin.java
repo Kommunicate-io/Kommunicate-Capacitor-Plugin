@@ -262,6 +262,8 @@ public class KommunicateCapacitorPlugin extends Plugin {
                             } catch (KmException k) {
                                 call.reject(k.getMessage());
                             }
+                        } else {
+                            call.reject("Conversation not found");
                         }
                     }
 
@@ -291,6 +293,8 @@ public class KommunicateCapacitorPlugin extends Plugin {
                                 }
                             });
 
+                        } else {
+                            call.reject("Conversation not found");
                         }
                     }
 
