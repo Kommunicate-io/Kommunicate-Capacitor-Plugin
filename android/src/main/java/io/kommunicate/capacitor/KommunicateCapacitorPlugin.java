@@ -303,6 +303,8 @@ public class KommunicateCapacitorPlugin extends Plugin {
                         call.reject(e.getMessage());
                     }
                 }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            } else {
+                call.reject("Missing required parameter: clientConversationId or conversationId");
             }
 
         } catch (Exception e) {
