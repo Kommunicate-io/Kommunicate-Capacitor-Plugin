@@ -236,52 +236,53 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
     }
     
     @objc func updateTeamId(_ call: CAPPluginCall) {
-        guard let jsonObj = call.options as? Dictionary<String, Any>, let teamId = jsonObj["teamId"] as? String else {
+        guard let teamId = call.options["teamId"] as? String, !teamId.isEmpty else {
             call.reject("Invalid or empty Team ID")
-                                    return
-                                }
-        guard jsonObj[KommunicateCapacitorPlugin.CLIENT_CONVERSATION_ID] != nil || jsonObj[KommunicateCapacitorPlugin.CONVERSATION_ID] != nil else {
-                        call.reject("Invalid or Empty conversationID")
-                        
-                        return
-                    }
-                    if(Kommunicate.isLoggedIn) {
-                                var clientConversationId: String? = nil
-                        if(jsonObj[KommunicateCapacitorPlugin.CLIENT_CONVERSATION_ID]) != nil {
-                                   
-                            clientConversationId = jsonObj[KommunicateCapacitorPlugin.CLIENT_CONVERSATION_ID] as? String
-                                    }
-                                    else {
-                                        guard let conversationId = jsonObj[KommunicateCapacitorPlugin.CONVERSATION_ID] as? Int else {
-                                            call.reject("Invalid or Empty conversationID")
-                                            return
-                                        }
-                                        let alChannelService = KMCoreChannelService()
-                                            alChannelService.getChannelInformation(NSNumber(value: conversationId), orClientChannelKey: nil) { (channel) in
-                                                if (channel != nil && channel?.clientChannelKey != nil) {
-                                                    clientConversationId = channel!.clientChannelKey
-                                                }
-                                                else {
-                                                    call.reject("Conversation not found, please enter correct Conversation ID")
-                                                }
-                                            }
-                                    }
-                                     let conversation = KMConversationBuilder().withClientConversationId(clientConversationId).build()
-                                    
-                                        Kommunicate.updateTeamId(conversation: conversation, teamId: teamId){ response in
-                                        switch response {
-                                        case .success(let conversationId):
-                                            call.resolve(["success" : "Successfully updated team"])
-                                            break
-                                        case .failure(let error):
-                                            call.reject("Failed to update Team")
-                                            break
-                                        }
-                                        }
-                               
-                                } else {
-                                    call.reject("User not authorised. This usually happens when calling the function before conversationBuilder or loginUser. Make sure you call either of the two functions before updating the teamId")
-                                }
+            return
+        }
+
+        guard Kommunicate.isLoggedIn else {
+            call.reject("User not authorised. This usually happens when calling the function before conversationBuilder or loginUser. Make sure you call either of the two functions before updating the teamId")
+            return
+        }
+
+        let updateTeam: (String) -> Void = { clientConversationId in
+            let conversation = KMConversationBuilder()
+                .withClientConversationId(clientConversationId)
+                .build()
+
+            Kommunicate.updateTeamId(conversation: conversation, teamId: teamId) { response in
+                switch response {
+                case .success:
+                    call.resolve(["success": "Successfully updated team"])
+                case .failure:
+                    call.reject("Failed to update Team")
+                }
+            }
+        }
+
+        if let clientConversationId = call.options[KommunicateCapacitorPlugin.CLIENT_CONVERSATION_ID] as? String,
+           !clientConversationId.isEmpty {
+            updateTeam(clientConversationId)
+            return
+        }
+
+        guard let conversationId = call.options[KommunicateCapacitorPlugin.CONVERSATION_ID] as? Int else {
+            call.reject("Invalid or empty conversationId")
+            return
+        }
+
+        KMCoreChannelService().getChannelInformation(
+            NSNumber(value: conversationId),
+            orClientChannelKey: nil
+        ) { channel in
+            guard let clientConversationId = channel?.clientChannelKey else {
+                call.reject("Conversation not found, please enter correct Conversation ID")
+                return
+            }
+
+            updateTeam(clientConversationId)
+        }
     }
     
     @objc func openParticularConversation(_ call: CAPPluginCall) {
