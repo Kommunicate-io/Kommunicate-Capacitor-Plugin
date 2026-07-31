@@ -121,7 +121,7 @@ public class KommunicateCapacitorPlugin extends Plugin {
             }
         };
 
-        if (call.getData().has("createOnly") && call.getData().has("createOnly")) {
+        if (call.getData().has("createOnly") && call.getData().getBoolean("createOnly", false)) {
             conversationBuilder.createConversation(callback);
         } else {
             try {

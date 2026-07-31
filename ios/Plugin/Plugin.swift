@@ -191,7 +191,7 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
                         call.reject("Error during login")
                         return
                     }
-                    call.resolve(["Success": "Login successful"])
+                    call.resolve(["success": "Login successful"])
                 }
             } else {
                 call.reject("Error during login: Invalid JSON String or KMUser")
@@ -220,7 +220,7 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
                             call.reject("Unable to login as Visitor")
                             return
                         }
-                        call.resolve(["Success" : "Logged in as visitor"])
+                        call.resolve(["success" : "Logged in as visitor"])
                     })
     }
     
@@ -228,7 +228,7 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
         DispatchQueue.main.async{
                         if let top = UIApplication.topViewController(){
                             Kommunicate.showConversations(from: top)
-                            call.resolve(["Success" : "Successfully opened conversation"])
+                            call.resolve(["success" : "Successfully opened conversation"])
                         } else {
                             call.reject("Failed to open conversation")
                         }
@@ -271,7 +271,7 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
                                         Kommunicate.updateTeamId(conversation: conversation, teamId: teamId){ response in
                                         switch response {
                                         case .success(let conversationId):
-                                            call.resolve(["Success" : "Successfully updated team"])
+                                            call.resolve(["success" : "Successfully updated team"])
                                             break
                                         case .failure(let error):
                                             call.reject("Failed to update Team")
@@ -287,24 +287,45 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
     @objc func openParticularConversation(_ call: CAPPluginCall) {
         let alChannelService = KMCoreChannelService()
         
-        if let conversationId = call.options["conversationId"] as? String, !conversationId.isEmpty {
-            alChannelService.getChannelInformation(NSNumber(value: Int(conversationId)!), orClientChannelKey: nil) { (channel) in
+        if let conversationId = call.options["conversationId"] as? String,!conversationId.isEmpty {
+
+            guard let numericConversationId = Int(conversationId) else {
+                call.reject("Invalid conversationId")
+               return
+            }
+
+            alChannelService.getChannelInformation(NSNumber(value: numericConversationId),orClientChannelKey: nil ) { channel in
                 guard let channel = channel, let clientChannelKey = channel.clientChannelKey else{
                     call.reject("Invalid channel")
                     return
                 }
-                self.openParticularConversation(clientChannelKey)
-
+                self.openParticularConversation(clientChannelKey, call: call)
             }
             
         } else if let clientConversationId = call.options["clientConversationId"] as? String, !clientConversationId.isEmpty {
-            self.openParticularConversation(clientConversationId)
+            self.openParticularConversation(clientConversationId, call: call)
         }
             else {
             call.reject("Invalid or empty conversationId")
-                       return
+            return
         }
         
+    }
+
+    func openParticularConversation(_ conversationId: String, call: CAPPluginCall) {
+        DispatchQueue.main.async {
+            guard let top = UIApplication.topViewController() else {call.reject("Failed to launch conversation with conversationId: \(conversationId)")
+                return
+            }
+
+            Kommunicate.showConversationWith(groupId: conversationId, from: top) { shown in
+                if shown {
+                    call.resolve(["success": "Successfully opened conversation"])
+                } else {
+                    call.reject("Failed to launch conversation with conversationId: \(conversationId)")
+                }
+            }
+        }
     }
     
     @objc func updateDefaultSettings(_ call: CAPPluginCall) {
@@ -329,7 +350,7 @@ public class KommunicateCapacitorPlugin: CAPPlugin, KMPreChatFormViewControllerD
                     if let botIds = settingDict["defaultBotIds"] as? [String], !botIds.isEmpty {
                         Kommunicate.defaultConfiguration.defaultBotIds = botIds
                     }
-        call.resolve(["Success": "Default settings updated"])
+        call.resolve(["success": "Default settings updated"])
     }
     
     

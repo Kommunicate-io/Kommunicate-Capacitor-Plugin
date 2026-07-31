@@ -29,11 +29,14 @@ var capacitorPlugin = (function (exports, core) {
         }
         buildConversation(options) {
             return new Promise((resolve, reject) => {
+                const conversationResolved = (clientConversationId) => {
+                    resolve({ clientConversationId: String(clientConversationId) });
+                };
                 let kmUser;
                 if (this.isUserLoggedIn()) {
                     this.init((response) => {
                         console.log(response);
-                        this.createConversation(options, JSON.parse(localStorage.KM_PLUGIN_USER_DETAILS).userId, resolve, reject);
+                        this.createConversation(options, JSON.parse(localStorage.KM_PLUGIN_USER_DETAILS).userId, conversationResolved, reject);
                     }, (error) => {
                         reject(error);
                     });
@@ -56,7 +59,7 @@ var capacitorPlugin = (function (exports, core) {
                     this.initPlugin(kmUser, (response) => {
                         console.log(response);
                         if (!(kmUser.withPreChat && kmUser.withPreChat == true)) {
-                            this.createConversation(options, kmUser.userId, resolve, reject);
+                            this.createConversation(options, kmUser.userId, conversationResolved, reject);
                         }
                     }, (error) => {
                         reject(error);
@@ -72,7 +75,7 @@ var capacitorPlugin = (function (exports, core) {
                 this.init((response) => {
                     console.log(response);
                     window.Kommunicate.updateChatContext(options);
-                    resolve("Chat context updated");
+                    resolve({ success: 'Chat context updated' });
                 }, (error) => {
                     console.log(error);
                     reject(error);
@@ -103,7 +106,7 @@ var capacitorPlugin = (function (exports, core) {
                         userDetails.metadata = options.metadata;
                     }
                     window.Kommunicate.updateUser(userDetails);
-                    resolve("user details updated");
+                    resolve({ success: 'User details updated' });
                 }, (error) => {
                     console.log(error);
                     reject(error);
@@ -117,7 +120,7 @@ var capacitorPlugin = (function (exports, core) {
                         console.log(response);
                         window.Kommunicate.logout();
                         localStorage.removeItem('KM_PLUGIN_USER_DETAILS');
-                        resolve("success");
+                        resolve({ success: 'Logout successful' });
                     }, (error) => {
                         console.log(error);
                         reject(error);
@@ -125,7 +128,7 @@ var capacitorPlugin = (function (exports, core) {
                 }
                 else {
                     localStorage.removeItem('KM_PLUGIN_USER_DETAILS');
-                    resolve("success");
+                    resolve({ success: 'Logout successful' });
                 }
             });
         }
