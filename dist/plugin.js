@@ -46,9 +46,11 @@ var capacitorPlugin = (function (exports, core) {
                         kmUser = JSON.parse(options.kmUser);
                         kmUser.applicationId = options.appId;
                     }
-                    else if (options.withPreChat && options.withPreChat == true) {
-                        kmUser.withPreChat = true;
-                        kmUser.applicationId = options.appId;
+                    else if (options.withPreChat === true) {
+                        kmUser = {
+                            applicationId: options.appId,
+                            withPreChat: true,
+                        };
                     }
                     else {
                         kmUser = {
@@ -58,9 +60,11 @@ var capacitorPlugin = (function (exports, core) {
                     }
                     this.initPlugin(kmUser, (response) => {
                         console.log(response);
-                        if (!(kmUser.withPreChat && kmUser.withPreChat == true)) {
-                            this.createConversation(options, kmUser.userId, conversationResolved, reject);
+                        if (kmUser.withPreChat === true) {
+                            resolve({ success: 'Pre-chat initialized' });
+                            return;
                         }
+                        this.createConversation(options, kmUser.userId, conversationResolved, reject);
                     }, (error) => {
                         reject(error);
                     });

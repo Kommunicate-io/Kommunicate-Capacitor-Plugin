@@ -48,9 +48,11 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin implements Kommunic
 			if (options.kmUser) {
 				kmUser = JSON.parse(options.kmUser);
 				kmUser.applicationId = options.appId
-			} else if (options.withPreChat && options.withPreChat == true) {
-				kmUser.withPreChat = true;
-        kmUser.applicationId = options.appId
+			} else if (options.withPreChat === true) {
+				kmUser = {
+          applicationId: options.appId,
+          withPreChat: true,
+        };
 			} else {
 				kmUser = {
 					'userId': this.getRandomId(),
@@ -59,9 +61,11 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin implements Kommunic
 			}
 			this.initPlugin(kmUser, (response: any) => {
         console.log(response)
-        if(!(kmUser.withPreChat && kmUser.withPreChat == true)) {
-         this.createConversation(options, kmUser.userId, conversationResolved, reject);
+        if (kmUser.withPreChat === true) {
+          resolve({ success: 'Pre-chat initialized' });
+          return;
         }
+        this.createConversation(options, kmUser.userId, conversationResolved, reject);
 			}, (error: any) => {
 				reject(error);
 			});
