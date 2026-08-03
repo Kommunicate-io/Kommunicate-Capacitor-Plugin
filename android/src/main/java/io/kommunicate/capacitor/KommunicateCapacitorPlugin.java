@@ -23,11 +23,9 @@ import io.kommunicate.devkit.listners.ResultCallback;
 import io.kommunicate.usecase.UserUpdateUseCase;
 
 import com.getcapacitor.JSObject;
-import com.getcapacitor.NativePlugin;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
-import com.getcapacitor.PluginResult;
 import com.getcapacitor.annotation.CapacitorPlugin;
 
 import io.kommunicate.KmConversationBuilder;
@@ -73,7 +71,7 @@ public class KommunicateCapacitorPlugin extends Plugin {
             Kommunicate.init(getContext(), call.getString("appId"));
         } else {
             if (!Kommunicate.isLoggedIn(getContext())) {
-                call.errorCallback("User is not logged in and no appId provided. Please provide an appId or log in first.");
+                call.reject("User is not logged in and no appId provided. Please provide an appId or log in first.");
                 return;
             }
         }
@@ -103,15 +101,15 @@ public class KommunicateCapacitorPlugin extends Plugin {
                         .getInstance(getActivity())
                         .getChannel((Integer) message)
                         .getClientGroupId();
-                    call.successCallback(getPluginResultObject("clientConversationId", clientConversationId));
+                    call.resolve(getJsObject("clientConversationId", clientConversationId));
                 } else {
-                    call.successCallback(getPluginResultObject("success", message));
+                    call.resolve(getJsObject("success", message));
                 }
             }
 
             @Override
             public void onFailure(Object error) {
-                call.errorCallback(
+                call.reject(
                     error != null
                         ? (
                             error instanceof ChannelFeedApiResponse
@@ -123,7 +121,7 @@ public class KommunicateCapacitorPlugin extends Plugin {
             }
         };
 
-        if (call.getData().has("createOnly") && call.getData().has("createOnly")) {
+        if (call.getData().has("createOnly") && call.getData().getBoolean("createOnly", false)) {
             conversationBuilder.createConversation(callback);
         } else {
             try {
@@ -166,7 +164,7 @@ public class KommunicateCapacitorPlugin extends Plugin {
             if (call.getData().has("appId") && !TextUtils.isEmpty(call.getString("appId"))) {
                 Kommunicate.init(getContext(), call.getString("appId"));
             } else {
-                call.errorCallback("appId is missing");
+                call.reject("appId is missing");
                 return;
             }
             KMUser user = (KMUser) GsonUtils.getObjectFromJson(call.getData().toString(), KMUser.class);
@@ -174,16 +172,16 @@ public class KommunicateCapacitorPlugin extends Plugin {
             Kommunicate.login(getContext(), user, new KMLoginHandler() {
                 @Override
                 public void onSuccess(RegistrationResponse registrationResponse, Context context) {
-                    call.successCallback(getPluginResultObject(SUCCESS, GsonUtils.getJsonFromObject(registrationResponse, RegistrationResponse.class)));
+                    call.resolve(getJsObject(SUCCESS, GsonUtils.getJsonFromObject(registrationResponse, RegistrationResponse.class)));
                 }
 
                 @Override
                 public void onFailure(RegistrationResponse registrationResponse, Exception exception) {
-                    call.errorCallback(registrationResponse != null ? GsonUtils.getJsonFromObject(registrationResponse, RegistrationResponse.class) : exception != null ? exception.getMessage() : null);
+                    call.reject(registrationResponse != null ? GsonUtils.getJsonFromObject(registrationResponse, RegistrationResponse.class) : exception != null ? exception.getMessage() : null);
                 }
             });
         } catch (Exception e) {
-            call.errorCallback(e.toString());
+            call.reject(e.toString());
         }
     }
 
@@ -193,23 +191,23 @@ public class KommunicateCapacitorPlugin extends Plugin {
             if (call.getData().has("appId") && !TextUtils.isEmpty(call.getString("appId"))) {
                 Kommunicate.init(getContext(), call.getString("appId"));
             } else {
-                call.errorCallback("appId is missing");
+                call.reject("appId is missing");
                 return;
             }
 
             Kommunicate.loginAsVisitor(getContext(), new KMLoginHandler() {
                 @Override
                 public void onSuccess(RegistrationResponse registrationResponse, Context context) {
-                    call.successCallback(getPluginResultObject(SUCCESS, GsonUtils.getJsonFromObject(registrationResponse, RegistrationResponse.class)));
+                    call.resolve(getJsObject(SUCCESS, GsonUtils.getJsonFromObject(registrationResponse, RegistrationResponse.class)));
                 }
 
                 @Override
                 public void onFailure(RegistrationResponse registrationResponse, Exception exception) {
-                    call.errorCallback(registrationResponse != null ? GsonUtils.getJsonFromObject(registrationResponse, RegistrationResponse.class) : exception != null ? exception.getMessage() : null);
+                    call.reject(registrationResponse != null ? GsonUtils.getJsonFromObject(registrationResponse, RegistrationResponse.class) : exception != null ? exception.getMessage() : null);
                 }
             });
         } catch (Exception e) {
-            call.errorCallback(e.toString());
+            call.reject(e.toString());
         }
     }
 
@@ -217,19 +215,19 @@ public class KommunicateCapacitorPlugin extends Plugin {
     public void openConversation(PluginCall call) {
 
         if (!Kommunicate.isLoggedIn(getContext())) {
-            call.errorCallback("User is not logged in. Please log in to continue.");
+            call.reject("User is not logged in. Please log in to continue.");
             return;
         }
 
         Kommunicate.openConversation(getContext(), new KmCallback() {
             @Override
             public void onSuccess(Object message) {
-                call.successCallback(getPluginResultObject(SUCCESS, message.toString()));
+                call.resolve(getJsObject(SUCCESS, message.toString()));
             }
 
             @Override
             public void onFailure(Object error) {
-                call.errorCallback(error.toString());
+                call.reject(error.toString());
             }
         });
     }
@@ -239,7 +237,7 @@ public class KommunicateCapacitorPlugin extends Plugin {
         try {
 
             if (!Kommunicate.isLoggedIn(getContext())) {
-                call.errorCallback("User is not logged in. Please log in to continue.");
+                call.reject("User is not logged in. Please log in to continue.");
                 return;
             }
 
@@ -253,23 +251,25 @@ public class KommunicateCapacitorPlugin extends Plugin {
                                 KmConversationHelper.openConversation(context, true, channel.getKey(), new KmCallback() {
                                     @Override
                                     public void onSuccess(Object message) {
-                                        call.successCallback(getPluginResultObject(SUCCESS, message.toString()));
+                                        call.resolve(getJsObject(SUCCESS, message.toString()));
                                     }
 
                                     @Override
                                     public void onFailure(Object error) {
-                                        call.errorCallback(error.toString());
+                                        call.reject(error.toString());
                                     }
                                 });
                             } catch (KmException k) {
-                                call.errorCallback(k.getMessage());
+                                call.reject(k.getMessage());
                             }
+                        } else {
+                            call.reject("Conversation not found");
                         }
                     }
 
                     @Override
                     public void onFailure(Exception e, Context context) {
-                        call.errorCallback(e.getMessage());
+                        call.reject(e.getMessage());
 
                     }
                 }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -284,27 +284,31 @@ public class KommunicateCapacitorPlugin extends Plugin {
                             Kommunicate.openConversation(context, channel.getKey(), new KmCallback() {
                                 @Override
                                 public void onSuccess(Object message) {
-                                    call.successCallback(getPluginResultObject(SUCCESS, message.toString()));
+                                    call.resolve(getJsObject(SUCCESS, message.toString()));
                                 }
 
                                 @Override
                                 public void onFailure(Object error) {
-                                    call.errorCallback(error.toString());
+                                    call.reject(error.toString());
                                 }
                             });
 
+                        } else {
+                            call.reject("Conversation not found");
                         }
                     }
 
                     @Override
                     public void onFailure(Exception e, Context context) {
-                        call.errorCallback(e.getMessage());
+                        call.reject(e.getMessage());
                     }
                 }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            } else {
+                call.reject("Missing required parameter: clientConversationId or conversationId");
             }
 
         } catch (Exception e) {
-            call.errorCallback(e.toString());
+            call.reject(e.toString());
         }
     }
 
@@ -315,11 +319,11 @@ public class KommunicateCapacitorPlugin extends Plugin {
             final Integer conversationId = call.getData().has("conversationId") ? (Integer) call.getInt("conversationId") : null;
             final String teamId = call.getData().has("teamId") ? (String) call.getString("teamId") : null;
             if (TextUtils.isEmpty(clientConversationId) && conversationId == null) {
-                call.errorCallback("Invalid or empty clientConversationId");
+                call.reject("Invalid or empty clientConversationId");
                 return;
             }
             if (TextUtils.isEmpty(teamId)) {
-                call.errorCallback("Invalid or empty teamID");
+                call.reject("Invalid or empty teamID");
                 return;
             }
             if (Kommunicate.isLoggedIn(getContext())) {
@@ -330,20 +334,20 @@ public class KommunicateCapacitorPlugin extends Plugin {
                         new KmCallback() {
                             @Override
                             public void onSuccess(Object o) {
-                                call.successCallback(getPluginResultObject(SUCCESS, o.toString()));
+                                call.resolve(getJsObject(SUCCESS, o.toString()));
                             }
 
                             @Override
                             public void onFailure(Object o) {
-                                call.errorCallback(o.toString());
+                                call.reject(o.toString());
                             }
                         });
             } else {
-                call.errorCallback("User not authorised. This usually happens when calling the function before conversationBuilder or loginUser. Make sure you call either of the two functions before updating the chatContext");
+                call.reject("User not authorised. This usually happens when calling the function before conversationBuilder or loginUser. Make sure you call either of the two functions before updating the chatContext");
 
             }
         } catch(Exception e) {
-            call.errorCallback(e.toString());
+            call.reject(e.toString());
         }
     }
 
@@ -375,9 +379,9 @@ public class KommunicateCapacitorPlugin extends Plugin {
             if (settingObject.has("skipRouting")) {
                 KmSettings.setSkipRouting(Boolean.valueOf(settingObject.get("skipRouting").toString()));
             }
-            call.successCallback(getPluginResultObject(SUCCESS, "Default setting updated"));
+            call.resolve(getJsObject(SUCCESS, "Default setting updated"));
         } catch(Exception e) {
-            call.errorCallback(e.toString());
+            call.reject(e.toString());
         }
     }
 
@@ -396,14 +400,14 @@ public class KommunicateCapacitorPlugin extends Plugin {
             );
             if (Kommunicate.isLoggedIn(getContext())) {
                 KmSettings.updateChatContext(getContext(), getStringMap(chatContext));
-                call.successCallback(getPluginResultObject(SUCCESS, "Chat context updated"));
+                call.resolve(getJsObject(SUCCESS, "Chat context updated"));
             } else {
-                call.errorCallback(
+                call.reject(
                     "User not authorised. This usually happens when calling the function before conversationBuilder or loginUser. Make sure you call either of the two functions before updating the chatContext"
                 );
             }
         } catch (Exception e) {
-            call.errorCallback(e.getLocalizedMessage());
+            call.reject(e.getLocalizedMessage());
         }
     }
 
@@ -411,9 +415,9 @@ public class KommunicateCapacitorPlugin extends Plugin {
     public void getUnreadCount(PluginCall call) {
         Utils.printLog(getContext(), TAG, "Called method get unread count");
         if (KMUser.isLoggedIn(getContext())) {
-            call.successCallback(getPluginResultObject("unreadCount", new MessageDatabaseService(getContext()).getTotalUnreadCount()));
+            call.resolve(getJsObject("unreadCount", new MessageDatabaseService(getContext()).getTotalUnreadCount()));
         } else {
-            call.errorCallback(
+            call.reject(
                 "User not authorised. This usually happens when calling the function before conversationBuilder or loginUser. Make sure you call either of the two functions before getting the unread count"
             );
         }
@@ -436,23 +440,23 @@ public class KommunicateCapacitorPlugin extends Plugin {
                     new ResultCallback() {
                         @Override
                         public void onSuccess(Object message) {
-                            call.successCallback(getPluginResultObject(SUCCESS, "User details updated"));
+                            call.resolve(getJsObject(SUCCESS, "User details updated"));
                         }
 
                         @Override
                         public void onError(Object error) {
-                            call.errorCallback("Failed to update user details : " + error);
+                            call.reject("Failed to update user details : " + error);
                         }
                     }
                 )
                     .execute();
             } else {
-                call.errorCallback(
+                call.reject(
                     "User not authorised. This usually happens when calling the function before conversationBuilder or loginUser. Make sure you call either of the two functions before updating the user details"
                 );
             }
         } catch (Exception e) {
-            call.errorCallback(e.getLocalizedMessage());
+            call.reject(e.getLocalizedMessage());
         }
     }
 
@@ -465,21 +469,15 @@ public class KommunicateCapacitorPlugin extends Plugin {
             new KMLogoutHandler() {
                 @Override
                 public void onSuccess(Context context) {
-                    call.successCallback(getPluginResultObject(SUCCESS, "Logout successful"));
+                    call.resolve(getJsObject(SUCCESS, "Logout successful"));
                 }
 
                 @Override
                 public void onFailure(Exception exception) {
-                    call.errorCallback(GsonUtils.getJsonFromObject(exception, Exception.class));
+                    call.reject(GsonUtils.getJsonFromObject(exception, Exception.class));
                 }
             }
         );
-    }
-
-    private PluginResult getPluginResultObject(String key, Object value) {
-        PluginResult result = new PluginResult();
-        result.put(key, value);
-        return result;
     }
 
     private JSObject getJsObject(String key, Object value) {

@@ -1,18 +1,36 @@
 import { WebPlugin } from '@capacitor/core';
 export class KommunicateCapacitorPluginWeb extends WebPlugin {
-    constructor() {
-        super({
-            name: 'KommunicateCapacitorPlugin',
-            platforms: ['web'],
-        });
+    openConversation() {
+        throw new Error('Method not implemented.');
+    }
+    openParticularConversation(_options) {
+        throw new Error('Method not implemented.');
+    }
+    updateTeamId(_options) {
+        throw new Error('Method not implemented.');
+    }
+    updateDefaultSettings(_options) {
+        throw new Error('Method not implemented.');
+    }
+    login(_options) {
+        throw new Error('Method not implemented.');
+    }
+    loginAsVisitor(_options) {
+        throw new Error('Method not implemented.');
+    }
+    getUnreadCount() {
+        throw new Error('Method not implemented.');
     }
     buildConversation(options) {
         return new Promise((resolve, reject) => {
+            const conversationResolved = (clientConversationId) => {
+                resolve({ clientConversationId: String(clientConversationId) });
+            };
             let kmUser;
             if (this.isUserLoggedIn()) {
                 this.init((response) => {
                     console.log(response);
-                    this.createConversation(options, JSON.parse(localStorage.KM_PLUGIN_USER_DETAILS).userId, resolve, reject);
+                    this.createConversation(options, JSON.parse(localStorage.KM_PLUGIN_USER_DETAILS).userId, conversationResolved, reject);
                 }, (error) => {
                     reject(error);
                 });
@@ -22,9 +40,11 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin {
                     kmUser = JSON.parse(options.kmUser);
                     kmUser.applicationId = options.appId;
                 }
-                else if (options.withPreChat && options.withPreChat == true) {
-                    kmUser.withPreChat = true;
-                    kmUser.applicationId = options.appId;
+                else if (options.withPreChat === true) {
+                    kmUser = {
+                        applicationId: options.appId,
+                        withPreChat: true,
+                    };
                 }
                 else {
                     kmUser = {
@@ -34,9 +54,11 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin {
                 }
                 this.initPlugin(kmUser, (response) => {
                     console.log(response);
-                    if (!(kmUser.withPreChat && kmUser.withPreChat == true)) {
-                        this.createConversation(options, kmUser.userId, resolve, reject);
+                    if (kmUser.withPreChat === true) {
+                        resolve({ success: 'Pre-chat initialized' });
+                        return;
                     }
+                    this.createConversation(options, kmUser.userId, conversationResolved, reject);
                 }, (error) => {
                     reject(error);
                 });
@@ -51,7 +73,7 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin {
             this.init((response) => {
                 console.log(response);
                 window.Kommunicate.updateChatContext(options);
-                resolve("Chat context updated");
+                resolve({ success: 'Chat context updated' });
             }, (error) => {
                 console.log(error);
                 reject(error);
@@ -82,7 +104,7 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin {
                     userDetails.metadata = options.metadata;
                 }
                 window.Kommunicate.updateUser(userDetails);
-                resolve("user details updated");
+                resolve({ success: 'User details updated' });
             }, (error) => {
                 console.log(error);
                 reject(error);
@@ -96,7 +118,7 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin {
                     console.log(response);
                     window.Kommunicate.logout();
                     localStorage.removeItem('KM_PLUGIN_USER_DETAILS');
-                    resolve("success");
+                    resolve({ success: 'Logout successful' });
                 }, (error) => {
                     console.log(error);
                     reject(error);
@@ -104,7 +126,7 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin {
             }
             else {
                 localStorage.removeItem('KM_PLUGIN_USER_DETAILS');
-                resolve("success");
+                resolve({ success: 'Logout successful' });
             }
         });
     }
@@ -184,8 +206,8 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin {
     }
     getPrechatLeadDetails() {
         return [{
-                "field": "Name",
-                "required": false,
+                "field": "Name", // Name of the field you want to add
+                "required": false, // Set 'true' to make it a mandatory field
                 "placeholder": "enter your name" // add whatever text you want to show in the placeholder
             },
             {
@@ -198,7 +220,7 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin {
                 "field": "Phone",
                 "type": "number",
                 "required": true,
-                "element": "input",
+                "element": "input", // Optional field (Possible values: textarea or input) 
                 "placeholder": "Enter your phone number"
             }
         ];
@@ -259,10 +281,10 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin {
     }
     startConversation(conversationObj, clientChannelKey, successCallback, errorCallback) {
         var conversationDetail = {
-            "agentIds": conversationObj.agentIds,
-            "botIds": conversationObj.botIds,
-            "skipRouting": conversationObj.skipRouting,
-            "assignee": conversationObj.conversationAssignee,
+            "agentIds": conversationObj.agentIds, // Optional. If you do not pass any agent ID, the default agent will automatically get selected.
+            "botIds": conversationObj.botIds, // Optional. Pass the bot IDs of the bots you want to add in this conversation.
+            "skipRouting": conversationObj.skipRouting, // Optional. If this parameter is set to 'true', then routing rules will be skipped for this conversation.
+            "assignee": conversationObj.conversationAssignee, // Optional. You can assign this conversation to any agent or bot. If you do not pass the ID. the conversation will assigned to the default agent. 
             "groupName": conversationObj.groupName,
             'clientGroupId': clientChannelKey
         };
@@ -298,8 +320,4 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin {
         return clientId;
     }
 }
-const KommunicatePlugin = new KommunicateCapacitorPluginWeb();
-export { KommunicatePlugin };
-import { registerWebPlugin } from '@capacitor/core';
-registerWebPlugin(KommunicatePlugin);
 //# sourceMappingURL=web.js.map

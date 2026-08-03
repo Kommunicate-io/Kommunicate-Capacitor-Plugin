@@ -1,20 +1,42 @@
 var capacitorPlugin = (function (exports, core) {
     'use strict';
 
+    const KommunicateCapacitorPlugin = core.registerPlugin('KommunicateCapacitorPlugin', {
+        web: () => Promise.resolve().then(function () { return web; }).then((m) => new m.KommunicateCapacitorPluginWeb()),
+    });
+
     class KommunicateCapacitorPluginWeb extends core.WebPlugin {
-        constructor() {
-            super({
-                name: 'KommunicateCapacitorPlugin',
-                platforms: ['web'],
-            });
+        openConversation() {
+            throw new Error('Method not implemented.');
+        }
+        openParticularConversation(_options) {
+            throw new Error('Method not implemented.');
+        }
+        updateTeamId(_options) {
+            throw new Error('Method not implemented.');
+        }
+        updateDefaultSettings(_options) {
+            throw new Error('Method not implemented.');
+        }
+        login(_options) {
+            throw new Error('Method not implemented.');
+        }
+        loginAsVisitor(_options) {
+            throw new Error('Method not implemented.');
+        }
+        getUnreadCount() {
+            throw new Error('Method not implemented.');
         }
         buildConversation(options) {
             return new Promise((resolve, reject) => {
+                const conversationResolved = (clientConversationId) => {
+                    resolve({ clientConversationId: String(clientConversationId) });
+                };
                 let kmUser;
                 if (this.isUserLoggedIn()) {
                     this.init((response) => {
                         console.log(response);
-                        this.createConversation(options, JSON.parse(localStorage.KM_PLUGIN_USER_DETAILS).userId, resolve, reject);
+                        this.createConversation(options, JSON.parse(localStorage.KM_PLUGIN_USER_DETAILS).userId, conversationResolved, reject);
                     }, (error) => {
                         reject(error);
                     });
@@ -24,9 +46,11 @@ var capacitorPlugin = (function (exports, core) {
                         kmUser = JSON.parse(options.kmUser);
                         kmUser.applicationId = options.appId;
                     }
-                    else if (options.withPreChat && options.withPreChat == true) {
-                        kmUser.withPreChat = true;
-                        kmUser.applicationId = options.appId;
+                    else if (options.withPreChat === true) {
+                        kmUser = {
+                            applicationId: options.appId,
+                            withPreChat: true,
+                        };
                     }
                     else {
                         kmUser = {
@@ -36,9 +60,11 @@ var capacitorPlugin = (function (exports, core) {
                     }
                     this.initPlugin(kmUser, (response) => {
                         console.log(response);
-                        if (!(kmUser.withPreChat && kmUser.withPreChat == true)) {
-                            this.createConversation(options, kmUser.userId, resolve, reject);
+                        if (kmUser.withPreChat === true) {
+                            resolve({ success: 'Pre-chat initialized' });
+                            return;
                         }
+                        this.createConversation(options, kmUser.userId, conversationResolved, reject);
                     }, (error) => {
                         reject(error);
                     });
@@ -53,7 +79,7 @@ var capacitorPlugin = (function (exports, core) {
                 this.init((response) => {
                     console.log(response);
                     window.Kommunicate.updateChatContext(options);
-                    resolve("Chat context updated");
+                    resolve({ success: 'Chat context updated' });
                 }, (error) => {
                     console.log(error);
                     reject(error);
@@ -84,7 +110,7 @@ var capacitorPlugin = (function (exports, core) {
                         userDetails.metadata = options.metadata;
                     }
                     window.Kommunicate.updateUser(userDetails);
-                    resolve("user details updated");
+                    resolve({ success: 'User details updated' });
                 }, (error) => {
                     console.log(error);
                     reject(error);
@@ -98,7 +124,7 @@ var capacitorPlugin = (function (exports, core) {
                         console.log(response);
                         window.Kommunicate.logout();
                         localStorage.removeItem('KM_PLUGIN_USER_DETAILS');
-                        resolve("success");
+                        resolve({ success: 'Logout successful' });
                     }, (error) => {
                         console.log(error);
                         reject(error);
@@ -106,7 +132,7 @@ var capacitorPlugin = (function (exports, core) {
                 }
                 else {
                     localStorage.removeItem('KM_PLUGIN_USER_DETAILS');
-                    resolve("success");
+                    resolve({ success: 'Logout successful' });
                 }
             });
         }
@@ -186,8 +212,8 @@ var capacitorPlugin = (function (exports, core) {
         }
         getPrechatLeadDetails() {
             return [{
-                    "field": "Name",
-                    "required": false,
+                    "field": "Name", // Name of the field you want to add
+                    "required": false, // Set 'true' to make it a mandatory field
                     "placeholder": "enter your name" // add whatever text you want to show in the placeholder
                 },
                 {
@@ -200,7 +226,7 @@ var capacitorPlugin = (function (exports, core) {
                     "field": "Phone",
                     "type": "number",
                     "required": true,
-                    "element": "input",
+                    "element": "input", // Optional field (Possible values: textarea or input) 
                     "placeholder": "Enter your phone number"
                 }
             ];
@@ -261,10 +287,10 @@ var capacitorPlugin = (function (exports, core) {
         }
         startConversation(conversationObj, clientChannelKey, successCallback, errorCallback) {
             var conversationDetail = {
-                "agentIds": conversationObj.agentIds,
-                "botIds": conversationObj.botIds,
-                "skipRouting": conversationObj.skipRouting,
-                "assignee": conversationObj.conversationAssignee,
+                "agentIds": conversationObj.agentIds, // Optional. If you do not pass any agent ID, the default agent will automatically get selected.
+                "botIds": conversationObj.botIds, // Optional. Pass the bot IDs of the bots you want to add in this conversation.
+                "skipRouting": conversationObj.skipRouting, // Optional. If this parameter is set to 'true', then routing rules will be skipped for this conversation.
+                "assignee": conversationObj.conversationAssignee, // Optional. You can assign this conversation to any agent or bot. If you do not pass the ID. the conversation will assigned to the default agent. 
                 "groupName": conversationObj.groupName,
                 'clientGroupId': clientChannelKey
             };
@@ -300,15 +326,17 @@ var capacitorPlugin = (function (exports, core) {
             return clientId;
         }
     }
-    const KommunicatePlugin = new KommunicateCapacitorPluginWeb();
-    core.registerWebPlugin(KommunicatePlugin);
 
-    exports.KommunicateCapacitorPluginWeb = KommunicateCapacitorPluginWeb;
-    exports.KommunicatePlugin = KommunicatePlugin;
+    var web = /*#__PURE__*/Object.freeze({
+        __proto__: null,
+        KommunicateCapacitorPluginWeb: KommunicateCapacitorPluginWeb
+    });
+
+    exports.KommunicateCapacitorPlugin = KommunicateCapacitorPlugin;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
     return exports;
 
-}({}, capacitorExports));
+})({}, capacitorExports);
 //# sourceMappingURL=plugin.js.map

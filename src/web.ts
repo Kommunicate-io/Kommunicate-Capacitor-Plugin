@@ -1,44 +1,46 @@
 import { WebPlugin } from '@capacitor/core';
-import { KommunicateCapacitor } from './definitions';
+import {
+  BuildConversationResult,
+  KommunicateCapacitor,
+  SuccessResult,
+  UnreadCountResult,
+} from './definitions';
 
 export class KommunicateCapacitorPluginWeb extends WebPlugin implements KommunicateCapacitor {
-  constructor() {
-    super({
-      name: 'KommunicateCapacitorPlugin',
-      platforms: ['web'],
-    });
-  }
-  openConversation(): Promise<void> {
+  openConversation(): Promise<SuccessResult> {
     throw new Error('Method not implemented.');
   }
-  openParticularConversation(_options: any): Promise<void> {
+  openParticularConversation(_options: any): Promise<SuccessResult> {
     throw new Error('Method not implemented.');
   }
-  updateTeamId(_options: any): Promise<void> {
+  updateTeamId(_options: any): Promise<SuccessResult> {
     throw new Error('Method not implemented.');
   }
-  updateDefaultSettings(_options: any): Promise<void> {
+  updateDefaultSettings(_options: any): Promise<SuccessResult> {
     throw new Error('Method not implemented.');
   }
-  login(_options: any): Promise<void> {
+  login(_options: any): Promise<SuccessResult> {
     throw new Error('Method not implemented.');
   }
-  loginAsVisitor(_options: any): Promise<void> {
+  loginAsVisitor(_options: any): Promise<SuccessResult> {
     throw new Error('Method not implemented.');
   }
-  getUnreadCount(): Promise<void> {
+  getUnreadCount(): Promise<UnreadCountResult> {
     throw new Error('Method not implemented.');
   }
 
-  buildConversation(options: any): Promise<void> {
-    return new Promise((resolve, reject) => {
+  buildConversation(options: any): Promise<BuildConversationResult> {
+    return new Promise<BuildConversationResult>((resolve, reject) => {
 
+    const conversationResolved = (clientConversationId: any) => {
+      resolve({ clientConversationId: String(clientConversationId) });
+    };
     let kmUser: any;
 
 		if (this.isUserLoggedIn()) {
 			this.init((response: any) => {
         console.log(response);
-				this.createConversation(options, JSON.parse(localStorage.KM_PLUGIN_USER_DETAILS).userId, resolve, reject);
+				this.createConversation(options, JSON.parse(localStorage.KM_PLUGIN_USER_DETAILS).userId, conversationResolved, reject);
 			}, (error: any) => {
 				reject(error)
 			})
@@ -46,9 +48,11 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin implements Kommunic
 			if (options.kmUser) {
 				kmUser = JSON.parse(options.kmUser);
 				kmUser.applicationId = options.appId
-			} else if (options.withPreChat && options.withPreChat == true) {
-				kmUser.withPreChat = true;
-        kmUser.applicationId = options.appId
+			} else if (options.withPreChat === true) {
+				kmUser = {
+          applicationId: options.appId,
+          withPreChat: true,
+        };
 			} else {
 				kmUser = {
 					'userId': this.getRandomId(),
@@ -57,9 +61,11 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin implements Kommunic
 			}
 			this.initPlugin(kmUser, (response: any) => {
         console.log(response)
-        if(!(kmUser.withPreChat && kmUser.withPreChat == true)) {
-         this.createConversation(options, kmUser.userId, resolve, reject);
+        if (kmUser.withPreChat === true) {
+          resolve({ success: 'Pre-chat initialized' });
+          return;
         }
+        this.createConversation(options, kmUser.userId, conversationResolved, reject);
 			}, (error: any) => {
 				reject(error);
 			});
@@ -67,15 +73,15 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin implements Kommunic
     });
   }
 
-  updateChatContext(options: any): Promise<void> {
-    return new Promise((resolve: any, reject: any) => {
+  updateChatContext(options: any): Promise<SuccessResult> {
+    return new Promise<SuccessResult>((resolve, reject) => {
       if(!this.isUserLoggedIn()) {
         reject("User not logged in. Call buildConversation function once before updating the chat context")
       }
         this.init((response: any) => {
           console.log(response);
           (window as any).Kommunicate.updateChatContext(options);
-          resolve("Chat context updated")
+          resolve({ success: 'Chat context updated' });
         }, (error: any) => {
           console.log(error);
           reject(error)
@@ -83,8 +89,8 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin implements Kommunic
    })
   }
 
-  updateUserDetails(options: any): Promise<void> {
-    return new Promise((resolve: any, reject: any) => {
+  updateUserDetails(options: any): Promise<SuccessResult> {
+    return new Promise<SuccessResult>((resolve, reject) => {
       if(!this.isUserLoggedIn()) {
         reject("User not logged in. Call buildConversation function once before updating the details")
       }
@@ -107,7 +113,7 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin implements Kommunic
           userDetails.metadata = options.metadata;
         }
        (window as any).Kommunicate.updateUser(userDetails);
-       resolve("user details updated")
+       resolve({ success: 'User details updated' });
         }, (error: any) => {
           console.log(error);
           reject(error)
@@ -115,21 +121,21 @@ export class KommunicateCapacitorPluginWeb extends WebPlugin implements Kommunic
     })
   }
 
-  logout(): Promise<void> {
-    return new Promise((resolve: any, reject: any) => {
+  logout(): Promise<SuccessResult> {
+    return new Promise<SuccessResult>((resolve, reject) => {
       if (this.isUserLoggedIn() && typeof (window as any).Kommunicate != 'undefined' && (window as any).Kommunicate) {
         this.init((response: any) => {
           console.log(response);
           (window as any).Kommunicate.logout();
           localStorage.removeItem('KM_PLUGIN_USER_DETAILS');
-          resolve("success")
+          resolve({ success: 'Logout successful' });
         }, (error: any) => {
           console.log(error);
           reject(error)
         });
       } else {
         localStorage.removeItem('KM_PLUGIN_USER_DETAILS');
-        resolve("success")
+        resolve({ success: 'Logout successful' });
       }
     });
   }
